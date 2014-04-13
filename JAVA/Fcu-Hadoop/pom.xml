@@ -89,7 +89,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>org.hadoop.presidentElection</mainClass>
+                            <mainClass>org.hadoop.NetFlowStatistics</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

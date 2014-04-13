@@ -36,7 +36,7 @@
       </layout>
   </appender> -->
   <appender name="file" class="org.apache.log4j.DailyRollingFileAppender">
-    <param name="File" value="D:/auto_pricing/logs/Hbase_%d{dd-MM-yy}.log" />
+    <param name="File" value="D:/auto_pricing/logs/Hbase.log" />
     <param name="DatePattern" value="'.'yyyy-MM-dd" />
     <param name="Append" value="true"/>
     <layout class="org.apache.log4j.PatternLayout">
@@ -44,7 +44,7 @@
     </layout>
   </appender>
 
-  <logger name="com.newegg.autopricing">
+  <logger name="org">
     <level value="info" />
   </logger>
 
@@ -52,25 +52,25 @@
 <!--     <level value="info" /> -->
 <!--   </logger> -->
 
-  <logger name="com.newegg.autopricing.angular.web">
-    <level value="info" />
-  </logger>
+<!--   <logger name="com.newegg.autopricing.angular.web"> -->
+<!--     <level value="info" /> -->
+<!--   </logger> -->
 
-  <logger name="org.springframework">
-    <level value="info" />
-  </logger>
+<!--   <logger name="org.springframework"> -->
+<!--     <level value="info" /> -->
+<!--   </logger> -->
 
-  <logger name="org.springframework.web">
-    <level value="info" />
-  </logger>
+<!--   <logger name="org.springframework.web"> -->
+<!--     <level value="info" /> -->
+<!--   </logger> -->
 
-  <logger name="org.apache.ibatis">
-    <level value="info" />
-  </logger>
+<!--   <logger name="org.apache.ibatis"> -->
+<!--     <level value="info" /> -->
+<!--   </logger> -->
 
-  <logger name="java.sql">
-    <level value="info" />
-  </logger>
+<!--   <logger name="java.sql"> -->
+<!--     <level value="info" /> -->
+<!--   </logger> -->
 
   <!-- Root Logger -->
   <root>

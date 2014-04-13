@@ -90,6 +90,7 @@ public class HBaseDataProcess {
                 System.out.print(new String(CellUtil.cloneQualifier(kv)) + " ");
                 System.out.print("TimeStamp:" + new DateTime(kv.getTimestamp()).toString("yyyy-MM-dd HH:mm:ss:mmm") + " ");
                 System.out.println(new String(CellUtil.cloneValue(kv)));
+                L.info("Row Name:{}", new String(CellUtil.cloneRow(kv)));
             }
             table.close();
             L.info("HBaseDataProcess Done.");
