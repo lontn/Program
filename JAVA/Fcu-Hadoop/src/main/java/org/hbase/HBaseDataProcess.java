@@ -17,7 +17,10 @@ import org.apache.hadoop.hbase.CellUtil;
 import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.hbase.KeyValue;
 import org.apache.hadoop.hbase.client.Get;
+import org.apache.hadoop.hbase.client.HConnection;
+import org.apache.hadoop.hbase.client.HConnectionManager;
 import org.apache.hadoop.hbase.client.HTable;
+import org.apache.hadoop.hbase.client.HTableInterface;
 import org.apache.hadoop.hbase.client.Put;
 import org.apache.hadoop.hbase.client.Result;
 import org.apache.hadoop.hbase.util.Bytes;
@@ -48,7 +51,10 @@ public class HBaseDataProcess {
     public static void main(String[] args) {
         try {
             //List<NetFlow> results = LoadFile();
-            HTable table = new HTable(conf, "NetFlowLog");
+            //HTable table = new HTable(conf, "NetFlowProxyLogTest");
+            //連接管理
+            HConnection connection = HConnectionManager.createConnection(conf);
+            HTableInterface table = connection.getTable("NetFlowProxyLogTest");
 //            for(NetFlow flow : results){
 //                Put put = new Put(Bytes.toBytes(flow.getRow())); //Set Row Key
 //                put.add(Bytes.toBytes("Src"), Bytes.toBytes("DateTime"),
@@ -85,14 +91,15 @@ public class HBaseDataProcess {
 //                System.out.print("TimeStamp:" + new DateTime(kv.getTimestamp()).toString("yyyy-MM-dd HH:mm:ss:mmm") + " ");
 //                System.out.println(new String(kv.getValue()));
                 //0.96以後的API寫法
-                System.out.print(new String(CellUtil.cloneRow(kv)) + " ");
-                System.out.print(new String(CellUtil.cloneFamily(kv)) + ":");
-                System.out.print(new String(CellUtil.cloneQualifier(kv)) + " ");
-                System.out.print("TimeStamp:" + new DateTime(kv.getTimestamp()).toString("yyyy-MM-dd HH:mm:ss:mmm") + " ");
+                System.out.println("1." +new String(CellUtil.cloneRow(kv)) + " ");
+                System.out.println("2." +new String(CellUtil.cloneFamily(kv)) + ":");
+                System.out.println("3." +new String(CellUtil.cloneQualifier(kv)) + " ");
+                System.out.println("TimeStamp:" + new DateTime(kv.getTimestamp()).toString("yyyy-MM-dd HH:mm:ss:mmm") + " ");
                 System.out.println(new String(CellUtil.cloneValue(kv)));
                 L.info("Row Name:{}", new String(CellUtil.cloneRow(kv)));
             }
             table.close();
+            connection.close();
             L.info("HBaseDataProcess Done.");
         } catch (Exception e) {
             L.error("HTable fail.", e);

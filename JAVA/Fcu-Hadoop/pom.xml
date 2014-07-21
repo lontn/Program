@@ -10,6 +10,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!-- <org.springframework.version>3.2.3.RELEASE</org.springframework.version> -->
         <org.slf4j.version>1.7.5</org.slf4j.version>
+        <commons-configuration>1.10</commons-configuration>
     </properties>
     <dependencies>
         <dependency>
@@ -76,6 +77,12 @@
             <version>4.10</version>
             <scope>test</scope>
         </dependency>
+        <!-- Apache Commons-configuration -->
+        <dependency>
+            <groupId>commons-configuration</groupId>
+            <artifactId>commons-configuration</artifactId>
+            <version>${commons-configuration}</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -89,7 +96,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>org.hadoop.NetFlowStatistics</mainClass>
+                            <mainClass>org.hadoop.ProxyLogStatistics</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -176,4 +183,51 @@
             </plugins>
         </pluginManagement>
     </build>
+  <profiles>
+    <profile>
+      <id>local</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <build>
+<!--         <finalName>${project.name}-${version}-local</finalName> -->
+        <resources>
+          <resource>
+            <directory>${basedir}/src/main/resources</directory>
+          </resource>
+          <resource>
+            <directory>${basedir}/evn/local/</directory>
+          </resource>
+        </resources>
+      </build>
+    </profile>
+    <profile>
+      <id>windows</id>
+      <build>
+        <finalName>${project.name}-${version}-windows</finalName>
+        <resources>
+          <resource>
+            <directory>${basedir}/src/main/resources</directory>
+          </resource>
+          <resource>
+            <directory>${basedir}/evn/windows/</directory>
+          </resource>
+        </resources>
+      </build>
+    </profile>
+    <profile>
+      <id>linux</id>
+      <build>
+        <finalName>${project.name}-${version}-linux</finalName>
+        <resources>
+          <resource>
+            <directory>${basedir}/src/main/resources</directory>
+          </resource>
+          <resource>
+            <directory>${basedir}/evn/linux/</directory>
+          </resource>
+        </resources>
+      </build>
+    </profile>
+  </profiles>
 </project>
