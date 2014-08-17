@@ -34,6 +34,7 @@ public class ProxyLogStatistics {
     private static final String QUALIFIER_CLIENTIDENTITY = "ClientIdentity";
     private static final String QUALIFIER_TIMESTEMP = "Timestemp";
     private static final String QUALIFIER_CONTENTTYPE = "ContentType";
+    private static final String QUALIFIER_STATUSCODE = "StatusCode";
     private static final String RANGE = "TimeRange.properties";
     private static String[] timeRange = {};
     public static enum Counters { ROWS, COLS, ERROR, VALID }
@@ -41,7 +42,7 @@ public class ProxyLogStatistics {
         conf = HBaseConfiguration.create();
         try {
             config = new PropertiesConfiguration(RANGE);
-            timeRange = config.getStringArray("TimeRange");
+            //timeRange = config.getStringArray("TimeRange");
         } catch (ConfigurationException e) {
             L.error("ConfigurationException:"+ e);
         }
@@ -58,24 +59,30 @@ public class ProxyLogStatistics {
             String clientAddress = "";
             String uri = "";
             String clientIdentity = "";
-            String timeStemp = "";
-            String contentType = "";
+            String statusCode = "";
+            //String timeStemp = "";
+            //String contentType = "";
             try{
-                clientAddress = new String(columns.getValue(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_CLIENTADDRESS)));
+                //clientAddress = new String(columns.getValue(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_CLIENTADDRESS)));
                 uri = new String(columns.getValue(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_URI)));
                 clientIdentity = new String(columns.getValue(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_CLIENTIDENTITY)));
-                timeStemp = new String(columns.getValue(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_TIMESTEMP)));
-                contentType = new String(columns.getValue(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_CONTENTTYPE)));
-                if(clientAddress.indexOf("140.134") != -1 && contentType.equals("text/html")){
-                    //L.info("Info:{}", timeStemp+ "---" +clientAddress+ "---" + uri + "---" + clientIdentity);
-                    word.set(timeStemp+ "---"+ clientAddress+ "---" + uri + "---" + clientIdentity);
-                    // vv AnalyzeData
-                    context.write(word, value);
-                    //context.getCounter(Counters.VALID).increment(1);
-                }
+                //timeStemp = new String(columns.getValue(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_TIMESTEMP)));
+                //contentType = new String(columns.getValue(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_CONTENTTYPE)));
+                statusCode = new String(columns.getValue(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_STATUSCODE)));
+                String resultURL = uri.replace("http://", "");
+                String[] result = resultURL.split("/");
+                word.set(clientIdentity+ "---"+ result[0] + "---" + statusCode);
+                context.write(word, value);
+//                if(clientAddress.indexOf("140.134") != -1 && contentType.equals("text/html")){
+//                    word.set(timeStemp+ "---"+ clientAddress+ "---" + uri + "---" + clientIdentity);
+//                    // vv AnalyzeData
+//                    
+//                    //context.getCounter(Counters.VALID).increment(1);
+//                }
             }catch(Exception e){
                 L.error("ProxyLogStatisticsMapper fail.", e);
-                L.error("Row:{}, Value:{} ", row.get());
+                L.error("Row:{}", row.get());
+                L.info("clientIdentity:{}", clientIdentity);
                 context.getCounter(Counters.ERROR).increment(1);
             }
         }
@@ -101,9 +108,10 @@ public class ProxyLogStatistics {
             scan.addColumn(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_CLIENTIDENTITY));
             scan.addColumn(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_TIMESTEMP));
             scan.addColumn(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_CONTENTTYPE));
+            scan.addColumn(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_STATUSCODE));
             //選取時間區間
-            FilterList filterList = new FilterList(HBaseQuaryTools.columnFilterList(COLUMN_FAMILY, QUALIFIER_TIMESTEMP, timeRange));
-            scan.setFilter(filterList);
+            //FilterList filterList = new FilterList(HBaseQuaryTools.columnFilterList(COLUMN_FAMILY, QUALIFIER_TIMESTEMP, timeRange));
+            //scan.setFilter(filterList);
 
             FileSystem hdfs = FileSystem.get(conf);
             //Path inputPath = new Path(hdfs.getWorkingDirectory().toString() + "/input");
@@ -111,7 +119,7 @@ public class ProxyLogStatistics {
             
             Job job = new Job(conf, "ProxyLogStatistics");
             job.setJarByClass(ProxyLogStatistics.class);
-            TableMapReduceUtil.initTableMapperJob("NetFlowProxyLog", scan, ProxyLogStatisticsMapper.class, Text.class, IntWritable.class, job);
+            TableMapReduceUtil.initTableMapperJob("NetFlowProxyLogTest", scan, ProxyLogStatisticsMapper.class, Text.class, IntWritable.class, job);
             job.setReducerClass(ProxyLogStatisticsReducer.class);
             
             job.setOutputKeyClass(Text.class);

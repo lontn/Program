@@ -73,4 +73,12 @@ public class NetFlowStatisticsTest extends SupportHBaseTest {
             
         }
     }
+    
+    @Test
+    public void test(){
+        String word = "www.sciencedirect.com";
+        word = word.replace("http://", "");
+        String[] result = word.split("/");
+        L.info("result:{}", result[0]);
+    }
 }
