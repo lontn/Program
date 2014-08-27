@@ -42,7 +42,7 @@ public class ProxyLogStatistics {
         conf = HBaseConfiguration.create();
         try {
             config = new PropertiesConfiguration(RANGE);
-            //timeRange = config.getStringArray("TimeRange");
+            timeRange = config.getStringArray("TimeRange");
         } catch (ConfigurationException e) {
             L.error("ConfigurationException:"+ e);
         }
@@ -69,9 +69,10 @@ public class ProxyLogStatistics {
                 //timeStemp = new String(columns.getValue(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_TIMESTEMP)));
                 //contentType = new String(columns.getValue(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_CONTENTTYPE)));
                 statusCode = new String(columns.getValue(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_STATUSCODE)));
-                String resultURL = uri.replace("http://", "");
-                String[] result = resultURL.split("/");
-                word.set(clientIdentity+ "---"+ result[0] + "---" + statusCode);
+//                String resultURL = uri.replace("http://", "");
+//                String[] result = resultURL.split("/");
+//                word.set(result[0] + "---"+ clientIdentity);
+                word.set(statusCode);
                 context.write(word, value);
 //                if(clientAddress.indexOf("140.134") != -1 && contentType.equals("text/html")){
 //                    word.set(timeStemp+ "---"+ clientAddress+ "---" + uri + "---" + clientIdentity);
@@ -110,8 +111,8 @@ public class ProxyLogStatistics {
             scan.addColumn(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_CONTENTTYPE));
             scan.addColumn(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_STATUSCODE));
             //選取時間區間
-            //FilterList filterList = new FilterList(HBaseQuaryTools.columnFilterList(COLUMN_FAMILY, QUALIFIER_TIMESTEMP, timeRange));
-            //scan.setFilter(filterList);
+            FilterList filterList = new FilterList(HBaseQuaryTools.columnFilterList(COLUMN_FAMILY, QUALIFIER_TIMESTEMP, timeRange));
+            scan.setFilter(filterList);
 
             FileSystem hdfs = FileSystem.get(conf);
             //Path inputPath = new Path(hdfs.getWorkingDirectory().toString() + "/input");
