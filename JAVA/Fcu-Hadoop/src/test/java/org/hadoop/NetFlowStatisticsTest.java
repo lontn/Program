@@ -9,6 +9,7 @@ import org.apache.hadoop.hbase.client.Result;
 import org.apache.hadoop.hbase.client.ResultScanner;
 import org.apache.hadoop.hbase.client.Scan;
 import org.apache.hadoop.hbase.util.Bytes;
+import org.joda.time.DateTime;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -80,5 +81,11 @@ public class NetFlowStatisticsTest extends SupportHBaseTest {
         word = word.replace("http://", "");
         String[] result = word.split("/");
         L.info("result:{}", result[0]);
+    }
+    
+    @Test
+    public void dateTest(){
+        String time = "2014-05-25 04:02:41.002";
+        L.info("time:{}", time.split(" ")[0]);
     }
 }

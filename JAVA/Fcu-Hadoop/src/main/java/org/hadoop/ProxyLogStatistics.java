@@ -60,19 +60,21 @@ public class ProxyLogStatistics {
             String uri = "";
             String clientIdentity = "";
             String statusCode = "";
-            //String timeStemp = "";
+            String timeStemp = "";
             //String contentType = "";
             try{
                 //clientAddress = new String(columns.getValue(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_CLIENTADDRESS)));
                 uri = new String(columns.getValue(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_URI)));
                 clientIdentity = new String(columns.getValue(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_CLIENTIDENTITY)));
-                //timeStemp = new String(columns.getValue(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_TIMESTEMP)));
+                timeStemp = new String(columns.getValue(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_TIMESTEMP)));
                 //contentType = new String(columns.getValue(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_CONTENTTYPE)));
                 statusCode = new String(columns.getValue(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_STATUSCODE)));
 //                String resultURL = uri.replace("http://", "");
 //                String[] result = resultURL.split("/");
 //                word.set(result[0] + "---"+ clientIdentity);
-                word.set(statusCode);
+                String[] code = statusCode.split("/");
+                String[] time = timeStemp.split(" ");
+                word.set(time[0]+ "---" + code[1]);
                 context.write(word, value);
 //                if(clientAddress.indexOf("140.134") != -1 && contentType.equals("text/html")){
 //                    word.set(timeStemp+ "---"+ clientAddress+ "---" + uri + "---" + clientIdentity);
