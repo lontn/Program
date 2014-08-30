@@ -56,16 +56,16 @@ public class ProxyLogStatistics {
         public void map(ImmutableBytesWritable row, Result columns, Context context) throws IOException {
             //context.getCounter(Counters.ROWS).increment(1); //Row
             //String qualifier = null;
-            String clientAddress = "";
-            String uri = "";
-            String clientIdentity = "";
+            //String clientAddress = "";
+            //String uri = "";
+            //String clientIdentity = "";
             String statusCode = "";
             String timeStemp = "";
             //String contentType = "";
             try{
                 //clientAddress = new String(columns.getValue(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_CLIENTADDRESS)));
-                uri = new String(columns.getValue(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_URI)));
-                clientIdentity = new String(columns.getValue(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_CLIENTIDENTITY)));
+                //uri = new String(columns.getValue(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_URI)));
+                //clientIdentity = new String(columns.getValue(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_CLIENTIDENTITY)));
                 timeStemp = new String(columns.getValue(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_TIMESTEMP)));
                 //contentType = new String(columns.getValue(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_CONTENTTYPE)));
                 statusCode = new String(columns.getValue(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_STATUSCODE)));
@@ -85,7 +85,6 @@ public class ProxyLogStatistics {
             }catch(Exception e){
                 L.error("ProxyLogStatisticsMapper fail.", e);
                 L.error("Row:{}", row.get());
-                L.info("clientIdentity:{}", clientIdentity);
                 context.getCounter(Counters.ERROR).increment(1);
             }
         }
@@ -106,11 +105,11 @@ public class ProxyLogStatistics {
     public static void main(String[] args) {
         try {
             Scan scan = new Scan();
-            scan.addColumn(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_CLIENTADDRESS));
-            scan.addColumn(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_URI));
-            scan.addColumn(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_CLIENTIDENTITY));
+            //scan.addColumn(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_CLIENTADDRESS));
+            //scan.addColumn(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_URI));
+            //scan.addColumn(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_CLIENTIDENTITY));
             scan.addColumn(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_TIMESTEMP));
-            scan.addColumn(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_CONTENTTYPE));
+            //scan.addColumn(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_CONTENTTYPE));
             scan.addColumn(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_STATUSCODE));
             //選取時間區間
             FilterList filterList = new FilterList(HBaseQuaryTools.columnFilterList(COLUMN_FAMILY, QUALIFIER_TIMESTEMP, timeRange));
@@ -122,7 +121,7 @@ public class ProxyLogStatistics {
             
             Job job = new Job(conf, "ProxyLogStatistics");
             job.setJarByClass(ProxyLogStatistics.class);
-            TableMapReduceUtil.initTableMapperJob("NetFlowProxyLogTest", scan, ProxyLogStatisticsMapper.class, Text.class, IntWritable.class, job);
+            TableMapReduceUtil.initTableMapperJob("NetFlowProxyLog", scan, ProxyLogStatisticsMapper.class, Text.class, IntWritable.class, job);
             job.setReducerClass(ProxyLogStatisticsReducer.class);
             
             job.setOutputKeyClass(Text.class);
