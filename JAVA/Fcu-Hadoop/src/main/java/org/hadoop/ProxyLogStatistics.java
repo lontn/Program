@@ -35,6 +35,7 @@ public class ProxyLogStatistics {
     private static final String QUALIFIER_TIMESTEMP = "Timestemp";
     private static final String QUALIFIER_CONTENTTYPE = "ContentType";
     private static final String QUALIFIER_STATUSCODE = "StatusCode";
+    private static final String QUALIFIER_RIGHTSIDECODING = "RightSideCoding";
     private static final String RANGE = "TimeRange.properties";
     private static String[] timeRange = {};
     public static enum Counters { ROWS, COLS, ERROR, VALID }
@@ -59,8 +60,9 @@ public class ProxyLogStatistics {
             //String clientAddress = "";
             //String uri = "";
             //String clientIdentity = "";
-            String statusCode = "";
+            //String statusCode = "";
             String timeStemp = "";
+            String rightSideCoding = "";
             //String contentType = "";
             try{
                 //clientAddress = new String(columns.getValue(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_CLIENTADDRESS)));
@@ -68,20 +70,16 @@ public class ProxyLogStatistics {
                 //clientIdentity = new String(columns.getValue(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_CLIENTIDENTITY)));
                 timeStemp = new String(columns.getValue(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_TIMESTEMP)));
                 //contentType = new String(columns.getValue(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_CONTENTTYPE)));
-                statusCode = new String(columns.getValue(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_STATUSCODE)));
+                //statusCode = new String(columns.getValue(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_STATUSCODE)));
+                rightSideCoding = new String(columns.getValue(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_RIGHTSIDECODING)));
 //                String resultURL = uri.replace("http://", "");
 //                String[] result = resultURL.split("/");
 //                word.set(result[0] + "---"+ clientIdentity);
-                String[] code = statusCode.split("/");
+                //String[] code = statusCode.split("/");
+                String[] sideCoding = rightSideCoding.split("/");
                 String[] time = timeStemp.split(" ");
-                word.set(time[0]+ "---" + code[1]);
+                word.set(time[0]+ "---" + sideCoding[0]);
                 context.write(word, value);
-//                if(clientAddress.indexOf("140.134") != -1 && contentType.equals("text/html")){
-//                    word.set(timeStemp+ "---"+ clientAddress+ "---" + uri + "---" + clientIdentity);
-//                    // vv AnalyzeData
-//                    
-//                    //context.getCounter(Counters.VALID).increment(1);
-//                }
             }catch(Exception e){
                 L.error("ProxyLogStatisticsMapper fail.", e);
                 L.error("Row:{}", row.get());
@@ -110,10 +108,11 @@ public class ProxyLogStatistics {
             //scan.addColumn(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_CLIENTIDENTITY));
             scan.addColumn(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_TIMESTEMP));
             //scan.addColumn(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_CONTENTTYPE));
-            scan.addColumn(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_STATUSCODE));
+            scan.addColumn(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_RIGHTSIDECODING));
             //選取時間區間
             FilterList filterList = new FilterList(HBaseQuaryTools.columnFilterList(COLUMN_FAMILY, QUALIFIER_TIMESTEMP, timeRange));
             scan.setFilter(filterList);
+            L.info("Sum:{}", scan.getMaxResultSize());
 
             FileSystem hdfs = FileSystem.get(conf);
             //Path inputPath = new Path(hdfs.getWorkingDirectory().toString() + "/input");
