@@ -44,7 +44,7 @@
     </property>
     <property>
        <name>hbase.master.maxclockskew</name>
-       <value>180000</value>
+       <value>360000</value>
        <description>Time difference of regionserver from master</description>
     </property>
     <property>

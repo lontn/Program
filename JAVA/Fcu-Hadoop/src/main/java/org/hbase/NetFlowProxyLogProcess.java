@@ -7,8 +7,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
+import java.util.Set;
 import java.util.UUID;
 
 import org.apache.commons.io.FileUtils;
@@ -97,7 +100,6 @@ public class NetFlowProxyLogProcess {
             L.info("END.."+dt.toString("yyyy-MM-dd HH:mm:ss:mmm"));
         } catch (Exception e) {
             L.error("HTable fail.", e);
-            //e.printStackTrace();
         }
 
     }

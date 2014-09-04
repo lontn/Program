@@ -1,6 +1,12 @@
 package org.hadoop;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import org.apache.hadoop.hbase.Cell;
 import org.apache.hadoop.hbase.CellUtil;
@@ -9,7 +15,6 @@ import org.apache.hadoop.hbase.client.Result;
 import org.apache.hadoop.hbase.client.ResultScanner;
 import org.apache.hadoop.hbase.client.Scan;
 import org.apache.hadoop.hbase.util.Bytes;
-import org.joda.time.DateTime;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -87,5 +92,42 @@ public class NetFlowStatisticsTest extends SupportHBaseTest {
     public void dateTest(){
         String time = "2014-05-25 04:02:41.002";
         L.info("time:{}", time.split(" ")[0]);
+    }
+    @Test
+    public void setTest(){
+        List<String> list = new ArrayList<>();
+        list.add("AA");
+        list.add("BB");
+        list.add("AA");
+        list.add("AA");
+        list.add("CC");
+        list.add("DD");
+        list.add("DD");
+        L.info("list:{}", list.size());
+        Set<String> set=new HashSet<>();
+        for(String w : list){
+            set.add(w);
+            Iterator<String> iterator=set.iterator();
+            while(iterator.hasNext()){
+                String oldStr = iterator.next();
+                L.info("w:{}", w);
+                L.info("oldStr:{}", oldStr);
+                if(w.equals(oldStr)){
+                    L.info("重複了~~~~~~~~~~~");
+                    continue;
+                }
+            }
+        }
+        L.info("set:{}", set.size());
+    }
+    
+    @Test
+    public void treeSet() {
+        TreeSet<String> ts = new TreeSet<String>();
+        ts.add("b");
+        ts.add("c");
+        ts.add("a");
+        ts.add("a");
+        System.out.println(ts);
     }
 }
