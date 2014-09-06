@@ -60,29 +60,32 @@ public class ProxyLogStatistics {
             //String clientAddress = "";
             //String uri = "";
             //String clientIdentity = "";
-            //String statusCode = "";
+            String statusCode = "";
             String timeStemp = "";
             String rightSideCoding = "";
             //String contentType = "";
+            String[] code = {};
             try{
                 //clientAddress = new String(columns.getValue(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_CLIENTADDRESS)));
                 //uri = new String(columns.getValue(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_URI)));
                 //clientIdentity = new String(columns.getValue(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_CLIENTIDENTITY)));
                 timeStemp = new String(columns.getValue(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_TIMESTEMP)));
                 //contentType = new String(columns.getValue(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_CONTENTTYPE)));
-                //statusCode = new String(columns.getValue(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_STATUSCODE)));
-                rightSideCoding = new String(columns.getValue(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_RIGHTSIDECODING)));
+                statusCode = new String(columns.getValue(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_STATUSCODE)));
+                //rightSideCoding = new String(columns.getValue(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_RIGHTSIDECODING)));
 //                String resultURL = uri.replace("http://", "");
 //                String[] result = resultURL.split("/");
 //                word.set(result[0] + "---"+ clientIdentity);
-                //String[] code = statusCode.split("/");
-                String[] sideCoding = rightSideCoding.split("/");
+                code = statusCode.split("/");
+                //String[] sideCoding = rightSideCoding.split("/");
                 String[] time = timeStemp.split(" ");
-                word.set(time[0]+ "---" + sideCoding[0]);
+//                word.set(time[0]+ "---" + sideCoding[0]);
+                word.set(time[0]+ "---" + code[1]);
                 context.write(word, value);
             }catch(Exception e){
                 L.error("ProxyLogStatisticsMapper fail.", e);
                 L.error("Row:{}", row.get());
+                L.info("statusCode:{}", statusCode);
                 context.getCounter(Counters.ERROR).increment(1);
             }
         }
@@ -108,7 +111,8 @@ public class ProxyLogStatistics {
             //scan.addColumn(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_CLIENTIDENTITY));
             scan.addColumn(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_TIMESTEMP));
             //scan.addColumn(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_CONTENTTYPE));
-            scan.addColumn(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_RIGHTSIDECODING));
+//            scan.addColumn(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_RIGHTSIDECODING));
+            scan.addColumn(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_STATUSCODE));
             //選取時間區間
             FilterList filterList = new FilterList(HBaseQuaryTools.columnFilterList(COLUMN_FAMILY, QUALIFIER_TIMESTEMP, timeRange));
             scan.setFilter(filterList);
@@ -120,7 +124,7 @@ public class ProxyLogStatistics {
             
             Job job = new Job(conf, "ProxyLogStatistics");
             job.setJarByClass(ProxyLogStatistics.class);
-            TableMapReduceUtil.initTableMapperJob("NetFlowProxyLog", scan, ProxyLogStatisticsMapper.class, Text.class, IntWritable.class, job);
+            TableMapReduceUtil.initTableMapperJob("NetFlowProxyLogTest", scan, ProxyLogStatisticsMapper.class, Text.class, IntWritable.class, job);
             job.setReducerClass(ProxyLogStatisticsReducer.class);
             
             job.setOutputKeyClass(Text.class);
