@@ -77,9 +77,9 @@ public class ProxyLogStatistics {
 //                String[] result = resultURL.split("/");
 //                word.set(result[0] + "---"+ clientIdentity);
                 code = statusCode.split("/");
-                //String[] sideCoding = rightSideCoding.split("/");
+                String[] sideCoding = rightSideCoding.split("/");
                 String[] time = timeStemp.split(" ");
-//                word.set(time[0]+ "---" + sideCoding[0]);
+                //word.set(time[0]+ "---" + sideCoding[0]);
                 word.set(time[0]+ "---" + code[1]);
                 context.write(word, value);
             }catch(Exception e){
@@ -111,7 +111,7 @@ public class ProxyLogStatistics {
             //scan.addColumn(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_CLIENTIDENTITY));
             scan.addColumn(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_TIMESTEMP));
             //scan.addColumn(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_CONTENTTYPE));
-//            scan.addColumn(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_RIGHTSIDECODING));
+            scan.addColumn(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_RIGHTSIDECODING));
             scan.addColumn(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_STATUSCODE));
             //選取時間區間
             FilterList filterList = new FilterList(HBaseQuaryTools.columnFilterList(COLUMN_FAMILY, QUALIFIER_TIMESTEMP, timeRange));

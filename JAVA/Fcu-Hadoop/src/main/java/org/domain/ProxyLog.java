@@ -4,7 +4,7 @@ public enum ProxyLog {
     LIBRARYINFO("LibraryInfo", 1), LABORATORYINFO("LaboratoryInfo", 2);
     private String familyName;
     private int index;
-
+    public static enum Counters { ROWS, COLS, ERROR, VALID }
     private ProxyLog(String familyName, int index) {
         this.familyName = familyName;
         this.index = index;
