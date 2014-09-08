@@ -20,6 +20,8 @@ import org.common.utils.HBaseQuaryTools;
 import org.joda.time.DateTime;
 import org.proxylog.CacheCodeStatistics.CacheCodeStatisticsMapper;
 import org.proxylog.CacheCodeStatistics.CacheCodeStatisticsReducer;
+import org.proxylog.ContentTypeStatistics.ContentTypeStatisticsMapper;
+import org.proxylog.ContentTypeStatistics.ContentTypeStatisticsReducer;
 import org.proxylog.HttpStatusStatistics.HttpStatusStatisticsMapper;
 import org.proxylog.HttpStatusStatistics.HttpStatusStatisticsReducer;
 import org.proxylog.MethodStatistics.MethodStatisticsMapper;
@@ -53,10 +55,9 @@ public class ProxyLogRun {
     
     public static void main(String[] args) {
         Scan scan = getScanSetting(args[0]);
-        Path outputPath = null;
         try {
             FileSystem hdfs = FileSystem.get(conf);
-            Job job = getJob(args[0], hdfs, outputPath, scan);
+            Job job = getJob(args[0], hdfs, scan);
             if (job.waitForCompletion(true)) {
                 System.out.println("Job Done!");
                 System.exit(0);
@@ -65,8 +66,7 @@ public class ProxyLogRun {
                 System.exit(1);
             }
         } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            L.error("Main:{}", e);
         }
     }
 
@@ -79,6 +79,9 @@ public class ProxyLogRun {
         Scan scan = new Scan();
         scan.addColumn(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_TIMESTEMP));
         if (set.equals("StatusCode")) {
+            scan.addColumn(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_STATUSCODE));
+        }
+        if (set.equals("HttpStatusCode")) {
             scan.addColumn(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_STATUSCODE));
         }
         if (set.equals("ContentType")) {
@@ -104,8 +107,9 @@ public class ProxyLogRun {
      * @param scan
      * @return
      */
-    private static Job getJob(String set, FileSystem hdfs, Path outputPath, Scan scan){
+    private static Job getJob(String set, FileSystem hdfs, Scan scan){
         Job job = null;
+        Path outputPath = null;
         try {
             job = new Job(conf, "ProxyLogRun");
         } catch (IOException e) {
@@ -118,10 +122,15 @@ public class ProxyLogRun {
                 TableMapReduceUtil.initTableMapperJob("NetFlowProxyLogTest", scan, CacheCodeStatisticsMapper.class, Text.class, IntWritable.class, job);
                 job.setReducerClass(CacheCodeStatisticsReducer.class);
             }
-            if (set.equals("ContentType")) {
+            if (set.equals("HttpStatusCode")) {
                 outputPath = new Path(hdfs.getWorkingDirectory().toString() + "/output/HttpStatusOutput-" + new DateTime().toString("yyyy-MM-dd HH:mm:ss.sss")); //當下的運行的目錄
                 TableMapReduceUtil.initTableMapperJob("NetFlowProxyLogTest", scan, HttpStatusStatisticsMapper.class, Text.class, IntWritable.class, job);
                 job.setReducerClass(HttpStatusStatisticsReducer.class);
+            }
+            if (set.equals("ContentType")) {
+                outputPath = new Path(hdfs.getWorkingDirectory().toString() + "/output/ContentTypeStatisticsOutput-" + new DateTime().toString("yyyy-MM-dd HH:mm:ss.sss")); //當下的運行的目錄
+                TableMapReduceUtil.initTableMapperJob("NetFlowProxyLogTest", scan, ContentTypeStatisticsMapper.class, Text.class, IntWritable.class, job);
+                job.setReducerClass(ContentTypeStatisticsReducer.class);
             }
             if (set.equals("RequestMethod")) {
                 outputPath = new Path(hdfs.getWorkingDirectory().toString() + "/output/MethodStatisticsOutput-" + new DateTime().toString("yyyy-MM-dd HH:mm:ss.sss")); //當下的運行的目錄
