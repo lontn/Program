@@ -27,7 +27,7 @@ public class MyCrawler extends WebCrawler {
     @Override
     public boolean shouldVisit(WebURL url) {
             String href = url.getURL().toLowerCase();
-            return !FILTERS.matcher(href).matches() && href.startsWith("http://open.umn.edu/opentextbooks/");
+            return !FILTERS.matcher(href).matches() && href.startsWith("http://openstaxcollege.org/books");
     }
 
     /**
@@ -48,7 +48,7 @@ public class MyCrawler extends WebCrawler {
                     L.info("Text length: " + text.length());
                     L.info("text Template:{}", text);
                     L.info("Html length: " + html.length());
-                    L.info("html Template:{}", html);
+                    L.info("html Template:{}", html.substring(5, 20));
                     L.info("Number of outgoing links: " + links.size());
             }
     }

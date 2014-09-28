@@ -36,7 +36,7 @@ public class CrawlerRun {
          * URLs that are fetched and then the crawler starts following links
          * which are found in these pages
          */
-        controller.addSeed("http://open.umn.edu/opentextbooks/SearchResults.aspx?subjectAreaId=1");
+        controller.addSeed("http://openstaxcollege.org/books");
 //        controller.addSeed("http://www.ics.uci.edu/~lopes/");
 //        controller.addSeed("http://www.ics.uci.edu/");
 
