@@ -45,11 +45,11 @@ public class MyCrawler extends WebCrawler {
                     String html = htmlParseData.getHtml();
                     List<WebURL> links = htmlParseData.getOutgoingUrls();
                     
-                    L.info("Text length: " + text.length());
+                    //L.info("Text length: " + text.length());
                     L.info("text Template:{}", text);
-                    L.info("Html length: " + html.length());
+                    //L.info("Html length: " + html.length());
                     L.info("html Template:{}", html.substring(5, 20));
-                    L.info("Number of outgoing links: " + links.size());
+                    //L.info("Number of outgoing links: " + links.size());
             }
     }
 }

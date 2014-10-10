@@ -28,6 +28,7 @@ import org.proxylog.MethodStatistics.MethodStatisticsMapper;
 import org.proxylog.MethodStatistics.MethodStatisticsReducer;
 import org.proxylog.PeerStatusStatistics.PeerStatusStatisticsMapper;
 import org.proxylog.PeerStatusStatistics.PeerStatusStatisticsReducer;
+import org.proxylog.URLStatistics.URLStatisticsMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,6 +42,7 @@ public class ProxyLogRun {
     private static final String QUALIFIER_CONTENTTYPE = "ContentType";
     private static final String QUALIFIER_REQUESTMETHOD = "RequestMethod";
     private static final String QUALIFIER_RIGHTSIDECODING = "RightSideCoding";
+    private static final String QUALIFIER_URI = "URI";
     private static final String RANGE = "TimeRange.properties";
     private static String[] timeRange = {};
     static {
@@ -93,6 +95,9 @@ public class ProxyLogRun {
         if (set.equals("PeerStatus")) {
             scan.addColumn(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_RIGHTSIDECODING));
         }
+        if (set.equals("URI")) {
+            scan.addColumn(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_URI));
+        }
         //選取時間區間
         FilterList filterList = new FilterList(HBaseQuaryTools.columnFilterList(COLUMN_FAMILY, QUALIFIER_TIMESTEMP, timeRange));
         scan.setFilter(filterList);
@@ -140,6 +145,11 @@ public class ProxyLogRun {
             if (set.equals("PeerStatus")) {
                 outputPath = new Path(hdfs.getWorkingDirectory().toString() + "/output/PeerStatusOutput-" + new DateTime().toString("yyyy-MM-dd HH:mm:ss.sss")); //當下的運行的目錄
                 TableMapReduceUtil.initTableMapperJob("NetFlowProxyLogTest", scan, PeerStatusStatisticsMapper.class, Text.class, IntWritable.class, job);
+                job.setReducerClass(PeerStatusStatisticsReducer.class);
+            }
+            if (set.equals("URI")) {
+                outputPath = new Path(hdfs.getWorkingDirectory().toString() + "/output/URIStatusOutput-" + new DateTime().toString("yyyy-MM-dd HH:mm:ss.sss")); //當下的運行的目錄
+                TableMapReduceUtil.initTableMapperJob("NetFlowProxyLogTest", scan, URLStatisticsMapper.class, Text.class, IntWritable.class, job);
                 job.setReducerClass(PeerStatusStatisticsReducer.class);
             }
             job.setOutputKeyClass(Text.class);
