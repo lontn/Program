@@ -108,13 +108,11 @@
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>4.10</version>
-      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-test</artifactId>
       <version>${org.springframework.version}</version>
-      <scope>test</scope>
     </dependency>
     <!-- Apache Commons-configuration -->
     <dependency>
@@ -143,9 +141,13 @@
     <dependency>
       <groupId>org.apache.httpcomponents</groupId>
       <artifactId>httpclient</artifactId>
-    <version>4.4-alpha1</version>
-</dependency>
-    
+      <version>4.4-alpha1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jsoup</groupId>
+      <artifactId>jsoup</artifactId>
+      <version>1.8.1</version>
+    </dependency>
   </dependencies>
   <build>
         <plugins>

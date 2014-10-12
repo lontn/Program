@@ -15,7 +15,7 @@ public class ClientWithResponseHandler {
     public static void main(String[] args) throws Exception {
         CloseableHttpClient httpclient = HttpClients.createDefault();
         try {
-            HttpGet httpget = new HttpGet("http://localhost/");
+            HttpGet httpget = new HttpGet("http://www.intechopen.com/books");
 
             System.out.println("Executing request " + httpget.getRequestLine());
 
@@ -36,9 +36,15 @@ public class ClientWithResponseHandler {
             };
             String responseBody = httpclient.execute(httpget, responseHandler);
             System.out.println("----------------------------------------");
-            //System.out.println(responseBody.substring(arg0, arg1));
+//            System.out.println(responseBody);
+            int start = responseBody.indexOf("book-listing entity-listing\">");
+            int end = responseBody.indexOf("<div class=\"pagination\">");
+            String listContent = responseBody.subSequence(start, end).toString();
+            System.out.println(listContent);
         } finally {
             httpclient.close();
         }
     }
+    
+    //private String getURLHtml()
 }
