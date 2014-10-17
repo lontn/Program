@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- local version -->
+<Configuration status="info" monitorInterval="30">
+  <Appenders>
+    <!-- ***************************** -->
+    <!-- ALL                           -->
+    <!-- ***************************** -->
+    <Console name="Console" target="SYSTEM_OUT">
+      <PatternLayout charset="utf-8" pattern="%d %p %c{1} [%t] %m%n" />
+    </Console>
+    <RollingRandomAccessFile name="crawlerTextBook" fileName="logs/crawlerTextBookFile.log" filePattern="logs/$${date:yyyy-MM}/crawlerTextBookFile-%d{yyyy-MM-dd_HH}-%i.log.gz">
+      <PatternLayout charset="utf-8">
+        <Pattern>%d %p %c{1} [%t] %m%n</Pattern>
+      </PatternLayout>
+      <Policies>
+        <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+        <SizeBasedTriggeringPolicy size="100 MB"/>
+      </Policies>
+      <DefaultRolloverStrategy max="1000"/>
+    </RollingRandomAccessFile>
+    <RollingRandomAccessFile name="ErrFile" fileName="logs/err.log" filePattern="logs/$${date:yyyy-MM}/err-%d{yyyy-MM-dd}-%i.log.gz">
+      <PatternLayout charset="utf-8">
+        <Pattern>%d %p %c [%t] %m%n</Pattern>
+      </PatternLayout>
+      <Filters>
+        <ThresholdFilter level="warn"/>
+      </Filters>
+      <Policies>
+        <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+        <SizeBasedTriggeringPolicy size="100 MB"/>
+      </Policies>
+      <DefaultRolloverStrategy max="1000"/>
+    </RollingRandomAccessFile>
+<!--     <RollingRandomAccessFile name="PerformanceFile" fileName="logs/Performance.log" filePattern="logs/$${date:yyyy-MM}/Performance-%d{yyyy-MM-dd_HH}-%i.log.gz"> -->
+<!--       <PatternLayout charset="utf-8"> -->
+<!--         <Pattern>%d %m%n</Pattern> -->
+<!--       </PatternLayout> -->
+<!--       <Policies> -->
+<!--         <TimeBasedTriggeringPolicy interval="1" modulate="true"/> -->
+<!--         <SizeBasedTriggeringPolicy size="100 MB"/> -->
+<!--       </Policies> -->
+<!--       <DefaultRolloverStrategy max="1000"/> -->
+<!--     </RollingRandomAccessFile> -->
+  </Appenders>
+
+  <Loggers>
+<!--     <Logger name="com.newegg.autopricing.cdp.datasync.s7cwldb02.Performance" level="info" additivity="false"> -->
+<!--       <AppenderRef ref="PerformanceFile" /> -->
+<!--     </Logger> -->
+    <Logger name="org.fcu.green.crawler" level="info" additivity="false">
+      <AppenderRef ref="crawlerTextBook" />
+      <AppenderRef ref="ErrFile" />
+      <AppenderRef ref="Console" />
+    </Logger>
+    <Root level="INFO">
+      <AppenderRef ref="crawlerTextBook" />
+      <AppenderRef ref="ErrFile" />
+      <AppenderRef ref="Console" />
+    </Root>
+  </Loggers>
+</Configuration>

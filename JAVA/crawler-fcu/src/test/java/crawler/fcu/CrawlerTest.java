@@ -2,6 +2,8 @@ package crawler.fcu;
 
 import java.io.IOException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -9,6 +11,7 @@ import org.jsoup.select.Elements;
 import org.junit.Test;
 
 public class CrawlerTest {
+    private static final Logger L = LogManager.getLogger(CrawlerTest.class);
 
     @Test
     public void test() {
@@ -54,34 +57,31 @@ public class CrawlerTest {
         }
     }
     
+    //Detail Page
     @Test
     public void test2() {
         Document doc = null;
         try {
-            doc = Jsoup.connect("http://www.intechopen.com/books/essentials-and-controversies-in-bariatric-surgery").get();
+            doc = Jsoup.connect("http://www.intechopen.com/books/matlab-applications-for-the-practical-engineer").get();
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
         Elements content = doc.getElementsByClass("main-content");
-        String content1 = "";
-        String content2 = "";
         for (Element element : content) {
             Elements hh = element.getElementsByTag("h1");
-            System.out.println(hh.get(0).text());
-            System.out.println(hh.get(1).text());
-//            for (Element element2 : hh) {
-//                System.out.println("element2:"+element2.text());
-//            }
+            System.out.println("subject:classification:"+hh.get(0).text());
+            System.out.println("title:"+hh.get(1).text());
             Elements p =element.getElementsByTag("p");
-            System.out.println(p.get(0).text());
             String[] contentInfo = p.get(0).text().split(",");
-            System.out.println("DDDDd:"+contentInfo[0].replaceAll("Edited by", "").trim());
-            System.out.println("ddddd:"+contentInfo[1].replaceAll("ISBN", "").trim());
-            for (String string : contentInfo) {
-                System.out.println("CC:" + string);
-            }
-            System.out.println(p.get(1).text());
+            System.out.println("Creater:"+contentInfo[0].replaceAll("Edited by", "").trim());
+            System.out.println("ISBN:"+contentInfo[1].replaceAll("ISBN", "").trim());
+            System.out.println("Publisher:"+contentInfo[3].replaceAll("Publisher:", "").trim());
+            String[] word = contentInfo[5].split(" ");
+            System.out.println("year:"+word[1]);
+            System.out.println("right:uri:"+word[3]+ " " + word[4] + " " + word[5] + " " + word[6]);
+            System.out.println("DOI:"+word[8]);
+            System.out.println("abstract:"+p.get(1).text());
 //            for (Element element2 : p) {
 //                System.out.println("content:"+element2.text());
 //            }
@@ -106,7 +106,26 @@ public class CrawlerTest {
             System.out.println("AA");
             for (Element element2 : dtTag) {
                 Elements url = element2.getElementsByTag("a");
-                System.out.println(url.attr("href"));
+                L.info("http://www.intechopen.com"+url.attr("href"));
+            }
+        }
+    }
+    
+    @Test
+    public void page() {
+        Document doc = null;
+        try {
+            doc = Jsoup.connect("http://www.intechopen.com/books/latest/1/list").get();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        Elements pagination = doc.getElementsByClass("pagination");
+        for (Element element : pagination) {
+            Elements li = element.getElementsByTag("li");
+            System.out.println(li.get(li.size()-2).text());
+            for (Element element2 : li) {
+                System.out.println(element2.text());
             }
         }
     }
