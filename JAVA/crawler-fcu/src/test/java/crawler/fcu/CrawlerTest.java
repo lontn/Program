@@ -64,17 +64,50 @@ public class CrawlerTest {
             e.printStackTrace();
         }
         Elements content = doc.getElementsByClass("main-content");
+        String content1 = "";
+        String content2 = "";
         for (Element element : content) {
-            String h1 = element.getElementsByTag("h1").text();
-            System.out.println("h1:"+h1);
+            Elements hh = element.getElementsByTag("h1");
+            System.out.println(hh.get(0).text());
+            System.out.println(hh.get(1).text());
+//            for (Element element2 : hh) {
+//                System.out.println("element2:"+element2.text());
+//            }
             Elements p =element.getElementsByTag("p");
-            for (Element element2 : p) {
-                System.out.println("element2:"+element2.text());
+            System.out.println(p.get(0).text());
+            String[] contentInfo = p.get(0).text().split(",");
+            System.out.println("DDDDd:"+contentInfo[0].replaceAll("Edited by", "").trim());
+            System.out.println("ddddd:"+contentInfo[1].replaceAll("ISBN", "").trim());
+            for (String string : contentInfo) {
+                System.out.println("CC:" + string);
             }
+            System.out.println(p.get(1).text());
+//            for (Element element2 : p) {
+//                System.out.println("content:"+element2.text());
+//            }
             String p1 = element.getElementsByTag("p").text();
             //System.out.println("p1:"+p1);
         }
-        Elements subtitle = doc.getElementsByClass("subtitle");
-        //System.out.println(subtitle.text());
+    }
+    
+    @Test
+    public void test3() {
+        Document doc = null;
+        try {
+            doc = Jsoup.connect("http://www.intechopen.com/books/latest/1/list").get();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        Elements content = doc.getElementsByClass("main-content");
+        System.out.println("AAaaa:"+content.text());
+        for (Element element : content) {
+            Elements dtTag = element.getElementsByTag("dt");
+            System.out.println("AA");
+            for (Element element2 : dtTag) {
+                Elements url = element2.getElementsByTag("a");
+                System.out.println(url.attr("href"));
+            }
+        }
     }
 }
