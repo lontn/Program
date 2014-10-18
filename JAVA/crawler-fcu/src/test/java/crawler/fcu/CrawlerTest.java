@@ -1,9 +1,16 @@
 package crawler.fcu;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.openxml4j.opc.OPCPackage;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.fcu.green.crawler.IntechopenCrawler;
+import org.jsoup.Connection;
+import org.jsoup.Connection.Response;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -62,7 +69,8 @@ public class CrawlerTest {
     public void test2() {
         Document doc = null;
         try {
-            doc = Jsoup.connect("http://www.intechopen.com/books/matlab-applications-for-the-practical-engineer").get();
+            doc = Jsoup.connect("http://www.intechopen.com/books/mitigation-of-ionospheric-threats-to-gnss-an-appraisal-of-the-scientific-and-technological-outputs-of-the-transmit-project").get();
+            //doc = Jsoup.connect("http://www.intechopen.com/books/iron-metabolism").get();
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -74,12 +82,21 @@ public class CrawlerTest {
             System.out.println("title:"+hh.get(1).text());
             Elements p =element.getElementsByTag("p");
             String[] contentInfo = p.get(0).text().split(",");
-            System.out.println("Creater:"+contentInfo[0].replaceAll("Edited by", "").trim());
+            System.out.println("contentInfo:"+contentInfo.length);
+            for (String string : contentInfo) {
+                System.out.println("string:"+string);
+            }
+            System.out.println("Creater:"+p.get(0).getElementsByTag("a").get(0).text().trim());
+            if (p.get(0).getElementsByTag("a").size() > 1) {
+                System.out.println("right:uri:"+p.get(0).getElementsByTag("a").get(1).text().trim());
+            }
             System.out.println("ISBN:"+contentInfo[1].replaceAll("ISBN", "").trim());
             System.out.println("Publisher:"+contentInfo[3].replaceAll("Publisher:", "").trim());
             String[] word = contentInfo[5].split(" ");
+            for (String string : word) {
+                System.out.println("DOI:"+string);
+            }
             System.out.println("year:"+word[1]);
-            System.out.println("right:uri:"+word[3]+ " " + word[4] + " " + word[5] + " " + word[6]);
             System.out.println("DOI:"+word[8]);
             System.out.println("abstract:"+p.get(1).text());
 //            for (Element element2 : p) {
@@ -92,12 +109,19 @@ public class CrawlerTest {
     
     @Test
     public void test3() {
+        Response response = null;
         Document doc = null;
         try {
-            doc = Jsoup.connect("http://www.intechopen.com/books/latest/1/list").get();
+            response = Jsoup.connect("http://www.intechopen.com/books/latest/82/list").execute();
+            System.out.println(response.statusCode());
+            if (response.statusCode() == 200){
+                doc = response.parse();
+            } else {
+                return;
+            }
         } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            System.out.println("ddd:"+e);
+            return;
         }
         Elements content = doc.getElementsByClass("main-content");
         System.out.println("AAaaa:"+content.text());
@@ -127,6 +151,24 @@ public class CrawlerTest {
             for (Element element2 : li) {
                 System.out.println(element2.text());
             }
+        }
+    }
+    
+    @Test
+    public void excel() {
+        //寫入Excel
+        XSSFWorkbook wb; //產XSSFWorkbook如果使用XSSFWorkbook需要範本是Office2007以上的版本
+        try {
+            //String filePath = IntechopenCrawler.class.getResourceAsStream("CrawlerTextBook.xlsx").toString();
+            //System.out.println("filePath:"+filePath);
+            OPCPackage opcPackage = OPCPackage.open(IntechopenCrawler.class.getResourceAsStream("CrawlerTextBook.xlsx"));
+            wb = new XSSFWorkbook(opcPackage);
+        } catch (IOException e) {
+            L.error("product_Selection_report.xlsx loading error.", e);
+            return;
+        } catch (InvalidFormatException e) {
+            L.error("product_Selection_report.xlsx loading error.", e);
+            return;
         }
     }
 }

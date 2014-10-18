@@ -10,7 +10,7 @@ public class Main {
     private static final Logger L = LogManager.getLogger(Main.class);
     public static void main(String[] args) {
         IntechopenCrawler syncer = new IntechopenCrawler();
-
+        syncer.start();
     }
 
 //    private static void shutdownHook(IntechopenCrawler syncer) {
