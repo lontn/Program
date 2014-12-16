@@ -90,8 +90,8 @@ public class ContentTypeStatistics {
         public void map(ImmutableBytesWritable row, Result columns, Context context) throws IOException {
             timeStemp = new String(columns.getValue(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_TIMESTEMP)));
             contentType = new String(columns.getValue(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_CONTENTTYPE)));
-            String[] time = timeStemp.split(" ");
-            word.set(time[0]+ "---" + contentType);
+//            String[] time = timeStemp.split(" ");
+            word.set(timeStemp+ "---" + contentType);
             try {
                 context.write(word, value);
             } catch (InterruptedException e) {

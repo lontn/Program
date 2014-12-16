@@ -2,6 +2,8 @@ package crawler.fcu;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -69,6 +71,86 @@ public class CrawlerTest {
     public void test2() {
         Document doc = null;
         try {
+            //doc = Jsoup.connect("http://www.intechopen.com/books/mitigation-of-ionospheric-threats-to-gnss-an-appraisal-of-the-scientific-and-technological-outputs-of-the-transmit-project").get();
+            doc = Jsoup.connect("http://www.intechopen.com/books/development_and_implementation_of_rfid_technology").get();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        Elements content = doc.getElementsByClass("main-content");
+        for (Element element : content) {
+            Elements hh = element.getElementsByTag("h1");
+            System.out.println("subject:classification:"+hh.get(0).text());
+            System.out.println("title:"+hh.get(1).text());
+            Elements p =element.getElementsByTag("p");
+            String contentTest = p.get(0).text();
+            int a = contentTest.indexOf("Edited by");
+            int b = contentTest.indexOf(", ISBN");
+            String creater = (String) contentTest.subSequence(a, b);
+            creater = creater.replaceAll("Edited by", "");
+            int a1 = contentTest.indexOf("ISBN");
+            int b1 = contentTest.indexOf(", Publisher:");
+            String isbn = (String) contentTest.subSequence(a1, b1);
+            isbn = isbn.replaceAll("ISBN", "");
+            String[] isbnSplit = isbn.split(",");
+            int a2 = contentTest.indexOf("Publisher:");
+            int b2 = contentTest.indexOf(", Chapters");
+            String publisher = (String) contentTest.subSequence(a2, b2);
+            publisher = publisher.replaceAll("Publisher:", "");
+            int a3 = contentTest.indexOf("Chapters published");
+            int b3 = contentTest.indexOf("under");
+            String year = (String) contentTest.subSequence(a3, b3);
+            year = year.replaceAll("Chapters published", "").trim();
+            String[] yearSplit = year.split(",");
+            System.out.println("year:" + yearSplit[1].trim());
+            int a4 = contentTest.indexOf("under");
+            int b4 = contentTest.indexOf("DOI:");
+            String right = contentTest.substring(a4, b4);
+            right = right.replaceAll("under", "");
+            int a5 = contentTest.indexOf("DOI:");
+            int b5 = contentTest.length();
+            String doi = contentTest.substring(a5, b5);
+            doi = doi.replaceAll("DOI:", "");
+            System.out.println("creater:"+creater.trim());
+            System.out.println("isbn:"+isbnSplit[0].trim());
+            System.out.println("publisher:"+publisher);
+            System.out.println("right:"+right.trim());
+            System.out.println("doi:"+doi.trim());
+            if (p.size() > 1){
+                System.out.println("abstract:"+p.get(1).text());
+            }
+            
+            
+//            String[] contentInfo = p.get(0).text().split(",");
+//            System.out.println("contentInfo:"+contentInfo.length);
+//            for (String string : contentInfo) {
+//                System.out.println("string:"+string);
+//            }
+//            System.out.println("Creater:"+p.get(0).getElementsByTag("a").get(0).text().trim());
+//            if (p.get(0).getElementsByTag("a").size() > 1) {
+//                System.out.println("right:uri:"+p.get(0).getElementsByTag("a").get(1).text().trim());
+//            }
+//            System.out.println("ISBN:"+contentInfo[1].replaceAll("ISBN", "").trim());
+//            System.out.println("Publisher:"+contentInfo[3].replaceAll("Publisher:", "").trim());
+//            String[] word = contentInfo[5].split(" ");
+//            for (String string : word) {
+//                System.out.println("DOI:"+string);
+//            }
+//            System.out.println("year:"+word[1]);
+//            System.out.println("DOIxxxx:"+word[8]);
+//            System.out.println("abstract:"+p.get(1).text());
+////            for (Element element2 : p) {
+////                System.out.println("content:"+element2.text());
+////            }
+//            String p1 = element.getElementsByTag("p").text();
+            //System.out.println("p1:"+p1);
+        }
+    }
+    
+    @Test
+    public void test2_1(){
+        Document doc = null;
+        try {
             doc = Jsoup.connect("http://www.intechopen.com/books/mitigation-of-ionospheric-threats-to-gnss-an-appraisal-of-the-scientific-and-technological-outputs-of-the-transmit-project").get();
             //doc = Jsoup.connect("http://www.intechopen.com/books/iron-metabolism").get();
         } catch (IOException e) {
@@ -97,7 +179,7 @@ public class CrawlerTest {
                 System.out.println("DOI:"+string);
             }
             System.out.println("year:"+word[1]);
-            System.out.println("DOI:"+word[8]);
+            System.out.println("DOIxxxx:"+word[8]);
             System.out.println("abstract:"+p.get(1).text());
 //            for (Element element2 : p) {
 //                System.out.println("content:"+element2.text());
@@ -170,5 +252,33 @@ public class CrawlerTest {
             L.error("product_Selection_report.xlsx loading error.", e);
             return;
         }
+    }
+    
+    @Test
+    public void word(){
+        String word = "Edited by Riccardo Notarpietro, Fabio Dovis"
+                + ", Giorgiana De Franceschi and Marcio Aquino, ISBN 978-953-51-1642-4"
+                + ", 236 pages, Publisher: InTech, Chapters published July 17"
+                + ", 2014 under CC BY 3.0 license"
+                + "DOI: 10.5772/58550";
+        int a = word.indexOf("ISBN");
+        int b = word.indexOf(", Publisher:");
+        String creator = word.substring(a, b);
+        System.out.println(creator);
+    }
+    
+    @Test
+    public void test4() {
+        List<Integer> list = new ArrayList<>();
+        list.add(6);
+        list.add(6);
+        list.add(-5);
+        list.add(-1);
+        list.add(-2);
+        list.add(-3);
+        list.add(-3);
+        list.add(3);
+        list.add(3);
+        list.add(3);
     }
 }

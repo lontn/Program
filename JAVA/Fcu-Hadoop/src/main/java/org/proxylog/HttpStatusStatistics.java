@@ -93,8 +93,9 @@ public class HttpStatusStatistics {
             timeStemp = new String(columns.getValue(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_TIMESTEMP)));
             statusCode = new String(columns.getValue(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_STATUSCODE)));
             String[] code = statusCode.split("/");
-            String[] time = timeStemp.split(" ");
-            word.set(time[0]+ "---" + code[1]);
+//            String[] time = timeStemp.split(" ");
+//            word.set(time[0]+ "---" + code[1]);
+            word.set(timeStemp+ "---" + code[1]);
             try {
                 context.write(word, value);
             } catch (InterruptedException e) {

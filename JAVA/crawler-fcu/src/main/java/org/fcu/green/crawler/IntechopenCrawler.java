@@ -88,22 +88,61 @@ public class IntechopenCrawler implements Crawler {
             book.setSubjectClassification(hh.get(0).text());
             book.setTitle(hh.get(1).text());
             Elements p =element.getElementsByTag("p");
-            String[] contentInfo = p.get(0).text().split(",");
-            int atag = p.get(0).getElementsByTag("a").size();
-            String creator = p.get(0).getElementsByTag("a").get(0).text().trim();
-            book.setCreator(creator);
-            book.setIdentifier(contentInfo[1].replaceAll("ISBN", "").trim());
-            book.setPublisher(contentInfo[3].replaceAll("Publisher:", "").trim());
-            String[] word = contentInfo[5].split(" ");
-            book.setYear(word[1]);
-            if (atag > 1) {
-             String rightUri = p.get(0).getElementsByTag("a").get(1).text().trim();
-             book.setRightUri(rightUri);
-            }
+            String contentInfo = p.get(0).text();
+            int a = contentInfo.indexOf("Edited by");
+            int b = contentInfo.indexOf(", ISBN");
+            String creator = (String) contentInfo.subSequence(a, b);
+            creator = creator.replaceAll("Edited by", "");
+            int a1 = contentInfo.indexOf("ISBN");
+            int b1 = contentInfo.indexOf(", Publisher:");
+            String isbn = (String) contentInfo.subSequence(a1, b1);
+            isbn = isbn.replaceAll("ISBN", "");
+            String[] isbnSplit = isbn.split(",");
+            int a2 = contentInfo.indexOf("Publisher:");
+            int b2 = contentInfo.indexOf(", Chapters");
+            String publisher = (String) contentInfo.subSequence(a2, b2);
+            publisher = publisher.replaceAll("Publisher:", "");
+            int a3 = contentInfo.indexOf("Chapters published");
+            int b3 = contentInfo.indexOf("under");
+            String year = (String) contentInfo.subSequence(a3, b3);
+            year = year.replaceAll("Chapters published", "").trim();
+            String[] yearSplit = year.split(",");
+            int a4 = contentInfo.indexOf("under");
+            int b4 = contentInfo.indexOf("DOI:");
+            String right = contentInfo.substring(a4, b4);
+            right = right.replaceAll("under", "");
+            int a5 = contentInfo.indexOf("DOI:");
+            int b5 = contentInfo.length();
+            String doi = contentInfo.substring(a5, b5);
+            doi = doi.replaceAll("DOI:", "");
+            
+            book.setCreator(creator.trim());
+            book.setIdentifier(isbnSplit[0].trim());
+            book.setPublisher(publisher.trim());
+            book.setYear(yearSplit[1].trim());
+            book.setRightUri(right.trim());
             book.setSyshyperlink(url);
-            book.setDoi(word[8]);
-            book.setIntroduction(p.get(1).text());
-        }
+            book.setDoi(doi.trim());
+            if (p.size() > 1) {
+                book.setIntroduction(p.get(1).text());
+            }
+            
+//            String[] contentInfo = p.get(0).text().split(",");
+//            int atag = p.get(0).getElementsByTag("a").size();
+//            String creator = p.get(0).getElementsByTag("a").get(0).text().trim();
+//            book.setCreator(creator);
+//            book.setIdentifier(contentInfo[1].replaceAll("ISBN", "").trim());
+//            book.setPublisher(contentInfo[3].replaceAll("Publisher:", "").trim());
+//            String[] word = contentInfo[5].split(" ");
+//            book.setYear(word[1]);
+//            if (atag > 1) {
+//             String rightUri = p.get(0).getElementsByTag("a").get(1).text().trim();
+//             book.setRightUri(rightUri);
+//            }
+//            book.setSyshyperlink(url);
+//            book.setDoi(word[8]);
+//            book.setIntroduction(p.get(1).text());
+       }
         return book;
     }
     

@@ -80,24 +80,46 @@ public class ProxyLogRun {
     private static Scan getScanSetting(String set){
         Scan scan = new Scan();
         scan.addColumn(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_TIMESTEMP));
-        if (set.equals("StatusCode")) {
+        switch (set) {
+        case "StatusCode":
             scan.addColumn(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_STATUSCODE));
-        }
-        if (set.equals("HttpStatusCode")) {
+            break;
+        case "HttpStatusCode":
             scan.addColumn(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_STATUSCODE));
-        }
-        if (set.equals("ContentType")) {
+            break;
+        case "ContentType":
             scan.addColumn(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_CONTENTTYPE));
-        }
-        if (set.equals("RequestMethod")) {
+            break;
+        case "RequestMethod":
             scan.addColumn(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_REQUESTMETHOD));
-        }
-        if (set.equals("PeerStatus")) {
+            break;
+        case "PeerStatus":
             scan.addColumn(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_RIGHTSIDECODING));
-        }
-        if (set.equals("URI")) {
+            break;
+        case "URI":
             scan.addColumn(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_URI));
+            break;
+        default:
+            break;
         }
+//        if (set.equals("StatusCode")) {
+//            scan.addColumn(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_STATUSCODE));
+//        }
+//        if (set.equals("HttpStatusCode")) {
+//            scan.addColumn(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_STATUSCODE));
+//        }
+//        if (set.equals("ContentType")) {
+//            scan.addColumn(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_CONTENTTYPE));
+//        }
+//        if (set.equals("RequestMethod")) {
+//            scan.addColumn(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_REQUESTMETHOD));
+//        }
+//        if (set.equals("PeerStatus")) {
+//            scan.addColumn(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_RIGHTSIDECODING));
+//        }
+//        if (set.equals("URI")) {
+//            scan.addColumn(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_URI));
+//        }
         //選取時間區間
         FilterList filterList = new FilterList(HBaseQuaryTools.columnFilterList(COLUMN_FAMILY, QUALIFIER_TIMESTEMP, timeRange));
         scan.setFilter(filterList);

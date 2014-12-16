@@ -89,8 +89,8 @@ public class MethodStatistics {
         public void map(ImmutableBytesWritable row, Result columns, Context context) throws IOException {
             timeStemp = new String(columns.getValue(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_TIMESTEMP)));
             requestMethod = new String(columns.getValue(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_REQUESTMETHOD)));
-            String[] time = timeStemp.split(" ");
-            word.set(time[0]+ "---" + requestMethod);
+//            String[] time = timeStemp.split(" ");
+            word.set(timeStemp+ "---" + requestMethod);
             try {
                 context.write(word, value);
             } catch (InterruptedException e) {

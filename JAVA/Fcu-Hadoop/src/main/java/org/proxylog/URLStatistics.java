@@ -54,13 +54,13 @@ public class URLStatistics {
             String timeStemp = "";
             try {
                 timeStemp = new String(columns.getValue(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_TIMESTEMP)));
-                String[] time = timeStemp.split(" ");
+//                String[] time = timeStemp.split(" ");
                 uri = new String(columns.getValue(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_URI)));
                 uri = uri.replaceAll("http://", "").replaceAll("[/.]", "@");
                 String[] uriChat = uri.split("@");
                 
                 for (String string : uriChat) {
-                    word.set(time[0] + "--" + string);
+                    word.set(timeStemp + "--" + string);
                     context.write(word, value);
                 }
             } catch (Exception e) {
