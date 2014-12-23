@@ -21,11 +21,13 @@
   <util:properties id="environmentConfig" location="classpath:env-config.properties" />
   
   <!-- Configures the @Controller programming model -->
-  <mvc:annotation-driven>
-    <mvc:argument-resolvers>
-      <bean class="com.newegg.autopricing.angular.web.springmvc.UserArgumentResolver" />
-    </mvc:argument-resolvers>
-  </mvc:annotation-driven>
+  <mvc:annotation-driven/>
+<!--   <mvc:annotation-driven> -->
+<!--     <mvc:argument-resolvers> -->
+<!--       <bean class="com.newegg.autopricing.angular.web.springmvc.UserArgumentResolver" /> -->
+<!--     </mvc:argument-resolvers> -->
+<!--   </mvc:annotation-driven> -->
+  <!-- 此為讀取資料夾的範圍 -->
   <context:component-scan base-package="com.newegg.autopricing.angular.web" />
 
   <!-- Handles GET requests for /resources/** by efficiently serving static content in the ${webappRoot}/resources dir -->
@@ -36,7 +38,7 @@
 
   <!-- Configures Handler Interceptors -->
   <mvc:interceptors>
-    <bean class="com.newegg.autopricing.angular.web.security.UserPrincipalInterceptor" />
+<!--     <bean class="com.newegg.autopricing.angular.web.security.UserPrincipalInterceptor" /> -->
     <!-- Changes the locale when a 'locale' request parameter is sent; e.g. /?locale=de -->
     <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" />
   </mvc:interceptors>

@@ -17,8 +17,14 @@ public class AngularDemoController {
     private static final String PATH = "demo";
     private static final String VIEW = PATH + "/viewByDemo";
 
+//    @RequestMapping(value="/demo", method = {RequestMethod.GET})
+//    public String demoView(Model model, @UserPrincipal User user){
+//        L.info("TEST");
+//        return VIEW;
+//    }
+    
     @RequestMapping(value="/demo", method = {RequestMethod.GET})
-    public String demoView(Model model, @UserPrincipal User user){
+    public String demoView(Model model){
         L.info("TEST");
         return VIEW;
     }
