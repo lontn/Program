@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.newegg.autopricing.angular.persistence.ProductsMapper">
+     <resultMap type="Products" id="rm_Products"> <!-- type的值是根據typeAlias來的 -->
+        <id property="productID" column="ProductID"/>
+        <result property="categoryName" column="CategoryName"/>
+        <result property="productName" column="ProductName"/>
+        <result property="quantityPerUnit" column="QuantityPerUnit"/>
+        <result property="description" column="Description"/>
+     </resultMap>
+     <!--  撈取全部的Products      -->
+     <select id="listProductsAll" resultMap="rm_Products">
+        select * from Products
+     </select>
+     <!-- 利用SupplierID找出Products傳參數進去    -->
+     <select id="listProductsSupplierID" parameterType="int" resultMap="rm_Products">
+        select * from Products where SupplierID = #{id}
+     </select>
+     
+     <select id="listProductsCategories" parameterType="int" resultMap="rm_Products">
+        select b.ProductID,a.CategoryName,b.ProductName,b.QuantityPerUnit,a.Description 
+        from Categories a inner join
+        Products b on a.CategoryID = b.CategoryID
+        where b.ProductID = #{b.id}
+     </select>
+     
+     <select id="listProductsCategoriesIn" parameterType="map" resultMap="rm_Products">
+        select b.ProductID,a.CategoryName,b.ProductName,b.QuantityPerUnit,a.Description 
+        from Categories a inner join
+        Products b on a.CategoryID = b.CategoryID
+        where b.ProductID in 
+        <foreach item="item" index="index" collection="Products"
+            open="(" separator="," close=")">
+            #{item}
+        </foreach>
+     </select>
+     <select id="listProductsCategoriesWhere" parameterType="map" resultMap="rm_Products">
+        select b.ProductID,a.CategoryName,b.ProductName,b.QuantityPerUnit,a.Description 
+        from Categories a inner join
+        Products b on a.CategoryID = b.CategoryID
+        where b.ProductID = #{productID} 
+        <if test="categoryName != null">
+        AND a.CategoryName = #{categoryName}
+        </if>
+     </select>
+</mapper>
