@@ -35,4 +35,43 @@
   <tx:annotation-driven transaction-manager="transactionManager01"/>
   <tx:annotation-driven transaction-manager="transactionManager02"/>
 
+  <!-- Configures the @Service programming model -->
+  <context:annotation-config />
+  <context:component-scan base-package="com.newegg.autopricing.angular.service"/>
+  <context:component-scan base-package="com.newegg.autopricing.angular.domain"/>
+  <context:component-scan base-package="com.newegg.autopricing.angular.persistence"/>
+  
+  <!-- 配置myBatis -->
+  <bean id="sqlSessionFactory01" class="org.mybatis.spring.SqlSessionFactoryBean">
+  <property name="dataSource" ref="dataSource01"/>
+  <property name="configLocation" value="classpath:com/newegg/autopricing/angular/persistence/mybatis-config.xml"/>
+  <!-- <property name="mapperLocations" value="classpath:com/newegg/autopricing/pricecomparison/persistence/*.xml" /> -->
+  </bean>
+<!--   <bean id="sqlSessionFactory02" class="org.mybatis.spring.SqlSessionFactoryBean"> -->
+<!--   <property name="dataSource" ref="dataSource02"/> -->
+<!--   <property name="configLocation" value="classpath:com/newegg/autopricing/crawler/mybatis-config.xml"/> -->
+  <!-- <property name="mapperLocations" value="classpath:com/newegg/autopricing/crawler/persistence/*.xml,classpath:com/newegg/autopricing/report/persistence/*.xml" /> -->
+<!--   </bean> -->
+  <bean id="sqlSessionTemplate01" class="org.mybatis.spring.SqlSessionTemplate">
+  <constructor-arg index="0" ref="sqlSessionFactory01" />
+  <!-- <constructor-arg index="1" value="BATCH" /> -->
+  </bean>
+<!--   <bean id="sqlSessionTemplate02" class="org.mybatis.spring.SqlSessionTemplate"> -->
+<!--   <constructor-arg index="0" ref="sqlSessionFactory02" /> -->
+  <!-- <constructor-arg index="1" value="BATCH" /> -->
+<!--   </bean> -->
+
+  <!-- scan for mappers and let them be autowired -->
+  <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+    <!-- optional unless there are multiple session factories defined 
+    <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory01" />-->
+    <property name="sqlSessionTemplateBeanName" value="sqlSessionTemplate01" />
+    <property name="basePackage" value="com.newegg.autopricing.angular.persistence" />
+  </bean>
+<!--   <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer"> -->
+  <!-- optional unless there are multiple session factories defined 
+  <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory02" />-->
+<!--   <property name="sqlSessionTemplateBeanName" value="sqlSessionTemplate02" /> -->
+<!--   <property name="basePackage" value="com.newegg.autopricing.crawler.persistence,com.newegg.autopricing.report.persistence" /> -->
+<!--   </bean> -->
 </beans>

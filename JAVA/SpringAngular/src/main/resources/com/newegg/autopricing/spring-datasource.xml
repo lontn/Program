@@ -20,8 +20,8 @@
     http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd">
 
   <!-- 暫用，之後會改為JNDI -->
-  <jee:jndi-lookup id="dataSource01" jndi-name="jdbc/SpringStrutsDB"/>
-  <jee:jndi-lookup id="dataSource02" jndi-name="jdbc/NorthwindChinese"/>
+  <jee:jndi-lookup id="dataSource01" jndi-name="jdbc/NorthwindChinese"/>
+  <jee:jndi-lookup id="dataSource02" jndi-name="jdbc/SpringStrutsDB"/>
   <!-- <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
     <property name="driverClass" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
     <property name="jdbcUrl" value="jdbc:sqlserver://10.16.78.20:1433;DatabaseName=ItemMainTain_ABS;SendStringParametersAsUnicode=false" />

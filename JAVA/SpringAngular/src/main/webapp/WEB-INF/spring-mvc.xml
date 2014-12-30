@@ -51,4 +51,12 @@
     <property name="prefix" value="/WEB-INF/jsp/"/>
     <property name="suffix" value=".jsp"/>
   </bean>
+  <!-- Tiles -->
+<!--   <bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer"> -->
+<!--     <property name="definitions"> -->
+<!--       <list> -->
+<!--         <value>/WEB-INF/tiles-defs.xml</value> -->
+<!--       </list> -->
+<!--     </property> -->
+<!--   </bean> -->
 </beans>
