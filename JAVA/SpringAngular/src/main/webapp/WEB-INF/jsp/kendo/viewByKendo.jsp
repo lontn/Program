@@ -9,10 +9,54 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-
-
+<link rel="stylesheet" href="${contextPath}/css/styles/kendo.common.min.css" />
+    <!-- CSS -->
+    <link rel="stylesheet" href="${contextPath}/css/styles/kendo.default.min.css" />
+    <link rel="stylesheet" href="${contextPath}/css/styles/kendo.dataviz.min.css" />
+    <link rel="stylesheet" href="${contextPath}/css/styles/kendo.dataviz.default.min.css" />
+    <!-- script -->
+    <script src="${contextPath}/js/kendo/jquery.min.js"></script>
+    <script src="${contextPath}/js/kendo/kendo.all.min.js"></script>
 </head>
+<script>
+   //$(document).ready = $(function (){})
+   $(function () {
+       $("#grid").kendoGrid({
+           dataSource: {
+               type: "odata",
+               transport: {
+                   read: "http://demos.telerik.com/kendo-ui/service/Northwind.svc/Customers"
+               },
+               pageSize: 20 //每頁show 20筆
+           },
+           height: 550,
+           groupable: true,
+           sortable: true, //是否排序
+           pageable: { //是否顯示分頁
+               refresh: true,
+               pageSizes: true, //是否要下拉分頁
+               buttonCount: 5 //展示幾個分頁
+           },
+           columns: [{
+               field: "ContactName",
+               title: "Contact Name",
+               width: 200
+           }, {
+               field: "ContactTitle",
+               title: "Contact Title"
+           }, {
+               field: "CompanyName",
+               title: "Company Name"
+           }, {
+               field: "Country",
+               width: 150
+           }]
+       });
+   });
+</script>
 <body>
-
+<div id="example">
+  <div id="grid"></div>
+</div>
 </body>
 </html>
