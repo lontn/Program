@@ -40,9 +40,8 @@
         select b.ProductID,a.CategoryName,b.ProductName,b.QuantityPerUnit,a.Description 
         from Categories a inner join
         Products b on a.CategoryID = b.CategoryID
-        where b.ProductID = #{productID} 
         <if test="categoryName != null">
-        AND a.CategoryName = #{categoryName}
+        where a.CategoryName = #{categoryName}
         </if>
      </select>
 </mapper>
