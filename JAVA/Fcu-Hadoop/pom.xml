@@ -79,17 +79,17 @@
         </dependency>
         <!-- For JSON response -->
         <dependency>
-          <groupId>com.fasterxml.jackson.core</groupId>
+          <groupId>com.fasterxml.jackson.core</groupId> <!--Jackson核心包-->
           <artifactId>jackson-core</artifactId>
           <version>2.4.2</version>
         </dependency>
         <dependency>
-          <groupId>com.fasterxml.jackson.core</groupId>
+          <groupId>com.fasterxml.jackson.core</groupId> <!--Jackson注解包-->
           <artifactId>jackson-annotations</artifactId>
           <version>2.4.2</version>
         </dependency>
         <dependency>
-          <groupId>com.fasterxml.jackson.core</groupId>
+          <groupId>com.fasterxml.jackson.core</groupId> <!--Jackson數據绑定包-->
           <artifactId>jackson-databind</artifactId>
           <version>2.4.2</version>
         </dependency>
