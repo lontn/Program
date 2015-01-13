@@ -29,20 +29,4 @@ public class PerformanceTest {
         L.info("Memory: [Max : " + maxMemory + "]" + " [Total : " + totalMemory + "]" + " [Free : " + freeMemory + "]");
     }
 
-    @Test
-    public void JsonTest() {
-        String url = "http://sid.geo.com.tw/FUCGoogleMapWebAPI/api/FCU/Get";
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_CONTROL_CHARS, true);
-        //mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false); //ignore 未知的屬性
-        try {
-            FcuFood fcu = mapper.readValue(new URL(url), FcuFood.class);
-            System.out.println(fcu);
-            System.out.println("Name:"+fcu.getName());
-            System.out.println("Address:"+fcu.getAddress());
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-    }
 }
