@@ -5,4 +5,12 @@
 <typeAliases>
   <typeAlias alias="Products" type="com.newegg.autopricing.angular.domain.Products"/>
 </typeAliases>
+<typeHandlers>
+    <typeHandler handler="com.newegg.autopricing.angular.mybatis.type.CharTypeHandler"
+      jdbcType="CHAR" />
+    <typeHandler handler="com.newegg.autopricing.angular.mybatis.type.NCharTypeHandler"
+      jdbcType="NCHAR" />
+    <typeHandler handler="com.newegg.autopricing.angular.mybatis.type.NVarcharTypeHandler"
+      jdbcType="NVARCHAR" />
+  </typeHandlers>
 </configuration>
