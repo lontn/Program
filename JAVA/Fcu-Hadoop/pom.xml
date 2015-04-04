@@ -8,11 +8,42 @@
     <description>This is Hadoop</description>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <!-- <org.springframework.version>3.2.3.RELEASE</org.springframework.version> -->
+        <org.springframework.version>3.2.10.RELEASE</org.springframework.version>
         <org.slf4j.version>1.7.5</org.slf4j.version>
         <commons-configuration>1.10</commons-configuration>
     </properties>
     <dependencies>
+        <!-- Spring -->
+        <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-context</artifactId>
+          <version>${org.springframework.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-web</artifactId>
+          <version>${org.springframework.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-webmvc</artifactId>
+          <version>${org.springframework.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-oxm</artifactId>
+          <version>${org.springframework.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>${org.springframework.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+            <version>${org.springframework.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.apache.hadoop</groupId>
             <artifactId>hadoop-core</artifactId>
@@ -77,6 +108,12 @@
             <version>4.10</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-test</artifactId>
+          <version>${org.springframework.version}</version>
+          <scope>test</scope>
+        </dependency>
         <!-- For JSON response -->
         <dependency>
           <groupId>com.fasterxml.jackson.core</groupId> <!--Jackson核心包-->
@@ -103,6 +140,30 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>5.1.31</version>
+        </dependency>
+        <!-- DBCP -->
+        <dependency>
+          <groupId>commons-dbcp</groupId>
+          <artifactId>commons-dbcp</artifactId>
+          <version>1.4</version>
+<!--           <scope>test</scope> -->
+        </dependency>
+        <dependency>
+          <groupId>com.microsoft.sqlserver</groupId>
+          <artifactId>sqljdbc4</artifactId>
+          <version>3.0</version>
+<!--           <scope>test</scope> -->
+        </dependency>
+        <!-- MyBatis -->
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+            <version>3.2.8</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis-spring</artifactId>
+            <version>1.2.2</version>
         </dependency>
     </dependencies>
 
@@ -228,11 +289,14 @@
         <finalName>${project.name}-${version}-windows</finalName>
         <resources>
           <resource>
-            <directory>${basedir}/src/main/resources</directory>
+            <directory>${basedir}/src/main/windows</directory>
           </resource>
           <resource>
-            <directory>${basedir}/evn/windows/</directory>
+            <directory>${basedir}/src/main/resources</directory>
           </resource>
+<!--           <resource> -->
+<!--             <directory>${basedir}/evn/windows/</directory> -->
+<!--           </resource> -->
         </resources>
       </build>
     </profile>
@@ -242,11 +306,14 @@
         <finalName>${project.name}-${version}-linux</finalName>
         <resources>
           <resource>
-            <directory>${basedir}/src/main/resources</directory>
+            <directory>${basedir}/src/main/linux</directory>
           </resource>
           <resource>
-            <directory>${basedir}/evn/linux/</directory>
+            <directory>${basedir}/src/main/resources</directory>
           </resource>
+<!--           <resource> -->
+<!--             <directory>${basedir}/src/main/linux</directory> -->
+<!--           </resource> -->
         </resources>
       </build>
     </profile>

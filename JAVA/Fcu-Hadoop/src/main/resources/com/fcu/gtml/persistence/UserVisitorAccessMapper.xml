@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fcu.gtml.persistence.UserVisitorAccessMapper">
+     <resultMap type="UserVisitorAccess" id="rm_UserVisitorAccess"> <!-- type的值是根據typeAlias來的 -->
+        <id     property="id"              column="Id"/>
+        <result property="timesTemp"       column="Timestemp"     jdbcType="TIMESTAMP" />
+        <result property="responseTime"    column="ResponseTime"  jdbcType="INTEGER" javaType="int" />
+        <result property="uri"             column="URI"  />
+        <result property="clientIdentity"  column="ClientIdentity"  />
+     </resultMap>
+     
+     <select id="batchInsert" parameterType="UserVisitorAccess">
+        INSERT INTO ProxyLogDataCenter.dbo.UserVisitorAccess
+           (Timestemp
+           ,ResponseTime
+           ,URI
+           ,ClientIdentity)
+     VALUES
+           (#{timesTemp}
+           ,#{responseTime}
+           ,#{uri}
+           ,#{clientIdentity})
+     </select>
+     <!-- 利用SupplierID找出Products傳參數進去    -->
+<!--      <select id="listProductsSupplierID" parameterType="int" resultMap="rm_Products"> -->
+<!--         select * from Products where SupplierID = #{id} -->
+<!--      </select> -->
+     
+<!--      <select id="listProductsCategories" parameterType="int" resultMap="rm_Products"> -->
+<!--         select b.ProductID,a.CategoryName,b.ProductName,b.QuantityPerUnit,a.Description  -->
+<!--         from Categories a inner join -->
+<!--         Products b on a.CategoryID = b.CategoryID -->
+<!--         where b.ProductID = #{b.id} -->
+<!--      </select> -->
+     
+<!--      <select id="listProductsCategoriesIn" parameterType="map" resultMap="rm_Products"> -->
+<!--         select b.ProductID,a.CategoryName,b.ProductName,b.QuantityPerUnit,a.Description  -->
+<!--         from Categories a inner join -->
+<!--         Products b on a.CategoryID = b.CategoryID -->
+<!--         where b.ProductID in  -->
+<!--         <foreach item="item" index="index" collection="Products" -->
+<!--             open="(" separator="," close=")"> -->
+<!--             #{item} -->
+<!--         </foreach> -->
+<!--      </select> -->
+<!--      <select id="listProductsCategoriesWhere" parameterType="map" resultMap="rm_Products"> -->
+<!--         select b.ProductID,a.CategoryName,b.ProductName,b.QuantityPerUnit,a.Description  -->
+<!--         from Categories a inner join -->
+<!--         Products b on a.CategoryID = b.CategoryID -->
+<!--         <if test="categoryName != null"> -->
+<!--         where a.CategoryName = #{categoryName} -->
+<!--         </if> -->
+<!--      </select> -->
+</mapper>
