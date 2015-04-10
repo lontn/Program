@@ -97,7 +97,7 @@ public class ClientIdentityStatistics {
             clientIdentity = new String(columns.getValue(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_CLIENTIDENTITY)));
             uri = new String(columns.getValue(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_URI)));
             responseTime = new String(columns.getValue(Bytes.toBytes(COLUMN_FAMILY), Bytes.toBytes(QUALIFIER_RESPONSETIME)));
-            word.set(timeStemp+ "---" + responseTime + "---" + uri + "---" + clientIdentity);
+            word.set(timeStemp+ "-@-" + responseTime + "-@-" + uri + "-@-" + clientIdentity);
             try {
                 context.write(word, value);
             } catch (InterruptedException e) {

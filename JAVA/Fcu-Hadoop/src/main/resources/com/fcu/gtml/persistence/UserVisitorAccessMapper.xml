@@ -7,7 +7,7 @@
         <id     property="id"              column="Id"/>
         <result property="timesTemp"       column="Timestemp"     jdbcType="TIMESTAMP" />
         <result property="responseTime"    column="ResponseTime"  jdbcType="INTEGER" javaType="int" />
-        <result property="uri"             column="URI"  />
+        <result property="uri"             column="URI" jdbcType="VARCHAR" />
         <result property="clientIdentity"  column="ClientIdentity"  />
      </resultMap>
      

@@ -29,7 +29,12 @@ public class UserVisitorAccessService {
         SqlSessionTemplate sqlSession = new SqlSessionTemplate(sqlSessionFactory, ExecutorType.BATCH);
         UserVisitorAccessMapper mapper = sqlSession.getMapper(UserVisitorAccessMapper.class);
         for (UserVisitorAccess visitor : visitorList) {
-            mapper.batchInsert(visitor);
+            try {
+                mapper.batchInsert(visitor);
+            } catch (Exception e) {
+                L.error("visitor warring:{}", visitor);
+                L.error("batchInsert fail.", e);
+            }
         }
     }
 }

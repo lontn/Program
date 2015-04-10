@@ -317,5 +317,19 @@
         </resources>
       </build>
     </profile>
+    <profile>
+      <id>gelab03</id>
+      <build>
+        <finalName>${project.name}-${version}-gelab03</finalName>
+        <resources>
+          <resource>
+            <directory>${basedir}/src/main/gelab03</directory>
+          </resource>
+          <resource>
+            <directory>${basedir}/src/main/resources</directory>
+          </resource>
+        </resources>
+      </build>
+    </profile>
   </profiles>
 </project>
