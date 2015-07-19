@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fcu.gtml.persistence.StudentEventMapper">
+<!--      <resultMap type="UserVisitorAccess" id="rm_UserVisitorAccess"> type的值是根據typeAlias來的 -->
+<!--         <id     property="id"              column="Id"/> -->
+<!--         <result property="timesTemp"       column="Timestemp"     jdbcType="TIMESTAMP" /> -->
+<!--         <result property="responseTime"    column="ResponseTime"  jdbcType="INTEGER" javaType="int" /> -->
+<!--         <result property="uri"             column="URI" jdbcType="VARCHAR" /> -->
+<!--         <result property="clientIdentity"  column="ClientIdentity"  /> -->
+<!--      </resultMap> -->
+     
+<!--      <select id="batchInsert" parameterType="StudentEnrollment"> -->
+<!--         INSERT INTO EdX.dbo.StudentEnrollment -->
+<!--            (UserName -->
+<!--            ,EventType -->
+<!--            ,CourseId -->
+<!--            ,UserId -->
+<!--            ,Mode -->
+<!--            ,Time) -->
+<!--      VALUES -->
+<!--            (#{userName} -->
+<!--            ,#{eventType} -->
+<!--            ,#{courseId} -->
+<!--            ,#{userId} -->
+<!--            ,#{mode} -->
+<!--            ,#{time}) -->
+<!--      </select> -->
+     <select id="batchInsert" parameterType="StudentNavigational">
+        INSERT INTO EdX.dbo.StudentNavigational
+           (UserName
+           ,EventType
+           ,EdXId
+           ,New
+           ,Old
+           ,Time)
+     VALUES
+           (#{userName}
+           ,#{eventType}
+           ,#{edXId}
+           ,#{newId}
+           ,#{old}
+           ,#{time})
+     </select>
+</mapper>

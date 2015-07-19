@@ -8,7 +8,7 @@
     <description>This is Hadoop</description>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <org.springframework.version>3.2.10.RELEASE</org.springframework.version>
+        <org.springframework.version>4.1.6.RELEASE</org.springframework.version>
         <org.slf4j.version>1.7.5</org.slf4j.version>
         <commons-configuration>1.10</commons-configuration>
     </properties>
@@ -150,8 +150,8 @@
         </dependency>
         <dependency>
           <groupId>com.microsoft.sqlserver</groupId>
-          <artifactId>sqljdbc4</artifactId>
-          <version>3.0</version>
+          <artifactId>sqljdbc41</artifactId>
+          <version>4.1</version>
 <!--           <scope>test</scope> -->
         </dependency>
         <!-- MyBatis -->
@@ -164,6 +164,16 @@
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis-spring</artifactId>
             <version>1.2.2</version>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.supercsv</groupId>
+            <artifactId>super-csv</artifactId>
+            <version>2.3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>18.0</version>
         </dependency>
     </dependencies>
 

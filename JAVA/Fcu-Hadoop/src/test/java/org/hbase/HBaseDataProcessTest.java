@@ -10,9 +10,10 @@ import org.domain.ProxyLog;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.unitTest.SupportHBaseTest;
 
 
-public class HBaseDataProcessTest {
+public class HBaseDataProcessTest extends SupportHBaseTest {
     private static final Logger L = LoggerFactory.getLogger(HBaseDataProcessTest.class);
 
     public static void main(String args[]){

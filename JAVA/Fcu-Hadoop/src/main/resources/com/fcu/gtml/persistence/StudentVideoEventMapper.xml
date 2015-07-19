@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fcu.gtml.persistence.StudentVideoEventMapper">
+<!--      <resultMap type="UserVisitorAccess" id="rm_UserVisitorAccess"> type的值是根據typeAlias來的 -->
+<!--         <id     property="id"              column="Id"/> -->
+<!--         <result property="timesTemp"       column="Timestemp"     jdbcType="TIMESTAMP" /> -->
+<!--         <result property="responseTime"    column="ResponseTime"  jdbcType="INTEGER" javaType="int" /> -->
+<!--         <result property="uri"             column="URI" jdbcType="VARCHAR" /> -->
+<!--         <result property="clientIdentity"  column="ClientIdentity"  /> -->
+<!--      </resultMap> -->
+     
+     <select id="batchInsertByHideTranscript" parameterType="StudentVideoHideTranscript">
+        INSERT INTO EdX.dbo.StudentVideoHideTranscript
+           (UserName
+           ,EventType
+           ,EdXId
+           ,CurrentTime
+           ,Code
+           ,Time)
+     VALUES
+           (#{userName}
+           ,#{eventType}
+           ,#{edXId}
+           ,#{currentTime}
+           ,#{code}
+           ,#{time})
+     </select>
+     <select id="batchInsertByLoadVideo" parameterType="StudentVideoLoadVideo">
+        INSERT INTO EdX.dbo.StudentVideoLoadVideo
+           (UserName
+           ,EventType
+           ,EdXId
+           ,Code
+           ,Time)
+     VALUES
+           (#{userName}
+           ,#{eventType}
+           ,#{edXId}
+           ,#{code}
+           ,#{time})
+     </select>
+     <select id="batchInsertByPauseVideo" parameterType="StudentVideoLoadVideo">
+        INSERT INTO EdX.dbo.StudentVideoPauseVideo
+           (UserName
+           ,EventType
+           ,EdXId
+           ,CurrentTime
+           ,Code
+           ,Time)
+     VALUES
+           (#{userName}
+           ,#{eventType}
+           ,#{edXId}
+           ,#{currentTime}
+           ,#{code}
+           ,#{time})
+     </select>
+     <select id="batchInsertByPlayVideo" parameterType="StudentVideoPlayVideo">
+        INSERT INTO EdX.dbo.StudentVideoPlayVideo
+           (UserName
+           ,EventType
+           ,EdXId
+           ,CurrentTime
+           ,Code
+           ,Time)
+     VALUES
+           (#{userName}
+           ,#{eventType}
+           ,#{edXId}
+           ,#{currentTime}
+           ,#{code}
+           ,#{time})
+     </select>
+     <select id="batchInsertBySeekVideo" parameterType="StudentVideoSeekVideo">
+        INSERT INTO EdX.dbo.StudentVideoSeekVideo
+           (UserName
+           ,EventType
+           ,EdXId
+           ,OldTime
+           ,NewTime
+           ,Type
+           ,Code
+           ,Time)
+     VALUES
+           (#{userName}
+           ,#{eventType}
+           ,#{edXId}
+           ,#{oldTime}
+           ,#{newTime}
+           ,#{type}
+           ,#{code}
+           ,#{time})
+     </select>
+     <select id="batchInsertByShowTranscript" parameterType="StudentVideoShowTranscript">
+        INSERT INTO EdX.dbo.StudentVideoShowTranscript
+           (UserName
+           ,EventType
+           ,EdXId
+           ,CurrentTime
+           ,Code
+           ,Time)
+     VALUES
+           (#{userName}
+           ,#{eventType}
+           ,#{edXId}
+           ,#{currentTime}
+           ,#{code}
+           ,#{time})
+     </select>
+     <select id="batchInsertBySpeedChangeVideo" parameterType="StudentVideoSpeedChangeVideo">
+        INSERT INTO EdX.dbo.StudentVideoSpeedChangeVideo
+           (UserName
+           ,EventType
+           ,EdXId
+           ,CurrentTime
+           ,OldSpeed
+           ,NewSpeed
+           ,Code
+           ,Time)
+     VALUES
+           (#{userName}
+           ,#{eventType}
+           ,#{edXId}
+           ,#{currentTime}
+           ,#{oldSpeed}
+           ,#{newSpeed}
+           ,#{code}
+           ,#{time})
+     </select>
+     <select id="batchInsertByStopVideo" parameterType="StudentVideoStopVideo">
+        INSERT INTO EdX.dbo.StudentVideoStopVideo
+           (UserName
+           ,EventType
+           ,EdXId
+           ,CurrentTime
+           ,Code
+           ,Time)
+     VALUES
+           (#{userName}
+           ,#{eventType}
+           ,#{edXId}
+           ,#{currentTime}
+           ,#{code}
+           ,#{time})
+     </select>
+</mapper>

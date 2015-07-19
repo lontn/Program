@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fcu.gtml.persistence.StudentLogMapper">
+     <resultMap type="StudentLog" id="rm_StudentLog"> <!-- type的值是根據typeAlias來的  -->
+        <result property="userName"        column="UserName"/>
+        <result property="eventType"       column="EventType"  />
+        <result property="event"           column="Event"  />
+        <result property="time"            column="Time"     jdbcType="TIMESTAMP" />
+     </resultMap>
+
+     <select id="listStudentLogByEventType" parameterType="map" resultMap="rm_StudentLog">
+        SELECT 
+             UserName
+            ,EventType
+            ,Event
+            ,Time
+        FROM EdX.dbo.StudentLog WITH(NOLOCK)
+          where EventType = #{eventType}
+        Order by UserName 
+     </select>
+     <select id="batchInsert" parameterType="StudentLog">
+        INSERT INTO EdX.dbo.StudentLog
+           (UserName
+           ,EventType
+           ,Event
+           ,EventSource
+           ,ContextUserId
+           ,ContextOrgId
+           ,ContextSession
+           ,ContextCourseId
+           ,ContextPath
+           ,ContextModuleDisplayName
+           ,Time
+           ,Page)
+     VALUES
+           (#{userName}
+           ,#{eventType}
+           ,#{event, jdbcType=NVARCHAR}
+           ,#{eventSource}
+           ,#{contextUserId}
+           ,#{contextOrgId}
+           ,#{contextSession}
+           ,#{contextCourseid}
+           ,#{contextPath}
+           ,#{contextModuleDisplayName, jdbcType=NVARCHAR}
+           ,#{time}
+           ,#{page})
+     </select>
+</mapper>

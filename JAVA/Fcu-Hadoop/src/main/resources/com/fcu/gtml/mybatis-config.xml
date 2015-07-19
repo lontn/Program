@@ -4,6 +4,17 @@
 <configuration>
 <typeAliases>
   <typeAlias alias="UserVisitorAccess" type="com.fcu.gtml.domain.UserVisitorAccess"/>
+  <typeAlias alias="StudentLog" type="com.fcu.gtml.domain.StudentLog"/>
+  <typeAlias alias="StudentEnrollment" type="com.fcu.gtml.domain.StudentEnrollment"/>
+  <typeAlias alias="StudentNavigational" type="com.fcu.gtml.domain.StudentNavigational"/>
+  <typeAlias alias="StudentVideoHideTranscript" type="com.fcu.gtml.domain.StudentVideoHideTranscript"/>
+  <typeAlias alias="StudentVideoLoadVideo" type="com.fcu.gtml.domain.StudentVideoLoadVideo"/>
+  <typeAlias alias="StudentVideoPauseVideo" type="com.fcu.gtml.domain.StudentVideoPauseVideo"/>
+  <typeAlias alias="StudentVideoPlayVideo" type="com.fcu.gtml.domain.StudentVideoPlayVideo"/>
+  <typeAlias alias="StudentVideoSeekVideo" type="com.fcu.gtml.domain.StudentVideoSeekVideo"/>
+  <typeAlias alias="StudentVideoShowTranscript" type="com.fcu.gtml.domain.StudentVideoShowTranscript"/>
+  <typeAlias alias="StudentVideoSpeedChangeVideo" type="com.fcu.gtml.domain.StudentVideoSpeedChangeVideo"/>
+  <typeAlias alias="StudentVideoStopVideo" type="com.fcu.gtml.domain.StudentVideoStopVideo"/>
 </typeAliases>
 <typeHandlers>
     <typeHandler handler="com.fcu.gtml.mybatis.type.CharTypeHandler"
