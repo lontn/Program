@@ -39,7 +39,7 @@ public class StudentVideoStopVideoTask extends StudentEventTool {
             }
         }
         L.info("result size:{}", result.size());
-        if(result.size() > 0) {
+        if (result.size() > 0) {
             studentEventService.batchInsertByStopVideo(result);
         }
         L.info("done.");
