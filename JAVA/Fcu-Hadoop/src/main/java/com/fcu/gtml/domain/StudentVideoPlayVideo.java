@@ -7,7 +7,11 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class StudentVideoPlayVideo {
+public class StudentVideoPlayVideo extends Entity {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
     private String userName;
     private String eventType;
     @JsonProperty("id")
@@ -54,8 +58,4 @@ public class StudentVideoPlayVideo {
         this.time = time;
     }
     
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
-    }
 }

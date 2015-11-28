@@ -16,6 +16,7 @@
   <typeAlias alias="StudentVideoSpeedChangeVideo" type="com.fcu.gtml.domain.StudentVideoSpeedChangeVideo"/>
   <typeAlias alias="StudentVideoStopVideo" type="com.fcu.gtml.domain.StudentVideoStopVideo"/>
   <typeAlias alias="StudentTextBook" type="com.fcu.gtml.domain.StudentTextBook"/>
+  <typeAlias alias="StudentPlayVideoTrainData" type="com.fcu.gtml.domain.StudentPlayVideoTrainData"/>
 </typeAliases>
 <typeHandlers>
     <typeHandler handler="com.fcu.gtml.mybatis.type.CharTypeHandler"

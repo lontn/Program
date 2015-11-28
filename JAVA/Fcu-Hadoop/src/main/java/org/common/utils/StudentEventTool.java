@@ -1,12 +1,11 @@
 package org.common.utils;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.fcu.gtml.service.StudentEventService;
 import com.fcu.gtml.service.StudentLogService;
+import com.fcu.gtml.service.StudentTrainDataService;
 import com.fcu.gtml.service.TextBookEventService;
 
 abstract public class StudentEventTool {
@@ -14,6 +13,7 @@ abstract public class StudentEventTool {
     protected static StudentLogService studentService = applicationContext.getBean(StudentLogService.class);
     protected static StudentEventService studentEventService = applicationContext.getBean(StudentEventService.class);
     protected static TextBookEventService textBookService = applicationContext.getBean(TextBookEventService.class);
+    protected static StudentTrainDataService trainDataService = applicationContext.getBean(StudentTrainDataService.class);
 
     static {
         JsonParserConfig.config();

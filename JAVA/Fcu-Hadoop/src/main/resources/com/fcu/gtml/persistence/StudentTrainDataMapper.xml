@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fcu.gtml.persistence.StudentTrainDataMapper">
+  <resultMap type="StudentPlayVideoTrainData" id="rm_StudentPlayVideoTrainData">
+     <result property="userName"       column="UserName"  />
+     <result property="a1"             column="A1"  />
+     <result property="a2"             column="A2"  />
+     <result property="a3"             column="A3"  />
+     <result property="a4"             column="A4"  />
+     <result property="a5"             column="A5"  />
+  </resultMap>
+  <resultMap type="StudentVideoPlayVideo" id="rm_StudentVideoPlayVideo">
+     <result property="userName"       column="UserName"  />
+     <result property="eventType"      column="EventType"  />
+     <result property="currentTime"    column="CurrentTime"  />
+     <result property="code"           column="Code"  />
+     <result property="time"           column="Time"   />
+  </resultMap>
+     
+  <select id="listStudentPlayVideoUser" resultMap="rm_StudentVideoPlayVideo">
+       select [UserName],Code
+       FROM [EdX].[dbo].[StudentVideoPlayVideo] with(nolock)
+       Group by [UserName],Code
+       Order by UserName,Code 
+  </select>
+  <select id="listStudentPlayVideoByKey" resultMap="rm_StudentVideoPlayVideo">
+       SELECT  [Id]
+      ,[UserName]
+      ,[EventType]
+      ,[EdXId]
+      ,[CurrentTime]
+      ,[Code]
+      ,[Time]
+  FROM [EdX].[dbo].[StudentVideoPlayVideo] with(nolock)
+  where UserName = #{userName} 
+  <if test="code != null">
+  and Code = #{code}
+  </if>
+  Order by id
+  </select>
+  <select id="getOpenResponseCount" resultType="int">
+    SELECT COUNT(1)
+    FROM [EdX].[dbo].[StudentLog] with(nolock)
+    where UserName = #{userName} and EventType like 'openassessment%'
+  </select>
+  <insert id="batchInsertByPlayVideoTrainData" parameterType="StudentPlayVideoTrainData">
+        INSERT INTO EdX.dbo.StudentPlayVideoTrainData
+           (UserName
+           ,Code
+           ,A1
+           ,A2
+           ,A3
+           ,A4
+           ,A5
+           ,CreateTime)
+     VALUES
+           (#{userName}
+           ,#{code}
+           ,#{a1}
+           ,#{a2}
+           ,#{a3}
+           ,#{a4}
+           ,#{a5}
+           ,GETDATE())
+  </insert>
+  <select id="listStudentPlayVideoTrainData" resultMap="rm_StudentPlayVideoTrainData">
+       SELECT UserName
+      ,[A1]
+      ,[A2]
+      ,[A3]
+      ,[A4]
+      ,[A5]
+  FROM [EdX].[dbo].[StudentPlayVideoTrainData] with(nolock)
+  Order by Id
+  </select>
+</mapper>
