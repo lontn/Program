@@ -12,6 +12,7 @@
         <org.slf4j.version>1.7.5</org.slf4j.version>
         <commons-configuration>1.10</commons-configuration>
         <hadoopv2x>2.7.1</hadoopv2x>
+        <org.log4j2>2.0.2</org.log4j2>
     </properties>
     <dependencies>
         <!-- Spring -->
@@ -54,21 +55,45 @@
           <groupId>org.apache.hadoop</groupId>
           <artifactId>hadoop-common</artifactId>
           <version>${hadoopv2x}</version>
+          <exclusions>
+            <exclusion>
+              <artifactId>guava</artifactId>
+              <groupId>com.google.guava</groupId>
+            </exclusion>
+          </exclusions>
         </dependency>
         <dependency>
           <groupId>org.apache.hadoop</groupId>
           <artifactId>hadoop-hdfs</artifactId>
           <version>${hadoopv2x}</version>
+          <exclusions>
+            <exclusion>
+              <artifactId>guava</artifactId>
+              <groupId>com.google.guava</groupId>
+            </exclusion>
+          </exclusions>
         </dependency>
         <dependency>
           <groupId>org.apache.hadoop</groupId>
           <artifactId>hadoop-mapreduce-client-core</artifactId>
           <version>${hadoopv2x}</version>
+          <exclusions>
+            <exclusion>
+              <artifactId>guava</artifactId>
+              <groupId>com.google.guava</groupId>
+            </exclusion>
+          </exclusions>
         </dependency>
         <dependency>
           <groupId>org.apache.hadoop</groupId>
           <artifactId>hadoop-client</artifactId>
           <version>${hadoopv2x}</version>
+          <exclusions>
+            <exclusion>
+              <artifactId>guava</artifactId>
+              <groupId>com.google.guava</groupId>
+            </exclusion>
+          </exclusions>
         </dependency>
         
         <!-- <dependency> -->
@@ -123,6 +148,22 @@
             <version>1.2.16</version>
             <scope>runtime</scope>
         </dependency>
+        <!-- Log4j2 -->
+        <dependency>
+          <groupId>org.apache.logging.log4j</groupId>
+          <artifactId>log4j-api</artifactId>
+          <version>${org.log4j2}</version>
+        </dependency>
+          <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>${org.log4j2}</version>
+          </dependency>
+          <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-jcl</artifactId>
+            <version>${org.log4j2}</version>
+          </dependency>
         <!-- Test -->
         <dependency>
             <groupId>junit</groupId>
@@ -192,11 +233,6 @@
             <artifactId>super-csv</artifactId>
             <version>2.3.1</version>
         </dependency>
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>18.0</version>
-        </dependency>
         <!-- SVM -->
         <dependency>
             <groupId>tw.edu.ntu.csie</groupId>
@@ -209,6 +245,16 @@
           <artifactId>sqlite-jdbc</artifactId>
           <version>3.8.11.1</version>
         </dependency>
+        <dependency>
+          <groupId>net.sf.opencsv</groupId>
+          <artifactId>opencsv</artifactId>
+          <version>2.3</version>
+        </dependency>
+<!--         <dependency> -->
+<!--           <groupId>com.opencsv</groupId> -->
+<!--           <artifactId>opencsv</artifactId> -->
+<!--           <version>3.3</version> -->
+<!--         </dependency> -->
         <dependency>
           <groupId>jdk.tools</groupId>
           <artifactId>jdk.tools</artifactId>

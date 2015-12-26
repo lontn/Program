@@ -36,7 +36,7 @@
       </layout>
   </appender> -->
   <appender name="file" class="org.apache.log4j.DailyRollingFileAppender">
-    <param name="File" value="/usr/local/hbase/Data/logs/Fcu/Libproxy.log" />
+    <param name="File" value="D:/Fcu/OpenEdx/OpenEdx.log" />
     <param name="DatePattern" value="'.'yyyy-MM-dd" />
     <param name="Append" value="true"/>
     <layout class="org.apache.log4j.PatternLayout">
