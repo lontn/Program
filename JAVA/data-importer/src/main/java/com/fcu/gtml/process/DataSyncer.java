@@ -1,10 +1,19 @@
-package com.fcu.gtml.oer;
+package com.fcu.gtml.process;
 
+import java.util.Properties;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.hbase.HBaseConfiguration;
 
 public class DataSyncer implements Syncer {
     private volatile boolean start;
     private AtomicInteger runningThreads = new AtomicInteger();
+    private static Properties prop = new Properties();
+    private static Configuration conf = null;
+    static {
+        conf = HBaseConfiguration.create();
+    }
 
     @Override
     public void start() {

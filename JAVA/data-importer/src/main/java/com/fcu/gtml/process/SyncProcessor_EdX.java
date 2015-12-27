@@ -1,6 +1,6 @@
-package com.fcu.gtml.oer;
+package com.fcu.gtml.process;
 
-import com.fcu.gtml.oer.Syncer_ProductData.SyncProcessor;
+import com.fcu.gtml.process.Syncer_ProductData.SyncProcessor;
 
 public class SyncProcessor_EdX implements SyncProcessor {
 
