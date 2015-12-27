@@ -111,6 +111,11 @@
         <version>1.1.2</version>
       </dependency>
       <dependency>
+        <groupId>net.sf.opencsv</groupId>
+        <artifactId>opencsv</artifactId>
+        <version>2.3</version>
+      </dependency>
+      <dependency>
         <groupId>jdk.tools</groupId>
         <artifactId>jdk.tools</artifactId>
         <version>1.7.0_65</version>
@@ -129,8 +134,20 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-<!--                             <mainClass>org.hadoop.PresidentElectionV2</mainClass> -->
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                            <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                            <mainClass>com.fcu.gtml.process.Main</mainClass>
                         </manifest>
+                        <manifestEntries>
+                          <Build-Time>${maven.build.timestamp}</Build-Time>
+                          <!--<Build-Version>${project.version}</Build-Version>
+                          <Build-Host>${agent.name}</Build-Host>
+                          <Build-User>${user.name}</Build-User>
+                          <Build-Maven>Maven ${maven.version}</Build-Maven>
+                          <Build-Java>${java.version}</Build-Java>
+                          <Build-OS>${os.name}</Build-OS>
+                          <Build-Path>${basedir}</Build-Path>-->
+                        </manifestEntries>
                     </archive>
                 </configuration>
             </plugin>
@@ -223,7 +240,7 @@
         <activeByDefault>true</activeByDefault>
       </activation>
       <build>
-<!--         <finalName>${project.name}-${version}-local</finalName> -->
+        <finalName>${project.name}-${version}-local</finalName>
         <resources>
           <resource>
             <directory>${basedir}/src/main/resources</directory>
@@ -245,9 +262,6 @@
           <resource>
             <directory>${basedir}/src/main/resources</directory>
           </resource>
-<!--           <resource> -->
-<!--             <directory>${basedir}/evn/windows/</directory> -->
-<!--           </resource> -->
         </resources>
       </build>
     </profile>
