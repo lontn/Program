@@ -38,6 +38,7 @@
     <Root level="info">
       <AppenderRef ref="AllFile" />
       <AppenderRef ref="ErrFile" />
+      <AppenderRef ref="Console" />
     </Root>
   </Loggers>
 </Configuration>
