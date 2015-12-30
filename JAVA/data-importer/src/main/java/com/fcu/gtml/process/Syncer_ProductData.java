@@ -12,7 +12,6 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.fcu.gtml.process.oer.domain.OpenEdxLog;
 
 public class Syncer_ProductData {
     private static final Logger L = LogManager.getLogger();
@@ -65,6 +64,6 @@ public class Syncer_ProductData {
 
     public interface SyncProcessor {
         void process(Syncer_ProductData syncer);
-        List<OpenEdxLog> LoadFile(File file);
+        <T> List<T> LoadFile(File file);
     }
 }
