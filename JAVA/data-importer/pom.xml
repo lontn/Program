@@ -12,6 +12,37 @@
       <hadoopv2x>2.7.1</hadoopv2x>
   </properties>
   <dependencies>
+      <!-- Spring -->
+        <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-context</artifactId>
+          <version>${org.springframework.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-web</artifactId>
+          <version>${org.springframework.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-webmvc</artifactId>
+          <version>${org.springframework.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-oxm</artifactId>
+          <version>${org.springframework.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>${org.springframework.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+            <version>${org.springframework.version}</version>
+        </dependency>
       <!-- Joda Time -->
       <dependency>
         <groupId>joda-time</groupId>
@@ -33,12 +64,17 @@
       <!-- Log4j2 -->
       <dependency>
         <groupId>org.apache.logging.log4j</groupId>
+        <artifactId>log4j-core</artifactId>
+        <version>${org.log4j2}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.logging.log4j</groupId>
         <artifactId>log4j-api</artifactId>
         <version>${org.log4j2}</version>
       </dependency>
       <dependency>
         <groupId>org.apache.logging.log4j</groupId>
-        <artifactId>log4j-core</artifactId>
+        <artifactId>log4j-1.2-api</artifactId>
         <version>${org.log4j2}</version>
       </dependency>
       <dependency>
@@ -46,13 +82,34 @@
         <artifactId>log4j-jcl</artifactId>
         <version>${org.log4j2}</version>
       </dependency>
+<!--       <dependency> -->
+<!--         <groupId>org.apache.logging.log4j</groupId> -->
+<!--         <artifactId>log4j-slf4j-impl</artifactId> -->
+<!--         <version>${org.log4j2}</version> -->
+<!--       </dependency> -->
+<!--       <dependency> -->
+<!--         <groupId>org.slf4j</groupId> -->
+<!--         <artifactId>slf4j-api</artifactId> -->
+<!--         <version>1.7.7</version> -->
+<!--       </dependency> -->
+<!--       <dependency> -->
+<!--         <groupId>org.slf4j</groupId> -->
+<!--         <artifactId>jul-to-slf4j</artifactId> -->
+<!--         <version>1.7.7</version> -->
+<!--       </dependency> -->
       <!-- Test -->
-      <dependency>
-          <groupId>junit</groupId>
-          <artifactId>junit</artifactId>
-          <version>4.10</version>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.10</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-test</artifactId>
+          <version>${org.springframework.version}</version>
           <scope>test</scope>
-      </dependency>
+        </dependency>
       <!-- Apache Commons-configuration -->
       <dependency>
           <groupId>commons-configuration</groupId>
@@ -114,6 +171,46 @@
         <groupId>net.sf.opencsv</groupId>
         <artifactId>opencsv</artifactId>
         <version>2.3</version>
+      </dependency>
+      <!-- DBCP -->
+      <dependency>
+        <groupId>commons-dbcp</groupId>
+        <artifactId>commons-dbcp</artifactId>
+        <version>1.4</version>
+<!--         <scope>test</scope> -->
+      </dependency>
+      <dependency>
+        <groupId>com.microsoft.sqlserver</groupId>
+        <artifactId>sqljdbc41</artifactId>
+        <version>4.1</version>
+<!--         <scope>test</scope> -->
+      </dependency>
+      <!-- MyBatis -->
+      <dependency>
+        <groupId>org.mybatis</groupId>
+        <artifactId>mybatis</artifactId>
+        <version>3.2.8</version>
+      </dependency>
+      <dependency>
+        <groupId>org.mybatis</groupId>
+        <artifactId>mybatis-spring</artifactId>
+        <version>1.2.2</version>
+      </dependency>
+      <!-- disruptor -->
+      <dependency>
+        <groupId>com.lmax</groupId>
+        <artifactId>disruptor</artifactId>
+        <version>3.3.0</version>
+      </dependency>
+      <dependency>
+        <groupId>org.wltea.ik-analyzer</groupId>
+        <artifactId>ik-analyzer</artifactId>
+        <version>2012</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.lucene</groupId>
+        <artifactId>lucene-core</artifactId>
+        <version>3.4.0</version>
       </dependency>
       <dependency>
         <groupId>jdk.tools</groupId>

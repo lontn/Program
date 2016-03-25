@@ -83,9 +83,7 @@ public class SyncProcessor_EdX implements SyncProcessor {
         }
     }
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public List<OpenEdxLog> LoadFile(File file) {
+    private List<OpenEdxLog> LoadFile(File file) {
         List<OpenEdxLog> resultData = new ArrayList<>();
         CSVReader reader = null;
         try {

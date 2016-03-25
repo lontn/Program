@@ -8,7 +8,7 @@
       <PatternLayout pattern="%d %p %c [%t] %m%n" />
     </Console>
 
-    <RollingRandomAccessFile name="AllFile" fileName="logs/data-importer.log" filePattern="logs/$${date:yyyy-MM}/all-%d{MM-dd-yyyy}-%i.log.gz">
+    <RollingRandomAccessFile name="AllFile" fileName="logs/all.log" filePattern="logs/$${date:yyyy-MM}/all-%d{MM-dd-yyyy}-%i.log.gz">
       <PatternLayout>
         <Pattern>%d %p %c{1} [%t] %m%n</Pattern>
       </PatternLayout>
@@ -18,7 +18,7 @@
       </Policies>
       <DefaultRolloverStrategy max="1000"/>
     </RollingRandomAccessFile>
-    <RollingRandomAccessFile name="ErrFile" fileName="logs/data-importer-err.log" filePattern="logs/$${date:yyyy-MM}/err-%d{MM-dd-yyyy}-%i.log.gz">
+    <RollingRandomAccessFile name="ErrFile" fileName="logs/err.log" filePattern="logs/$${date:yyyy-MM}/err-%d{MM-dd-yyyy}-%i.log.gz">
       <PatternLayout>
         <Pattern>%d %p %c [%t] %m%n</Pattern>
       </PatternLayout>

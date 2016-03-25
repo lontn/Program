@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fcu.gtml.persistence.WordNetMapper">
+
+     <select id="listHypernymNouns" parameterType="string" resultType="string">
+        select lemma from WordNet.dbo.UF_HypernymNouns(#{word})
+     </select>
+     <select id="listHyponymNouns" parameterType="string" resultType="string">
+        select lemma from WordNet.dbo.UF_HyponymNouns(#{word})
+     </select>
+</mapper>

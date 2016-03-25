@@ -8,9 +8,14 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
+import javax.annotation.Resource;
+
 import org.apache.hadoop.conf.Configuration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import com.fcu.gtml.service.WebMetadataService;
+import com.fcu.gtml.service.WordNetService;
 
 
 public class Syncer_ProductData {
@@ -20,14 +25,18 @@ public class Syncer_ProductData {
     private Set<SyncProcessor> processors = new LinkedHashSet<>();
     private Set<Field> processedField = new HashSet<>(); // 處理過的key
 
+    private WebMetadataService webMetadataService;
+    private WordNetService wordNetService;
     enum Field {
-        EDX
+        EDX, OER
     }
 
     
-    Syncer_ProductData(Properties prop, Configuration conf) {
+    Syncer_ProductData(Properties prop, Configuration conf, WebMetadataService webMetadataService, WordNetService wordNetService) {
         this.prop = prop;
         this.conf = conf;
+        this.webMetadataService = webMetadataService;
+        this.wordNetService = wordNetService;
     }
 
     public Properties getProperties() {
@@ -45,6 +54,13 @@ public class Syncer_ProductData {
         }
     }
 
+    public WebMetadataService getMetadataService() {
+        return webMetadataService;
+    }
+
+    public WordNetService getWordNetService() {
+        return wordNetService;
+    }
     public Syncer_ProductData addSyncProcessor(SyncProcessor... processors) {
         //Arrays.stream(processors).forEach(this.processors::add);
         List<SyncProcessor> listSyncProcessor = Arrays.asList(processors);
@@ -64,6 +80,5 @@ public class Syncer_ProductData {
 
     public interface SyncProcessor {
         void process(Syncer_ProductData syncer);
-        <T> List<T> LoadFile(File file);
     }
 }

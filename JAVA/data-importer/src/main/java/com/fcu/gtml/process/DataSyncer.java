@@ -16,7 +16,8 @@ public class DataSyncer implements Syncer {
     private static Properties prop = new Properties();
     private static Configuration conf = null;
     static {
-        conf = HBaseConfiguration.create();
+        //conf = HBaseConfiguration.create();
+        conf = new Configuration();
         try {
             prop.load(DataSyncer.class.getResourceAsStream("FilePath.properties"));
         } catch (IOException e) {
@@ -57,8 +58,8 @@ public class DataSyncer implements Syncer {
     }
 
     private void syncModelData() {
-        Syncer_ProductData syncData = new Syncer_ProductData(prop, conf);
-        syncData.addSyncProcessor(new SyncProcessor_EdX());
-        syncData.doSyncProcess();
+        //Syncer_ProductData syncData = new Syncer_ProductData(prop, conf);
+        //syncData.addSyncProcessor(new SyncProcessor_EdX());
+        //syncData.doSyncProcess();
     }
 }
