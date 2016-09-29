@@ -13,7 +13,7 @@
   </resultMap>
 
      <select id="listWebMetadata" parameterType="map" resultMap="rm_WebMetadata">
-        SELECT TOP 5000 Seq
+        SELECT TOP 10 Seq
           ,ParentSeq
           ,Uri
           ,[Text]

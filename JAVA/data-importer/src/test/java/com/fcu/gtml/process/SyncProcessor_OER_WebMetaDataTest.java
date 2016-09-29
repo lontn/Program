@@ -46,7 +46,7 @@ public class SyncProcessor_OER_WebMetaDataTest extends SupportSpringTest {
 
     @Test
     public void testProcess() {
-        Syncer_ProductData syncData = new Syncer_ProductData(prop, conf, service, wordNetService);
+        Syncer_ProductOERData syncData = new Syncer_ProductOERData(prop, conf, service, wordNetService);
         syncData.addSyncProcessor(new SyncProcessor_OER_WebMetaData());
         syncData.doSyncProcess();
     }

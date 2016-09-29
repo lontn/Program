@@ -15,7 +15,7 @@ import com.fcu.gtml.service.WebMetadataService;
 import com.fcu.gtml.service.WordNetService;
 
 
-public class Syncer_ProductData {
+public class Syncer_ProductOERData {
     private static final Logger L = LogManager.getLogger();
     private Properties prop;
     private Configuration conf;
@@ -29,9 +29,11 @@ public class Syncer_ProductData {
     }
 
     
-    Syncer_ProductData(Properties prop, Configuration conf) {
+    Syncer_ProductOERData(Properties prop, Configuration conf, WebMetadataService webMetadataService, WordNetService wordNetService) {
         this.prop = prop;
         this.conf = conf;
+        this.webMetadataService = webMetadataService;
+        this.wordNetService = wordNetService;
     }
 
     public Properties getProperties() {
@@ -56,7 +58,7 @@ public class Syncer_ProductData {
     public WordNetService getWordNetService() {
         return wordNetService;
     }
-    public Syncer_ProductData addSyncProcessor(SyncProcessor... processors) {
+    public Syncer_ProductOERData addSyncProcessor(SyncProcessor... processors) {
         //Arrays.stream(processors).forEach(this.processors::add);
         List<SyncProcessor> listSyncProcessor = Arrays.asList(processors);
         for (SyncProcessor syncProcessor : listSyncProcessor) {
@@ -74,6 +76,6 @@ public class Syncer_ProductData {
     }
 
     public interface SyncProcessor {
-        void process(Syncer_ProductData syncer);
+        void process(Syncer_ProductOERData syncer);
     }
 }

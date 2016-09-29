@@ -110,6 +110,22 @@
           <version>${org.springframework.version}</version>
           <scope>test</scope>
         </dependency>
+        <!-- For JSON response -->
+        <dependency>
+          <groupId>com.fasterxml.jackson.core</groupId> <!--Jackson核心包-->
+          <artifactId>jackson-core</artifactId>
+          <version>2.4.2</version>
+        </dependency>
+        <dependency>
+          <groupId>com.fasterxml.jackson.core</groupId> <!--Jackson注解包-->
+          <artifactId>jackson-annotations</artifactId>
+          <version>2.4.2</version>
+        </dependency>
+        <dependency>
+          <groupId>com.fasterxml.jackson.core</groupId> <!--Jackson數據绑定包-->
+          <artifactId>jackson-databind</artifactId>
+          <version>2.4.2</version>
+        </dependency>
       <!-- Apache Commons-configuration -->
       <dependency>
           <groupId>commons-configuration</groupId>
@@ -233,7 +249,7 @@
                             <classpathPrefix>lib/</classpathPrefix>
                             <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
                             <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
-                            <mainClass>com.fcu.gtml.process.Main</mainClass>
+                            <mainClass>com.fcu.gtml.hadoop.TrackingLogImport</mainClass>
                         </manifest>
                         <manifestEntries>
                           <Build-Time>${maven.build.timestamp}</Build-Time>
