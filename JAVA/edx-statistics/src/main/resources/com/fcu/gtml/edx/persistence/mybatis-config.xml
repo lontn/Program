@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+<!-- <typeAliases> -->
+<!--   <typeAlias alias="Products" type="com.fcu.gtml.recommender.domain.Products"/> -->
+<!-- </typeAliases> -->
+<typeHandlers>
+    <typeHandler handler="com.fcu.gtml.edx.mybatis.type.CharTypeHandler"
+      jdbcType="CHAR" />
+    <typeHandler handler="com.fcu.gtml.edx.mybatis.type.NCharTypeHandler"
+      jdbcType="NCHAR" />
+    <typeHandler handler="com.fcu.gtml.edx.mybatis.type.NVarcharTypeHandler"
+      jdbcType="NVARCHAR" />
+</typeHandlers>
+</configuration>

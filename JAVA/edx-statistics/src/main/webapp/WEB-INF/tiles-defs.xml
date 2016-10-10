@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+  <definition name="classic" template="/WEB-INF/layouts/layout_classic.jsp">
+    <put-attribute name="header" value="/WEB-INF/layouts/tile_header.jsp" />
+<!--     <put-attribute name="nav" value="/WEB-INF/layouts/tile_nav.jsp" /> -->
+  </definition>
+
+<!--   <definition name="classic-nav" template="/WEB-INF/layouts/layout_nav.jsp"> -->
+<!--     <put-attribute name="header" value="/WEB-INF/layouts/tile_header.jsp" /> -->
+<!--     <put-attribute name="nav" value="/WEB-INF/layouts/tile_nav.jsp" /> -->
+<!--   </definition> -->
+
+<!--   <definition name="classic_blank" template="/WEB-INF/layouts/layout_blank.jsp"> -->
+<!--   </definition> -->
+
+<!--   <definition name="classic-competitor-data" extends="classic"> -->
+<!--     <put-attribute name="functions" value="/WEB-INF/layouts/tile_functions_competitor_data.jsp" /> -->
+<!--   </definition> -->
+
+<!--   <definition name="classic-segment" extends="classic"> -->
+<!--     <put-attribute name="functions" value="/WEB-INF/layouts/tile_functions_segment.jsp" /> -->
+<!--   </definition> -->
+
+<!--   <definition name="classic-mapping" extends="classic"> -->
+<!--     <put-attribute name="functions" value="/WEB-INF/layouts/tile_functions_mapping.jsp" /> -->
+<!--   </definition> -->
+
+<!--   <definition name="classic-support-mapping" extends="classic_blank"> -->
+<!--     <put-attribute name="functions" value="/WEB-INF/layouts/tile_functions_mapping.jsp" /> -->
+<!--   </definition> -->
+
+<!--   <definition name="classic-watchlist" extends="classic"> -->
+<!--     <put-attribute name="functions" value="/WEB-INF/layouts/tile_functions_watchlist.jsp" /> -->
+<!--   </definition> -->
+
+<!--   <definition name="classic-competitor" extends="classic"> -->
+<!--     <put-attribute name="functions" value="/WEB-INF/layouts/tile_functions_competitor.jsp" /> -->
+<!--   </definition> -->
+
+<!--   <definition name="classic-crawler" extends="classic"> -->
+<!--     <put-attribute name="functions" value="/WEB-INF/layouts/tile_functions_crawler.jsp" /> -->
+<!--   </definition> -->
+
+<!--   <definition name="classic-partition" extends="classic"> -->
+<!--     <put-attribute name="functions" value="/WEB-INF/layouts/tile_functions_partition.jsp" /> -->
+<!--   </definition> -->
+</tiles-definitions>
