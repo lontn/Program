@@ -1,4 +1,4 @@
-package org.common.utils;
+package com.fcu.gtml.utils;
 
 public class ParseException extends Exception {
 

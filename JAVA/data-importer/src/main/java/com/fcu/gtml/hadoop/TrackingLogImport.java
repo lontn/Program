@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Properties;
+import java.util.StringTokenizer;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.hadoop.conf.Configuration;
@@ -29,13 +30,16 @@ import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.common.utils.JsonParser;
 import org.joda.time.DateTime;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 
 import com.fcu.gtml.process.edx.domain.TrackingLog;
+import com.fcu.gtml.utils.JsonParser;
 
 
 public class TrackingLogImport {
+    //private static final Logger L = LoggerFactory.getLogger(TrackingLogImport.class);
     private static final Logger L = LogManager.getLogger();
     private static Properties prop = new Properties();
     private static Configuration conf = null;
@@ -63,19 +67,18 @@ public class TrackingLogImport {
 
         @Override
         protected void setup(Context context) throws IOException, InterruptedException {
-            files = FileUtils.listFiles(FileUtils.getFile(filePath), null, true);
+            System.out.println("filePath:"+filePath);
+            //files = FileUtils.listFiles(FileUtils.getFile(filePath), null, true);
         }
 
         @Override
         public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
-            for (File file : files) {
-                List<TrackingLog> trackingLogs = LoadFile(file);
-                for (TrackingLog trackingLog : trackingLogs) {
-                    byte[] rowkey = Bytes.toBytes(trackingLog.getEventType() + trackingLog.getTime().getTime());
-                    context.write(new ImmutableBytesWritable(rowkey), putHBaseData(rowkey, trackingLog));
-                }
-                file.delete();
-            }
+            String strRow = value.toString();
+            L.info("strRow:" + strRow);
+            System.out.println("strRow:" + strRow);
+            TrackingLog tLog = LoadFile(strRow);
+            byte[] rowkey = Bytes.toBytes(tLog.getEventType() + tLog.getTime().getTime());
+            context.write(new ImmutableBytesWritable(rowkey), putHBaseData(rowkey, tLog));
         }
     }
 
@@ -103,29 +106,15 @@ public class TrackingLogImport {
         return put;
     }
 
-    private static List<TrackingLog> LoadFile(File file) {
-        List<TrackingLog> logs = new ArrayList<>();
+    private static TrackingLog LoadFile(String value) {
+        TrackingLog tLog = null;
         try {
-            FileReader fr = new FileReader(file.getAbsoluteFile());
-            BufferedReader br = new BufferedReader(fr);
-            String strRow = ""; // 讀第一行
-            while ((strRow = br.readLine()) != null) {
-                L.info("strRow:" + strRow);
-                try {
-                    TrackingLog tLog = JsonParser.parse(strRow, TrackingLog.class);
-                    logs.add(tLog);
-                } catch (Exception e) {
-                    L.error("Error Data:{}", strRow);
-                    L.error("FileReader Data fail.", e);
-                }
-            }
-            br.close();
-            fr.close();
-        } catch (IOException e) {
-            L.error("read *.txt fail.", e);
+            tLog = JsonParser.parse(value, TrackingLog.class);
+        } catch (Exception e) {
+            L.error("Error Data:{}", value);
+            L.error("TrackingLog Data fail.", e);
         }
-
-        return logs;
+        return tLog;
     }
 
     public static void main(String[] args) throws Exception {
@@ -138,7 +127,7 @@ public class TrackingLogImport {
         job.setJarByClass(TrackingLogImport.class);
 
         // Step 3. Set Input format
-        //job.setInputFormatClass(TextInputFormat.class);
+        job.setInputFormatClass(TextInputFormat.class);
 
         // Step 4. Set Mapper
         job.setMapperClass(ImportTrackingMapper.class);
@@ -167,10 +156,10 @@ public class TrackingLogImport {
         FileOutputFormat.setOutputPath(job, outputPath);
 
         if (job.waitForCompletion(true)) {
-            System.out.println("Job Done!");
+            System.out.println("Job Done!!!");
             System.exit(0);
         } else {
-            System.out.println("Job Failed!");
+            System.out.println("Job Failed!!!!!!!!!!!!!!!!");
             System.exit(1);
         }
     }

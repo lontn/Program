@@ -1,4 +1,4 @@
-package org.common.utils;
+package com.fcu.gtml.utils;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

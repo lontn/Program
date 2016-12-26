@@ -1,4 +1,4 @@
-package org.common.utils;
+package com.fcu.gtml.utils;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;

@@ -3,7 +3,6 @@ package com.fcu.gtml.process.edx.domain;
 import java.util.Date;
 
 import org.apache.commons.lang3.StringUtils;
-import org.common.utils.JsonParser;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormat;
@@ -13,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fcu.gtml.utils.JsonParser;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class TrackingLog extends TheData {
