@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fcu.gtml.persistence.TrackingLogMapper">
+    <resultMap type="TrackingLog" id="rm_TrackingLog"> <!-- type的值是根據typeAlias來的  -->
+       <result property="id"              column="Id"/>
+       <result property="eventType"       column="EventType"  />
+       <result property="event"           column="Event" jdbcType="VARCHAR" javaType="String" />
+       <result property="context"         column="Context"  />
+       <result property="time"            column="Time"  />
+       <result property="userId"          column="UserId"  />
+    </resultMap>
+<!--      <select id="batchInsert" parameterType="TrackingLog"> -->
+<!--         INSERT INTO Edx.[dbo].[TrackingLog] -->
+<!--            ([UserName] -->
+<!--            ,[EventType] -->
+<!--            ,[IP] -->
+<!--            ,[Agent] -->
+<!--            ,[Host] -->
+<!--            ,[Session] -->
+<!--            ,[Event] -->
+<!--            ,[EventSource] -->
+<!--            ,[Time] -->
+<!--            ,[Page] -->
+<!--            ,[ContextUserName] -->
+<!--            ,[ContextUserId] -->
+<!--            ,[ContextIP] -->
+<!--            ,[ContextOrgId] -->
+<!--            ,[ContextAgent] -->
+<!--            ,[ContextHost] -->
+<!--            ,[ContextSession] -->
+<!--            ,[ContextCourseId] -->
+<!--            ,[ContextPath]) -->
+<!--      VALUES -->
+<!--            (#{userName} -->
+<!--            ,#{eventType} -->
+<!--            ,#{ip} -->
+<!--            ,#{agent} -->
+<!--            ,#{host} -->
+<!--            ,#{session} -->
+<!--            ,#{event} -->
+<!--            ,#{eventSource} -->
+<!--            ,#{time} -->
+<!--            ,#{page} -->
+<!--            ,#{context.userName} -->
+<!--            ,#{context.userId} -->
+<!--            ,#{context.ip} -->
+<!--            ,#{context.orgId} -->
+<!--            ,#{context.agent} -->
+<!--            ,#{context.host} -->
+<!--            ,#{context.session} -->
+<!--            ,#{context.courseId} -->
+<!--            ,#{context.path}) -->
+<!--      </select> -->
+     <select id="listTrackingLogByEventType" parameterType="map" resultMap="rm_TrackingLog">
+        SELECT Id,EventType,Event,Context,[Time],UserId
+        FROM(
+         SELECT ROW_NUMBER() OVER (ORDER BY [TIME] ASC) AS RowNum
+              ,T.Id
+              ,[EventType]
+              ,[Event]
+              ,Context
+              ,[Time]
+              ,C.UserId
+          FROM [EdX].[dbo].[TrackingLogBAK] AS T with(nolock)
+          INNER JOIN [EdX].[dbo].[TrackingLogContext] AS C WITH(NOLOCK)
+          ON T.Id = C.TrackingLogBAKId
+          WHERE EventType = #{eventType}
+        ) AS Result
+     </select>
+     <select id="batchInsert" parameterType="TrackingLog">
+        INSERT INTO Edx.[dbo].[TrackingLogBAK]
+           ([UserName]
+           ,[EventType]
+           ,[IP]
+           ,[Agent]
+           ,[Host]
+           ,[Session]
+           ,[Event]
+           ,[EventSource]
+           ,[Time]
+           ,[Page]
+           ,[Context])
+     VALUES
+           (#{userName}
+           ,#{eventType}
+           ,#{ip}
+           ,#{agent}
+           ,#{host}
+           ,#{session}
+           ,#{event}
+           ,#{eventSource}
+           ,#{time}
+           ,#{page}
+           ,#{context})
+     </select>
+     <insert id="batchInsertBak" parameterType="TrackingLog" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO Edx.[dbo].[TrackingLogBackUp]
+           ([UserName]
+           ,[EventType]
+           ,[IP]
+           ,[Agent]
+           ,[Host]
+           ,[Session]
+           ,[Event]
+           ,[EventSource]
+           ,[Time]
+           ,[Page]
+           ,[Context])
+     VALUES
+           (#{userName}
+           ,#{eventType}
+           ,#{ip}
+           ,#{agent}
+           ,#{host}
+           ,#{session}
+           ,#{event}
+           ,#{eventSource}
+           ,#{time}
+           ,#{page}
+           ,#{context})
+     </insert>
+     <select id="batchInsertByTrackingLogContext" parameterType="TrackingLogContext">
+     INSERT INTO [dbo].[TrackingLogContextBackup]
+           ([TrackingLogBAKId]
+           ,[UserId]
+           ,[OrgId]
+           ,[CourseId]
+           ,[Path]
+           ,[InDate]
+           ,[InUser])
+     VALUES
+           (#{trackingLogBAKId}
+           ,#{userId}
+           ,#{orgId}
+           ,#{courseId}
+           ,#{path}
+           ,GETDATE()
+           ,'Gtml')
+     </select>
+     <select id="batchInsertBySeekVideo" parameterType="VideoBySeekVideo">
+     INSERT INTO EdX.[dbo].[VideoBySeekVideo]
+           ([TrackingLogId]
+           ,UserId
+           ,[SeekVideoId]
+           ,[OldTime]
+           ,[NewTime]
+           ,[Type]
+           ,[Code])
+     VALUES
+           (#{trackingLogId}
+           ,#{userId}
+           ,#{id}
+           ,#{oldTime}
+           ,#{newTime}
+           ,#{type}
+           ,#{code})
+     </select>
+     <select id="batchInsertByLoadVideo" parameterType="VideoByLoadVideo">
+     INSERT INTO EdX.[dbo].[VideoByLoadVideo]
+           ([TrackingLogId]
+           ,UserId
+           ,[LoadVideoId]
+           ,[Code])
+     VALUES
+           (#{trackingLogId}
+           ,#{userId}
+           ,#{id}
+           ,#{code})
+     </select>
+     <select id="batchInsertByPlayVideo" parameterType="VideoByPlayVideo">
+     INSERT INTO EdX.[dbo].[VideoByPlayVideo]
+           ([TrackingLogId]
+           ,UserId
+           ,[PlayVideoId]
+           ,[CurrentTime]
+           ,[Code])
+     VALUES
+           (#{trackingLogId}
+           ,#{userId}
+           ,#{id}
+           ,#{currentTime}
+           ,#{code})
+     </select>
+     <select id="batchInsertByPauseVideo" parameterType="VideoByPauseVideo">
+     INSERT INTO EdX.[dbo].[VideoByPauseVideo]
+           ([TrackingLogId]
+           ,UserId
+           ,[PauseVideoId]
+           ,[CurrentTime]
+           ,[Code])
+     VALUES
+           (#{trackingLogId}
+           ,#{userId}
+           ,#{id}
+           ,#{currentTime}
+           ,#{code})
+     </select>
+     <select id="batchInsertByStopVideo" parameterType="VideoByStopVideo">
+     INSERT INTO EdX.[dbo].[VideoByStopVideo]
+           ([TrackingLogId]
+           ,[UserId]
+           ,[StopVideoId]
+           ,[CurrentTime]
+           ,[Code])
+     VALUES
+           (#{trackingLogId}
+           ,#{userId}
+           ,#{id}
+           ,#{currentTime}
+           ,#{code})
+     </select>
+     <select id="batchInsertBySpeedChangeVideo" parameterType="VideoBySpeedChangeVideo">
+     INSERT INTO [dbo].[VideoBySpeedChangeVideo]
+           ([TrackingLogId]
+           ,[UserId]
+           ,[SpeedChangeVideoId]
+           ,[CurrentTime]
+           ,[OldSpeed]
+           ,[NewSpeed]
+           ,[Code])
+     VALUES
+           (#{trackingLogId}
+           ,#{userId}
+           ,#{id}
+           ,#{currentTime}
+           ,#{oldSpeed}
+           ,#{newSpeed}
+           ,#{code})
+     </select>
+     <select id="batchInsertByHideTranscript" parameterType="VideoByHideTranscript">
+     INSERT INTO EdX.[dbo].[VideoByHideTranscript]
+           ([TrackingLogId]
+           ,[UserId]
+           ,[HideTranscriptId]
+           ,[CurrentTime]
+           ,[Code])
+     VALUES
+           (#{trackingLogId}
+           ,#{userId}
+           ,#{id}
+           ,#{currentTime}
+           ,#{code})
+     </select>
+     <select id="batchInsertByShowTranscript" parameterType="VideoByShowTranscript">
+     INSERT INTO [dbo].[VideoByShowTranscript]
+           ([TrackingLogId]
+           ,[UserId]
+           ,[ShowTranscriptId]
+           ,[CurrentTime]
+           ,[Code])
+     VALUES
+           (#{trackingLogId}
+           ,#{userId}
+           ,#{id}
+           ,#{currentTime}
+           ,#{code})
+     </select>
+     <select id="batchInsertByEnrollmentEventsLog" parameterType="EnrollmentEventsLog">
+     INSERT INTO EdX.[dbo].[EnrollmentEventsLog]
+           ([TrackingLogId]
+           ,[UserId]
+           ,[CourseId]
+           ,[Mode]
+           ,[EnrollUserId])
+     VALUES
+           (#{trackingLogId}
+           ,#{userId}
+           ,#{courseId}
+           ,#{mode}
+           ,#{enrollUserId})
+     </select>
+     <select id="batchInsertByNavigationEventsLog" parameterType="NavigationEventsLog">
+     INSERT INTO EdX.[dbo].[NavigationEventsLog]
+           ([TrackingLogId]
+           ,[Old]
+           ,[New]
+           ,[EventId])
+     VALUES
+           (#{trackingLogId}
+           ,#{eventOld}
+           ,#{eventNew}
+           ,#{eventId})
+     </select>
+     <select id="batchInsertByTextBookByBook" parameterType="TextBookByBook">
+     INSERT INTO EdX.[dbo].[TextBookByBook]
+           ([TrackingLogId]
+           ,[UserId]
+           ,[BookType]
+           ,[Old]
+           ,[New]
+           ,[Chapter]
+           ,[BookName])
+     VALUES
+           (#{trackingLogId}
+           ,#{userId}
+           ,#{type}
+           ,#{eventOld}
+           ,#{eventNew}
+           ,#{chapter}
+           ,#{name})
+     </select>
+     <select id="batchInsertByPDFThumbnailsToggled" parameterType="PDFThumbnailsToggled">
+     INSERT INTO [dbo].[PDFThumbnailsToggled]
+           ([TrackingLogId]
+           ,[UserId]
+           ,[Page]
+           ,[Chapter]
+           ,[Name])
+     VALUES
+           (#{trackingLogId}
+           ,#{userId}
+           ,#{page}
+           ,#{chapter}
+           ,#{name})
+     </select>
+     <select id="batchInsertByPDFThumbnailNavigated" parameterType="PDFThumbnailNavigated">
+     INSERT INTO EDX.[dbo].[PDFThumbnailNavigated]
+           ([TrackingLogId]
+           ,[UserId]
+           ,[Page]
+           ,[ThumbnailTitle]
+           ,[Chapter]
+           ,[Name])
+     VALUES
+            (#{trackingLogId}
+           ,#{userId}
+           ,#{page}
+           ,#{thumbnailTitle}
+           ,#{chapter}
+           ,#{name})
+     </select>
+     <select id="batchInsertByPDFPageScrolled" parameterType="PDFPageScrolled">
+     INSERT INTO EdX.[dbo].[PDFPageScrolled]
+           ([TrackingLogId]
+           ,[Page]
+           ,[Direction]
+           ,[Chapter]
+           ,[Name])
+     VALUES
+           (#{trackingLogId}
+           ,#{page}
+           ,#{direction}
+           ,#{chapter}
+           ,#{name})
+     </select>
+     <select id="batchInsertByPDFDisplayScaled" parameterType="PDFPageScrolled">
+     INSERT INTO EdX.[dbo].[PDFDisplayScaled]
+           ([TrackingLogId]
+           ,[Amount]
+           ,[Page]
+           ,[Chapter]
+           ,[Name])
+     VALUES
+           (#{trackingLogId}
+           ,#{amount}
+           ,#{page}
+           ,#{chapter}
+           ,#{name})
+     </select>
+     <select id="batchInsertByPDFOutlineToggled" parameterType="PDFOutlineToggled">
+     INSERT INTO EdX.[dbo].[PDFOutlineToggled]
+           ([TrackingLogId]
+           ,[Page]
+           ,[Chapter]
+           ,[Name])
+     VALUES
+           (#{trackingLogId}
+           ,#{page}
+           ,#{chapter}
+           ,#{name})
+     </select>
+</mapper>

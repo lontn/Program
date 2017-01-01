@@ -138,7 +138,7 @@ public class ProxyLogRun {
         Job job = null;
         Path outputPath = null;
         try {
-            job = new Job(conf, "ProxyLogRun");
+            job = Job.getInstance(conf, "ProxyLogRun");
         } catch (IOException e) {
             L.error("Job Error:{}", e);
         }

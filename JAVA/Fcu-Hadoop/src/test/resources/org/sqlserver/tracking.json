@@ -1,0 +1,23 @@
+{
+    "username": "*hidden*",
+    "event_source": "server",
+    "name": "edx.course.enrollment.activated",
+    "time": "2014-09-12T02:37:58.752338+00:00",
+    "agent": "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/34.0.1847.131 Safari/537.36",
+    "page": null,
+    "host": "studio.openedx.tw",
+    "session": "a0c02aec8cb7d43a0ba2295e06dcc5e1",
+    "context": {
+        "user_id": 82,
+        "org_id": "ORG6039",
+        "course_id": "ORG6039/C0382/D2528",
+        "path": "/course/"
+    },
+    "ip": "*hidden*",
+    "event": {
+        "course_id": "ORG6039/C0382/D2528",
+        "user_id": 82,
+        "mode": "honor"
+    },
+    "event_type": "edx.course.enrollment.activated"
+}

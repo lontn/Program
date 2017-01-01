@@ -1,0 +1,23 @@
+{
+    "username": "*hidden*",
+    "event_type": "load_video",
+    "ip": "*hidden*",
+    "agent": "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.58 Safari/537.36",
+    "host": "courses.openedx.tw",
+    "session": "1aa23140a9e6e2424585470113bcf1ad",
+    "event": "{\"id\":\"i4x-ORG6039-C0771-video-9ea249c073d341d2982ac34a293b197a\",\"code\":\"X1xQFTq26vU\"}",
+    "event_source": "browser",
+    "context": {
+        "username": "*hidden*",
+        "user_id": 5,
+        "ip": "*hidden*",
+        "org_id": "ORG6039",
+        "agent": "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.58 Safari/537.36",
+        "host": "courses.openedx.tw",
+        "session": "1aa23140a9e6e2424585470113bcf1ad",
+        "course_id": "ORG6039/C0771/D2528",
+        "path": "/event"
+    },
+    "time": "2014-09-12T06:47:36.852806+00:00",
+    "page": "https://courses.openedx.tw/courses/ORG6039/C0771/D2528/courseware/23f67297beac4ecbb3352c43b5689e23/c3ab809a3113438994b9bb56b3e10e5e/"
+}

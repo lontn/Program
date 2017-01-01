@@ -102,7 +102,8 @@ public class presidentElection {
         }
 
         // Step 2. Create a Job
-        Job job = new Job(conf, "President Election");
+        //Job job = new Job(conf, "President Election");
+        Job job = Job.getInstance(conf, "President Election");
         job.setJarByClass(presidentElection.class);
 
         // Step 3. Set Input format

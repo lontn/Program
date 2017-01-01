@@ -122,7 +122,7 @@ public class ProxyLogStatistics {
             //Path inputPath = new Path(hdfs.getWorkingDirectory().toString() + "/input");
             Path outputPath = new Path(hdfs.getWorkingDirectory().toString() + "/output"); //當下的運行的目錄
             
-            Job job = new Job(conf, "ProxyLogStatistics");
+            Job job = Job.getInstance(conf, "ProxyLogStatistics");
             job.setJarByClass(ProxyLogStatistics.class);
             TableMapReduceUtil.initTableMapperJob("NetFlowProxyLogTest", scan, ProxyLogStatisticsMapper.class, Text.class, IntWritable.class, job);
             job.setReducerClass(ProxyLogStatisticsReducer.class);

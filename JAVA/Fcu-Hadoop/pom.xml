@@ -95,16 +95,16 @@
             </exclusion>
           </exclusions>
         </dependency>
-        
-        <!-- <dependency> -->
-        <!-- <groupId>org.apache.hbase</groupId> -->
-        <!-- <artifactId>hbase-hadoop1-compat</artifactId> -->
-        <!-- <version>0.96.1-hadoop1</version> -->
-        <!-- </dependency> -->
         <dependency>
             <groupId>org.apache.hbase</groupId>
             <artifactId>hbase-server</artifactId>
             <version>1.1.2</version>
+<!--             <exclusions> -->
+<!--               <exclusion> -->
+<!--                 <artifactId>guava</artifactId> -->
+<!--                 <groupId>com.google.guava</groupId> -->
+<!--               </exclusion> -->
+<!--             </exclusions> -->
         </dependency>
         <!-- Joda Time -->
         <dependency>
@@ -262,6 +262,23 @@
           <scope>system</scope>
           <systemPath>C:/Program Files/Java/jdk1.7.0_65/lib/tools.jar</systemPath>
         </dependency>
+        <dependency>
+          <groupId>org.apache.mrunit</groupId>
+          <artifactId>mrunit</artifactId>
+          <version>1.1.0</version>
+          <classifier>hadoop2</classifier>
+          <exclusions>
+            <exclusion>
+              <artifactId>guava</artifactId>
+              <groupId>com.google.guava</groupId>
+            </exclusion>
+          </exclusions>
+        </dependency>
+<!--         <dependency> -->
+<!--           <groupId>com.google.guava</groupId> -->
+<!--           <artifactId>guava</artifactId> -->
+<!--           <version>19.0</version> -->
+<!--         </dependency> -->
     </dependencies>
 
     <build>
@@ -275,8 +292,20 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>org.hadoop.PresidentElectionV2</mainClass>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                            <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                            <mainClass>org.sqlserver.TrackingLogPlatform</mainClass>
                         </manifest>
+                        <manifestEntries>
+                          <Build-Time>${maven.build.timestamp}</Build-Time>
+                          <!--<Build-Version>${project.version}</Build-Version>
+                          <Build-Host>${agent.name}</Build-Host>
+                          <Build-User>${user.name}</Build-User>
+                          <Build-Maven>Maven ${maven.version}</Build-Maven>
+                          <Build-Java>${java.version}</Build-Java>
+                          <Build-OS>${os.name}</Build-OS>
+                          <Build-Path>${basedir}</Build-Path>-->
+                        </manifestEntries>
                     </archive>
                 </configuration>
             </plugin>
@@ -300,7 +329,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.3.2</version>
+                <version>3.1</version>
                 <configuration>
                     <source>1.7</source>
                     <target>1.7</target>
@@ -309,7 +338,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>2.1.2</version>
+                <version>2.3</version>
                 <executions>
                     <execution>
                         <id>attach-sources</id>

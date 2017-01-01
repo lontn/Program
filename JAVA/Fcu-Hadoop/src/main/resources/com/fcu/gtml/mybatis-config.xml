@@ -5,7 +5,25 @@
 <typeAliases>
   <typeAlias alias="UserVisitorAccess" type="com.fcu.gtml.domain.UserVisitorAccess"/>
   <typeAlias alias="StudentLog" type="com.fcu.gtml.domain.StudentLog"/>
+  <typeAlias alias="TrackingLog" type="com.fcu.gtml.domain.TrackingLog"/>
+  <typeAlias alias="VideoBySeekVideo" type="com.fcu.gtml.domain.VideoBySeekVideo"/>
+  <typeAlias alias="VideoByLoadVideo" type="com.fcu.gtml.domain.VideoByLoadVideo"/>
+  <typeAlias alias="VideoByPlayVideo" type="com.fcu.gtml.domain.VideoByPlayVideo"/>
+  <typeAlias alias="VideoByPauseVideo" type="com.fcu.gtml.domain.VideoByPauseVideo"/>
+  <typeAlias alias="VideoByStopVideo" type="com.fcu.gtml.domain.VideoByStopVideo"/>
+  <typeAlias alias="VideoBySpeedChangeVideo" type="com.fcu.gtml.domain.VideoBySpeedChangeVideo"/>
+  <typeAlias alias="VideoByHideTranscript" type="com.fcu.gtml.domain.VideoByHideTranscript"/>
+  <typeAlias alias="VideoByShowTranscript" type="com.fcu.gtml.domain.VideoByShowTranscript"/>
+  <typeAlias alias="EnrollmentEventsLog" type="com.fcu.gtml.domain.EnrollmentEventsLog"/>
+  <typeAlias alias="NavigationEventsLog" type="com.fcu.gtml.domain.NavigationEventsLog"/>
+  <typeAlias alias="TextBookByBook" type="com.fcu.gtml.domain.TextBookByBook"/>
+  <typeAlias alias="PDFThumbnailsToggled" type="com.fcu.gtml.domain.PDFThumbnailsToggled"/>
+  <typeAlias alias="PDFThumbnailNavigated" type="com.fcu.gtml.domain.PDFThumbnailNavigated"/>
+  <typeAlias alias="PDFPageScrolled" type="com.fcu.gtml.domain.PDFPageScrolled"/>
+  <typeAlias alias="PDFDisplayScaled" type="com.fcu.gtml.domain.PDFDisplayScaled"/>
+  <typeAlias alias="PDFOutlineToggled" type="com.fcu.gtml.domain.PDFOutlineToggled"/>
   <typeAlias alias="StudentEnrollment" type="com.fcu.gtml.domain.StudentEnrollment"/>
+  <typeAlias alias="TrackingLogContext" type="com.fcu.gtml.domain.TrackingLogContext"/>
   <typeAlias alias="StudentNavigational" type="com.fcu.gtml.domain.StudentNavigational"/>
   <typeAlias alias="StudentVideoHideTranscript" type="com.fcu.gtml.domain.StudentVideoHideTranscript"/>
   <typeAlias alias="StudentVideoLoadVideo" type="com.fcu.gtml.domain.StudentVideoLoadVideo"/>

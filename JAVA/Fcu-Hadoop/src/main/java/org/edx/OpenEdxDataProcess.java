@@ -33,7 +33,7 @@ public class OpenEdxDataProcess {
     private static final Logger L = LoggerFactory.getLogger(OpenEdxDataProcess.class);
     private static Properties prop = new Properties();
     private static Configuration conf = null;
-    static{
+    static {
         conf = HBaseConfiguration.create();
         try {
             prop.load(OpenEdxDataProcess.class.getResourceAsStream("FilePath.properties"));
