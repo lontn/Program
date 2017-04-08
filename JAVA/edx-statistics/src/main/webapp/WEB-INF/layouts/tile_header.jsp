@@ -14,7 +14,7 @@
     </div>
     <div id="navbar" class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
-        <li><a href="${contextPath}/oerbook">書籍清單</a></li>
+<%--         <li><a href="${contextPath}/oerbook">Log監控</a></li> --%>
 <!--         <li><a href="#about">About</a></li> -->
 <!--         <li><a href="#contact">Contact</a></li> -->
       </ul>

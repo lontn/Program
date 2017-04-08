@@ -2,9 +2,11 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-<!-- <typeAliases> -->
-<!--   <typeAlias alias="Products" type="com.fcu.gtml.recommender.domain.Products"/> -->
-<!-- </typeAliases> -->
+<typeAliases>
+  <typeAlias alias="TrackingStatistics" type="com.fcu.gtml.edx.domain.TrackingStatistics"/>
+  <typeAlias alias="TrackingStatisticsByPie" type="com.fcu.gtml.edx.domain.TrackingStatisticsByPie"/>
+  <typeAlias alias="TrackingStatisticsByMonth" type="com.fcu.gtml.edx.domain.TrackingStatisticsByMonth"/>
+</typeAliases>
 <typeHandlers>
     <typeHandler handler="com.fcu.gtml.edx.mybatis.type.CharTypeHandler"
       jdbcType="CHAR" />
@@ -13,4 +15,10 @@
     <typeHandler handler="com.fcu.gtml.edx.mybatis.type.NVarcharTypeHandler"
       jdbcType="NVARCHAR" />
 </typeHandlers>
+<plugins>
+    <plugin interceptor="com.github.pagehelper.PageInterceptor">
+        <!-- config params as the following -->
+        <property name="param1" value="value1"/>
+    </plugin>
+</plugins>
 </configuration>

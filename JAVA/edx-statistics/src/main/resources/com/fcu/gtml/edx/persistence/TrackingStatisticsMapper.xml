@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fcu.gtml.edx.persistence.TrackingStatisticsMapper">
+  <resultMap id="rm_TrackingStatistics" type="TrackingStatistics">
+     <result property="evenType"       column="EventType"  />
+     <result property="time"           column="Time"  />
+     <result property="quantity"       column="Quantity"  />
+  </resultMap>
+  <resultMap id="rm_TrackingStatisticsByPie" type="TrackingStatisticsByPie">
+     <result property="evenType"       column="EventType"  />
+     <result property="year"           column="Year"  />
+     <result property="quantity"       column="Quantity"  />
+  </resultMap>
+  <resultMap id="rm_TrackingStatisticsByMonth" type="TrackingStatisticsByMonth">
+     <result property="evenType"       column="EventType"  />
+     <result property="year"           column="Year"  />
+     <result property="month"          column="Month"  />
+     <result property="quantity"       column="Quantity"  />
+  </resultMap>
+
+  <select id="listTrackingStatistics" resultMap="rm_TrackingStatistics">
+       SELECT ISNULL(LogEdX.EventType, #{eventType}) AS EventType,
+ISNULL(LogEdX.Time,  C.[Date]) AS [Time],
+ISNULL(LogEdX.Quantity, 0) AS Quantity
+FROM (
+SELECT 
+      [EventType]
+      ,[Time]
+      ,[Quantity]
+      ,[InDate]
+      ,[InUser]
+  FROM [EdX].[dbo].[TrackingStatistics] AS L WITH(NOLOCK)
+where EventType = #{eventType} and L.Time Between #{startDate} AND #{endDate}
+) AS LogEdX
+RIGHT JOIN
+(
+SELECT * FROM EdX.dbo.ComposeCalendar(#{startDate}, #{endDate})
+) AS C
+ON LogEdX.Time = C.[Date]
+Order by C.Date ASC 
+  </select>
+  <select id="listTrackingStatisticsByPie" resultMap="rm_TrackingStatisticsByPie">
+    SELECT  
+       [EventType]
+      ,[Year]
+      ,[Quantity]
+  FROM [EdX].[dbo].[TrackingStatisticsByYear] WITH(NOLOCK)
+where [Year] = #{year} AND EventType in (<foreach collection="eventTypes" separator="," item="eventType">#{eventType}</foreach>)
+  </select>
+  <select id="listTrackingStatisticsByMonth" resultMap="rm_TrackingStatisticsByMonth">
+      SELECT ISNULL(LogEdX.EventType, #{eventType}) AS EventType,
+      ISNULL(LogEdX.Year, #{year}) AS [Year],
+      ISNULL(LogEdX.Month, MM.Month) AS [Month],
+      ISNULL(LogEdX.Quantity, 0) AS Quantity
+      FROM
+      (
+      SELECT [Id]
+            ,[EventType]
+            ,[Year]
+            ,[Month]
+            ,[Quantity]
+            ,[InDate]
+            ,[InUser]
+        FROM [EdX].[dbo].[TrackingStatisticsByMonth] WITH(NOLOCK)
+      WHERE EventType = #{eventType} AND Year = #{year}
+      ) AS LogEdX
+      RIGHT JOIN
+      (
+      SELECT [Month]
+      FROM (
+      select DATEPART(MONTH, Date) AS [Month] from EdX.dbo.ComposeCalendar(#{startDate}, #{endDate}) AS C 
+      Group By DATEPART(MONTH, Date)
+      ) AS M
+      ) AS MM
+      ON LogEdX.[Month] = MM.[Month]
+  </select>
+</mapper>
