@@ -6,6 +6,8 @@
   <typeAlias alias="TrackingStatistics" type="com.fcu.gtml.edx.domain.TrackingStatistics"/>
   <typeAlias alias="TrackingStatisticsByPie" type="com.fcu.gtml.edx.domain.TrackingStatisticsByPie"/>
   <typeAlias alias="TrackingStatisticsByMonth" type="com.fcu.gtml.edx.domain.TrackingStatisticsByMonth"/>
+  <typeAlias alias="TrackingCourse" type="com.fcu.gtml.edx.domain.TrackingCourse"/>
+  <typeAlias alias="EdXTrackingLog" type="com.fcu.gtml.edx.domain.EdXTrackingLog"/>
 </typeAliases>
 <typeHandlers>
     <typeHandler handler="com.fcu.gtml.edx.mybatis.type.CharTypeHandler"

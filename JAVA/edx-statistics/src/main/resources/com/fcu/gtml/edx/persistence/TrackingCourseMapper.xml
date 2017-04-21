@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fcu.gtml.edx.persistence.TrackingCourseMapper">
+  <resultMap id="rm_TrackingCourse" type="TrackingCourse">
+     <result property="courseId"       column="CourseId"  />
+     <result property="displayName"    column="DisplayName"  />
+  </resultMap>
+
+  <select id="listTrackingCourse" resultMap="rm_TrackingCourse">
+       SELECT CourseId, 
+       concat(Org, '-', DisplayNumber, '-', Date, '-',DisplayName) AS DisplayName 
+       FROM EdXInfo.TrackingCourse
+       Order by DisplayName;
+  </select>
+</mapper>

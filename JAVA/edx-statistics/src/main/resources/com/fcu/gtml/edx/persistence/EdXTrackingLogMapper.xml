@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fcu.gtml.edx.persistence.EdXTrackingLogMapper">
+  <resultMap id="rm_EdXTrackingLog" type="EdXTrackingLog">
+     <result property="id"              column="Id"  />
+     <result property="userName"        column="UserName"  />
+     <result property="eventType"       column="EventType"  />
+     <result property="event"           column="Event"  />
+     <result property="time"            column="Time"  />
+     <result property="context"            column="Context"  />
+  </resultMap>
+
+  <select id="listEdXTrackingLog" resultMap="rm_EdXTrackingLog">
+       SELECT DISTINCT
+       T.Id,
+       T.UserName,
+       T.EventType, 
+       T.Event,
+       T.Time,
+       T.Context
+       FROM EdXInfo.TrackingLog AS T
+       INNER JOIN edxapp.auth_user AS A
+       ON T.UserName = A.username
+       INNER JOIN edxapp.student_courseaccessrole AS R
+       ON A.id = R.user_id
+       WHERE T.CourseId = #{courseId} 
+       AND T.Time Between #{datetimeStart} AND #{datetimeEnd}
+       <if test="roles !=null and roles.length != 0">
+       AND R.Role not in (<foreach item="role" collection="roles" separator=",">#{role}</foreach>)
+       </if>
+  </select>
+</mapper>

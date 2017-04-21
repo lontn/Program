@@ -37,10 +37,8 @@
 
   <!-- Configures the @Service programming model -->
   <context:annotation-config />
-  <context:component-scan base-package="com.fcu.gtml.edx.service"/>
-  <context:component-scan base-package="com.fcu.gtml.edx.domain"/>
-  <context:component-scan base-package="com.fcu.gtml.edx.persistence"/>
-  
+  <context:component-scan base-package="com.fcu.gtml.edx"/>
+
   <!-- 配置myBatis -->
   <bean id="sqlSessionFactory01" class="org.mybatis.spring.SqlSessionFactoryBean">
   <property name="dataSource" ref="dataSource01"/>

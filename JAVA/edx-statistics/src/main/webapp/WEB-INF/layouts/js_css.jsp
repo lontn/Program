@@ -13,9 +13,11 @@
 <script src="${contextPath}/js/jquery-1.12.3.js"></script>
 <script src="${contextPath}/js/jquery-ui.js"></script>
 <script src="${contextPath}/js/moment.min.js"></script>
+<script src="${contextPath}/js/moment-with-locales.js"></script>
 <script src="${contextPath}/js/bootstrap.js"></script>
 <script src="${contextPath}/js/bootstrap-datetimepicker.min.js"></script>
 <script src="${contextPath}/js/vue.js"></script>
 <script src="${contextPath}/js/vue-resource.js"></script>
 <script src="${contextPath}/js/highchart/highcharts.js"></script>
 <script src="${contextPath}/js/highchart/modules/exporting.js"></script>
+<%-- <script src="${contextPath}/js/locale/zh-tw.js"></script> --%>

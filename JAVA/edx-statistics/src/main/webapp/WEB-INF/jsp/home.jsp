@@ -114,98 +114,98 @@ Vue.http.options.emulateJSON = true;
 //$(function(){                   // Start when document ready
     var result = {};
     console.log("AAAAA");
-    var sortable = new Vue({
-        el: '#sortable',
-        data: {
-            result:{}
-        },
-        ready: function() {
-            console.log("BBBB");
-            this.getData();
-            this.getSeekVideoData();
-            this.getPieChart();
-            this.getLogByMonth();
-        },
-        methods: {
-            getData: function() {
-                var vm = this;
-                var data = {
-                        eventType : $("#eventType").val(),
-                        year :$("#year").val(),
-                        month : $("#month").val(),
-                        emulateJSON: true
-                        //'Content-Type' : 'application/x-www-form-urlencoded'
-                };
-                //console.log(vm.$http);
-                vm.$http.post("home/searchType", data).then(function(response) {
-                    console.log("response:", response.data);
-                    result = response.data;
-                    console.log("result:", result);
-                    loadVideoChart(response.data, "loadVideoChart");
-                    //vm.$set('result', response.data);
-                });
-            },
-            getSeekVideoData: function() {
-                var vm = this;
-                var data = {
-                        eventType : $("#eventType").val(),
-                        year :$("#year").val(),
-                        month : $("#month").val(),
-                        emulateJSON: true
-                        //'Content-Type' : 'application/x-www-form-urlencoded'
-                };
-                //console.log(vm.$http);
-                vm.$http.post("home/searchType", data).then(function(response) {
-                    console.log("response seek_video:", response.data);
-                    result = response.data;
-                    console.log("result seek_video:", result + $("#year").val());
-                    loadVideoChart(response.data, "seekVideoChart");
-                    //vm.$set('result', response.data);
-                });
-            },
-            getPieChart: function() {
-                var vm = this;
-                var data = {
-                        year :$("#year").val(),
-                        emulateJSON: true
-                        //'Content-Type' : 'application/x-www-form-urlencoded'
-                };
-                vm.$http.post("home/combinePie", data).then(function(response) {
-                    console.log("response pie data:", response.data);
-                    result = response.data;
-                    console.log("result pie data:", result[0]);
-                    pieChart(result, "pieChart");
-                    //vm.$set('result', response.data);
-                });
-            },
-            getLogByMonth: function() {
-                var vm = this;
-                var data = {
-                        year : $("#year").val(),
-                        month : $("#month").val(),
-                        eventType : $("#eventType").val(),
-                        emulateJSON: true
-                        //'Content-Type' : 'application/x-www-form-urlencoded'
-                };
-                //console.log(vm.$http);
-                vm.$http.post("home/searchMonth", data).then(function(response) {
-                    console.log("response getLogByMonth:", response.data);
-                    result = response.data;
-                    console.log("result getLogByMonth:", result);
-                    loadVideoChart(result, "logByMonthChart");
-                    //vm.$set('result', response.data);
-                });
-            },
-            searchResult: function() {
-                //alert('year:' + $("#year").val() + 'month:' + $("#month").val() + 'eventType:' + $("#eventType").val());
-                this.getData();
-                this.getSeekVideoData();
-                this.getPieChart();
-                this.getLogByMonth();
-            }
-        }
-    });
-    console.log("result outside:", result);
+//     var sortable = new Vue({
+//         el: '#sortable',
+//         data: {
+//             result:{}
+//         },
+//         ready: function() {
+//             console.log("BBBB");
+//             this.getData();
+//             this.getSeekVideoData();
+//             this.getPieChart();
+//             this.getLogByMonth();
+//         },
+//         methods: {
+//             getData: function() {
+//                 var vm = this;
+//                 var data = {
+//                         eventType : $("#eventType").val(),
+//                         year :$("#year").val(),
+//                         month : $("#month").val(),
+//                         emulateJSON: true
+//                         //'Content-Type' : 'application/x-www-form-urlencoded'
+//                 };
+//                 //console.log(vm.$http);
+//                 vm.$http.post("home/searchType", data).then(function(response) {
+//                     console.log("response:", response.data);
+//                     result = response.data;
+//                     console.log("result:", result);
+//                     loadVideoChart(response.data, "loadVideoChart");
+//                     //vm.$set('result', response.data);
+//                 });
+//             },
+//             getSeekVideoData: function() {
+//                 var vm = this;
+//                 var data = {
+//                         eventType : $("#eventType").val(),
+//                         year :$("#year").val(),
+//                         month : $("#month").val(),
+//                         emulateJSON: true
+//                         //'Content-Type' : 'application/x-www-form-urlencoded'
+//                 };
+//                 //console.log(vm.$http);
+//                 vm.$http.post("home/searchType", data).then(function(response) {
+//                     console.log("response seek_video:", response.data);
+//                     result = response.data;
+//                     console.log("result seek_video:", result + $("#year").val());
+//                     loadVideoChart(response.data, "seekVideoChart");
+//                     //vm.$set('result', response.data);
+//                 });
+//             },
+//             getPieChart: function() {
+//                 var vm = this;
+//                 var data = {
+//                         year :$("#year").val(),
+//                         emulateJSON: true
+//                         //'Content-Type' : 'application/x-www-form-urlencoded'
+//                 };
+//                 vm.$http.post("home/combinePie", data).then(function(response) {
+//                     console.log("response pie data:", response.data);
+//                     result = response.data;
+//                     console.log("result pie data:", result[0]);
+//                     pieChart(result, "pieChart");
+//                     //vm.$set('result', response.data);
+//                 });
+//             },
+//             getLogByMonth: function() {
+//                 var vm = this;
+//                 var data = {
+//                         year : $("#year").val(),
+//                         month : $("#month").val(),
+//                         eventType : $("#eventType").val(),
+//                         emulateJSON: true
+//                         //'Content-Type' : 'application/x-www-form-urlencoded'
+//                 };
+//                 //console.log(vm.$http);
+//                 vm.$http.post("home/searchMonth", data).then(function(response) {
+//                     console.log("response getLogByMonth:", response.data);
+//                     result = response.data;
+//                     console.log("result getLogByMonth:", result);
+//                     loadVideoChart(result, "logByMonthChart");
+//                     //vm.$set('result', response.data);
+//                 });
+//             },
+//             searchResult: function() {
+//                 //alert('year:' + $("#year").val() + 'month:' + $("#month").val() + 'eventType:' + $("#eventType").val());
+//                 this.getData();
+//                 this.getSeekVideoData();
+//                 this.getPieChart();
+//                 this.getLogByMonth();
+//             }
+//         }
+//     });
+//     console.log("result outside:", result);
     //loadVideoChart(result);
 //});
 </script>
