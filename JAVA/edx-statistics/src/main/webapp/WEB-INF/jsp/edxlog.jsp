@@ -53,11 +53,11 @@
             <input type="checkbox" id="{{role.id}}" value="{{role.name}}" v-model="edxObj.roles"> {{role.name}}
           </label>
         </div>
-        <button type="button" class="btn btn-default" v-on:click="searchResult()">查詢</button>
+        <button type="button" id="edxBtn" class="btn btn-default" v-on:click="searchResult()">查詢</button>
       </div>
     </form>
   </div>
-  <div v-if="isShow">
+  <div id="showTable" style="display: none">
   <table class="table table-bordered">
     <thead>
       <tr class="info">
@@ -79,6 +79,15 @@
           <td>{{ edx.context }}</td>
       </tr>
     </tbody>
+    <tfoot>
+      <tr>
+          <td colspan="6">
+              <nav aria-label="Page navigation" id="paginationBox">
+                <ul class="pagination" id="pagination"></ul>
+              </nav>
+          </td>
+      </tr>
+    </tfoot>
   </table>
   </div>
 </div>
@@ -93,14 +102,28 @@ $(function() {
         locale: 'zh-tw',
         format: 'YYYY-MM-DD HH:mm'
     });
-//     $("#datetimeStart").on("dp.change", function (e) {
-//         $('#datetimeEnd').data("DateTimePicker").minDate(e.date);
-//     });
-//     $("#datetimeEnd").on("dp.change", function (e) {
-//         $('#datetimeStart').data("DateTimePicker").maxDate(e.date);
-//     });
 });
-
+var setPagination = function(totals, data, vm) {
+    //用來解決分頁中沒有自動刷新的問題
+    $('#pagination').remove();
+    $('#paginationBox').append('<ul class="pagination" id="pagination"></ul>');
+    //-------------------------
+    $('#pagination').twbsPagination({
+        totalPages: totals,
+        visiblePages: 10,
+        onPageClick: function (event, page) {
+            console.log("page", page);
+            data.pageIndex = page;
+            vm.$http.post("edxLog/searchEdX", data).then(function(response) {
+                console.log("searchEdX:", response.data);
+                var edxLogList = response.data.edxLogList;
+                vm.$set('resultLog', edxLogList);
+                $("#showTable" ).show();
+            });
+        }
+    });
+}
+//$("#edxBtn").bind("click", setPagination(35, 1));
 Vue.http.options.emulateJSON = true;
     console.log("AAAAA");
     var roleCheckBox = [ {
@@ -148,60 +171,32 @@ Vue.http.options.emulateJSON = true;
                     vm.$set('resultCourse', response.data);
                 });
             },
-    //             getPieChart: function() {
-    //                 var vm = this;
-    //                 var data = {
-    //                         year :$("#year").val(),
-    //                         emulateJSON: true
-    //                         //'Content-Type' : 'application/x-www-form-urlencoded'
-    //                 };
-    //                 vm.$http.post("home/combinePie", data).then(function(response) {
-    //                     console.log("response pie data:", response.data);
-    //                     result = response.data;
-    //                     console.log("result pie data:", result[0]);
-    //                     pieChart(result, "pieChart");
-    //                     //vm.$set('result', response.data);
-    //                 });
-    //             },
-    //             getLogByMonth: function() {
-    //                 var vm = this;
-    //                 var data = {
-    //                         year : $("#year").val(),
-    //                         month : $("#month").val(),
-    //                         eventType : $("#eventType").val(),
-    //                         emulateJSON: true
-    //                         //'Content-Type' : 'application/x-www-form-urlencoded'
-    //                 };
-    //                 //console.log(vm.$http);
-    //                 vm.$http.post("home/searchMonth", data).then(function(response) {
-    //                     console.log("response getLogByMonth:", response.data);
-    //                     result = response.data;
-    //                     console.log("result getLogByMonth:", result);
-    //                     loadVideoChart(result, "logByMonthChart");
-    //                     //vm.$set('result', response.data);
-    //                 });
-    //             },
-                searchResult: function() {
-                    console.log("edxObj:", this.edxObj);
-                    var roleStr = this.edxObj.roles.join(",")
-                    console.log("roleStr:", roleStr);
-                    var vm = this;
-                    var data = {
-                            courseId: this.edxObj.course,
-                            calenderStart: this.edxObj.calenderStart,
-                            calenderEnd: this.edxObj.calenderEnd,
-                            roles: roleStr,
-                            emulateJSON: true
-                          //'Content-Type' : 'application/x-www-form-urlencoded'
-                    };
-                    console.log("data:", data);
-                    vm.$http.post("edxLog/searchEdX", data).then(function(response) {
-                        console.log("searchEdX:", response.data);
-                        //resultCourse = response.data;
-                        vm.$set('resultLog', response.data);
-                        vm.$set('isShow', true);
-                    });
-                }
+            searchResult: function() {
+                console.log("edxObj:", this.edxObj);
+                var roleStr = this.edxObj.roles.join(",")
+                console.log("roleStr:", roleStr);
+                var vm = this;
+                var data = {
+                        courseId: this.edxObj.course,
+                        calenderStart: this.edxObj.calenderStart,
+                        calenderEnd: this.edxObj.calenderEnd,
+                        roles: roleStr,
+                        pageIndex: 0,
+                        emulateJSON: true
+                      //'Content-Type' : 'application/x-www-form-urlencoded'
+                };
+                console.log("data:", data);
+                vm.$http.post("edxLog/searchEdX", data).then(function(response) {
+                    console.log("searchEdX:", response.data);
+                    var edxLogList = response.data.edxLogList;
+                    vm.$set('resultLog', edxLogList);
+                    //vm.$set('isShow', true);
+                    $("#showTable").show();
+                    var totalCount = response.data.totalCount;
+                    var totalPage = Math.ceil(totalCount / 100);
+                    setPagination(totalPage, data, vm);
+                });
+            }
         }
     });
 </script>

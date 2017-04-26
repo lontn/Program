@@ -1,5 +1,6 @@
 package com.fcu.gtml.edx.web;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -39,11 +40,45 @@ public class EdXLogController {
     }
 
     @RequestMapping(value="/searchEdX", method = {RequestMethod.POST})
-    public @ResponseBody List<EdXTrackingLog> searchEdX(@RequestParam(value="courseId") String courseId, @RequestParam(value="calenderStart") String calenderStart
-            ,@RequestParam(value="calenderEnd") String calenderEnd, @RequestParam(value="roles", required=false) String[] roles) {
-        L.info("courseId:{}, calenderStart:{}, calenderEnd:{}, roles:{}", courseId, calenderStart, calenderEnd, roles);
-        List<EdXTrackingLog> list = edXTrackingLogService.listEdXTrackingLog(courseId, calenderStart, calenderEnd, roles);
-        return list;
+    public @ResponseBody EdXTrackingLogResult searchEdX(
+            @RequestParam(value="courseId") String courseId,
+            @RequestParam(value="calenderStart") String calenderStart,
+            @RequestParam(value="calenderEnd") String calenderEnd,
+            @RequestParam(value="roles", required=false) String[] roles,
+            @RequestParam(value="pageIndex", required = false, defaultValue = "0") int pageIndex) {
+        L.info("courseId:{}, calenderStart:{}, calenderEnd:{}, roles:{}, pageIndex:{}", courseId, calenderStart, calenderEnd, roles, pageIndex);
+        int totalCount = edXTrackingLogService.countEdXTrackingLog(courseId, calenderStart, calenderEnd, roles);
+        if (totalCount == 0) {
+            return null;
+        }
+
+        if (pageIndex == 0 || pageIndex == 1) {
+            pageIndex = 0;
+        } else {
+            pageIndex = (pageIndex - 1) * 100;
+        }
+        List<EdXTrackingLog> list = edXTrackingLogService.listEdXTrackingLog(courseId, calenderStart, calenderEnd, roles, pageIndex);
+        EdXTrackingLogResult result = new EdXTrackingLogResult();
+        result.totalCount = totalCount;
+        result.edxLogList = list;
+        return result;
         
+    }
+
+    private static class EdXTrackingLogResult {
+        private int totalCount;
+        private List<EdXTrackingLog> edxLogList = new ArrayList<>();
+        public int getTotalCount() {
+            return totalCount;
+        }
+        public void setTotalCount(int totalCount) {
+            this.totalCount = totalCount;
+        }
+        public List<EdXTrackingLog> getEdxLogList() {
+            return edxLogList;
+        }
+        public void setEdxLogList(List<EdXTrackingLog> edxLogList) {
+            this.edxLogList = edxLogList;
+        }
     }
 }

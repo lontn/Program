@@ -11,7 +11,18 @@ public interface EdXTrackingLogService {
      * @param datetimeString
      * @param datetimeEmd
      * @param roles
+     * @param pageIndex
      * @return
      */
-    public List<EdXTrackingLog> listEdXTrackingLog(String courseId, String datetimeString, String datetimeEnd, String[] roles);
+    public List<EdXTrackingLog> listEdXTrackingLog(String courseId, String datetimeString, String datetimeEnd, String[] roles, int pageIndex);
+
+    /**
+     * Count
+     * @param courseId
+     * @param datetimeString
+     * @param datetimeEnd
+     * @param roles
+     * @return
+     */
+    public int countEdXTrackingLog(String courseId, String datetimeString, String datetimeEnd, String[] roles);
 }

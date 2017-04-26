@@ -30,5 +30,28 @@
        <if test="roles !=null and roles.length != 0">
        AND R.Role not in (<foreach item="role" collection="roles" separator=",">#{role}</foreach>)
        </if>
+       limit #{pageIndex}, 100
+  </select>
+  <select id="countEdXTrackingLog" resultType="Integer">
+     SELECT COUNT(1)
+     FROM (
+       SELECT DISTINCT
+       T.Id,
+       T.UserName,
+       T.EventType, 
+       T.Event,
+       T.Time,
+       T.Context
+       FROM EdXInfo.TrackingLog AS T
+       INNER JOIN edxapp.auth_user AS A
+       ON T.UserName = A.username
+       INNER JOIN edxapp.student_courseaccessrole AS R
+       ON A.id = R.user_id
+       WHERE T.CourseId = #{courseId} 
+       AND T.Time Between #{datetimeStart} AND #{datetimeEnd}
+       <if test="roles !=null and roles.length != 0">
+       AND R.Role not in (<foreach item="role" collection="roles" separator=",">#{role}</foreach>)
+       </if>
+     ) AS Log
   </select>
 </mapper>
