@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="info" monitorInterval="30">
+  <Appenders>
+    <!-- ***************************** -->
+    <!-- ALL                           -->
+    <!-- ***************************** -->
+    <Console name="Console" target="SYSTEM_OUT">
+      <PatternLayout pattern="%d %p %c [%t] %m%n" />
+    </Console>
+
+    <RollingRandomAccessFile name="AllFile" fileName="logs/edx-train.log" filePattern="logs/$${date:yyyy-MM}/edx-train-%d{MM-dd-yyyy}-%i.log.gz">
+      <PatternLayout>
+        <Pattern>%d %p %c{1} [%t] %m%n</Pattern>
+      </PatternLayout>
+      <Policies>
+        <TimeBasedTriggeringPolicy />
+        <SizeBasedTriggeringPolicy size="100 MB"/>
+      </Policies>
+      <DefaultRolloverStrategy max="1000"/>
+    </RollingRandomAccessFile>
+    <RollingRandomAccessFile name="ErrFile" fileName="logs/edx-trainerr.log" filePattern="logs/$${date:yyyy-MM}/edx-trainerr-%d{MM-dd-yyyy}-%i.log.gz">
+      <PatternLayout>
+        <Pattern>%d %p %c [%t] %m%n</Pattern>
+      </PatternLayout>
+      <Filters>
+        <ThresholdFilter level="warn"/>
+      </Filters>
+      <Policies>
+        <TimeBasedTriggeringPolicy />
+        <SizeBasedTriggeringPolicy size="100 MB"/>
+      </Policies>
+      <DefaultRolloverStrategy max="1000"/>
+    </RollingRandomAccessFile>
+  </Appenders>
+
+  <Loggers>
+    <logger name="com.fcu.gtml" level="info" additivity="false">
+      <AppenderRef ref="AllFile" />
+      <AppenderRef ref="ErrFile" />
+      <AppenderRef ref="Console" />
+    </logger>
+    <Root level="info">
+      <AppenderRef ref="AllFile" />
+      <AppenderRef ref="ErrFile" />
+      <AppenderRef ref="Console" />
+    </Root>
+  </Loggers>
+</Configuration>
