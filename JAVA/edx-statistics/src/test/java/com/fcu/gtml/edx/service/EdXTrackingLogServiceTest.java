@@ -22,7 +22,7 @@ public class EdXTrackingLogServiceTest extends SupportSpringTest {
         String datetimeString = "2016-04-08 00:00";
         String datetimeEnd = "2016-04-08 23:00";
         String[] roles = {"instructor"};
-        List<EdXTrackingLog> list = edXTrackingLogService.listEdXTrackingLog(courseId, datetimeString, datetimeEnd, roles);
+        List<EdXTrackingLog> list = edXTrackingLogService.listEdXTrackingLog(courseId, datetimeString, datetimeEnd, roles, 0);
         L.info("list:{}", list.size());
         for (EdXTrackingLog edXTrackingLog : list) {
             L.info("edXTrackingLog:{}", edXTrackingLog);
