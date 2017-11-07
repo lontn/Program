@@ -28,8 +28,8 @@
   <!-- <tx:jta-transaction-manager /> -->
   <bean id="transactionManager01" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
     p:dataSource-ref="dataSource01"/>
-  <bean id="transactionManager02" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
-    p:dataSource-ref="dataSource02"/>
+<!--   <bean id="transactionManager02" class="org.springframework.jdbc.datasource.DataSourceTransactionManager" -->
+<!--     p:dataSource-ref="dataSource02"/> -->
 
   <!-- <aop:aspectj-autoproxy/> -->
   <tx:annotation-driven transaction-manager="transactionManager01"/>

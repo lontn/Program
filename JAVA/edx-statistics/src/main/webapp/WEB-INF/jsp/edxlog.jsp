@@ -90,6 +90,9 @@
     </tfoot>
   </table>
   </div>
+  <div id="noDataTable" style="display: none">
+ 		查無此資料
+  </div>
 </div>
 </div>
 <script>
@@ -189,12 +192,18 @@ Vue.http.options.emulateJSON = true;
                 vm.$http.post("edxLog/searchEdX", data).then(function(response) {
                     console.log("searchEdX:", response.data);
                     var edxLogList = response.data.edxLogList;
-                    vm.$set('resultLog', edxLogList);
-                    //vm.$set('isShow', true);
-                    $("#showTable").show();
-                    var totalCount = response.data.totalCount;
-                    var totalPage = Math.ceil(totalCount / 100);
-                    setPagination(totalPage, data, vm);
+                    if (edxLogList !=null) {
+                        vm.$set('resultLog', edxLogList);
+                        //vm.$set('isShow', true);
+                        $("#showTable").show();
+                        $("#noDataTable").hide();
+                        var totalCount = response.data.totalCount;
+                        var totalPage = Math.ceil(totalCount / 100);
+                        setPagination(totalPage, data, vm);
+                    } else {
+                        $("#noDataTable").show();
+                        $("#showTable").hide();
+                    }
                 });
             }
         }

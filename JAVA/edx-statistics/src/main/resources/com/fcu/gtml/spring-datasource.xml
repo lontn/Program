@@ -21,7 +21,7 @@
 
   <!-- 暫用，之後會改為JNDI -->
   <jee:jndi-lookup id="dataSource01" jndi-name="jdbc/MySQL"/>
-  <jee:jndi-lookup id="dataSource02" jndi-name="jdbc/NetworkDataAnalysis"/>
+<!--   <jee:jndi-lookup id="dataSource02" jndi-name="jdbc/NetworkDataAnalysis"/> -->
   <!-- <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
     <property name="driverClass" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
     <property name="jdbcUrl" value="jdbc:sqlserver://10.16.78.20:1433;DatabaseName=ItemMainTain_ABS;SendStringParametersAsUnicode=false" />

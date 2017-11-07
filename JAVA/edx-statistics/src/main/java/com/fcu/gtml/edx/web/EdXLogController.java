@@ -48,6 +48,7 @@ public class EdXLogController {
             @RequestParam(value="pageIndex", required = false, defaultValue = "0") int pageIndex) {
         L.info("courseId:{}, calenderStart:{}, calenderEnd:{}, roles:{}, pageIndex:{}", courseId, calenderStart, calenderEnd, roles, pageIndex);
         int totalCount = edXTrackingLogService.countEdXTrackingLog(courseId, calenderStart, calenderEnd, roles);
+//        L.info("totalCount:{}", totalCount);
         if (totalCount == 0) {
             return null;
         }
