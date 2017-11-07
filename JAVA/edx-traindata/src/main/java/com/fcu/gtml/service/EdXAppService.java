@@ -30,7 +30,7 @@ public class EdXAppService {
                      " ON G.user_id = A.id " +
                      " where course_id = ? ";
         List<UserInfo> userInfos = new ArrayList<>();
-        try (Connection conn = basicDataSource.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = basicDataSource.getConnection(); PreparedStatement ps = conn.prepareStatement(sql);) {
             ps.setString(1, courseId);
             try (ResultSet rs = ps.executeQuery();) {
                 while (rs.next()) {

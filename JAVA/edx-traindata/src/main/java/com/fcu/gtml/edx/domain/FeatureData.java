@@ -16,13 +16,13 @@ public class FeatureData extends TheData {
     private int seqNext;
     private int seqPrev;
     private int pageClose;
-    private int label;
+    private String label;
 
     public FeatureData() {}
 
     public FeatureData(int userId, int showTranscript, int hideTranscript, int loadVideo, int playVideo, int pauseVideo,
             int seekVideo, int stopVideo, int speedChangeVideo, int videoHideCCMenu, int videoShowCCMenu, int seqGoto,
-            int seqNext, int seqPrev, int pageClose, int label) {
+            int seqNext, int seqPrev, int pageClose, String label) {
         this.userId = userId;
         this.showTranscript = showTranscript;
         this.hideTranscript = hideTranscript;
@@ -133,10 +133,10 @@ public class FeatureData extends TheData {
     public void setPageClose(int pageClose) {
         this.pageClose = pageClose;
     }
-    public int getLabel() {
+    public String getLabel() {
         return label;
     }
-    public void setLabel(int label) {
+    public void setLabel(String label) {
         this.label = label;
     }
     

@@ -75,4 +75,24 @@ public class DateFormatUtils {
         }
     }
 
+    public static class YMDHMS24 {
+        private static final DateFormat DF = new SimpleDateFormat(
+                "yyyy-MM-dd HH:mm:ss", Locale.US);
+
+        public static final String format() {
+            return DF.format(new Date());
+        }
+
+        public static final String format(long time) {
+            return DF.format(new Date(time));
+        }
+
+        public static final String format(Date time) {
+            return DF.format(time);
+        }
+
+        public static final String format(Calendar time) {
+            return DF.format(time.getTime());
+        }
+    }
 }

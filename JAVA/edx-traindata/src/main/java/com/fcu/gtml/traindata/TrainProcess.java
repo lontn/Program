@@ -27,13 +27,14 @@ import com.opencsv.CSVWriter;
 @Component
 public class TrainProcess {
     private static final Logger L = LogManager.getLogger();
+    private static String OS = System.getProperty("os.name").toLowerCase();
     @Resource
     private BasicDataSource basicDataSource;
     @Resource
     private EdXAppService edXAppService;
     @Resource
     private EdXInfoService edXInfoService;
-    private static final String outputFile = "D:\\ResourceDataTest\\trainData" + new DateTime().toString("yyyy-MM-dd_HH_mm_ss") + ".csv";
+    private static String outputFile = "D:\\ResourceDataTest\\trainData" + new DateTime().toString("yyyy-MM-dd_HH_mm_ss") + ".csv";
     private String courseId;
     
     public void setCourseId(String courseId) {
@@ -41,9 +42,15 @@ public class TrainProcess {
     }
 
     public void build() {
-        System.out.println(basicDataSource);
+        System.out.println(OS);
         System.out.println(edXAppService);
-        System.out.println(FeatureEnum.SHOWTRANSCRIPT.getName());
+        if(isWindows()) {
+            outputFile = "D:\\ResourceDataTest\\trainData_" + courseId + "_" + new DateTime().toString("yyyy-MM-dd_HH_mm_ss") + ".csv";
+        } else if (isMac()) {
+            outputFile = "/Users/lon/trainData_" + courseId + "_" + new DateTime().toString("yyyy-MM-dd_HH_mm_ss") + ".csv";
+        } else if (isUnix()) {
+            outputFile = "/home/lon/trainData_" + courseId + "_" + new DateTime().toString("yyyy-MM-dd_HH_mm_ss") + ".csv";
+        }
         //拿到證書的
         List<UserInfo> userInfos = edXAppService.listAPPUser(courseId);
         List<FeatureData> featureDatas = new ArrayList<>();
@@ -55,7 +62,7 @@ public class TrainProcess {
             Map<String, Integer> eventTypeMap = EventTypeSum.EventTypeToMap(listEventType);
 //            L.info("eventTypeMap:{}", eventTypeMap);
 //            System.out.println(eventTypeMap.get(FeatureEnum.SHOWTRANSCRIPT.getName()));
-            FeatureData featureData = combineData(eventTypeMap, userInfo.getUserId(), 1);
+            FeatureData featureData = combineData(eventTypeMap, userInfo.getUserId(), "Pass");
             L.info("featureData:{}", featureData);
             featureDatas.add(featureData);
         }
@@ -66,7 +73,7 @@ public class TrainProcess {
             List<EventTypeSum> listEventType = edXInfoService.listEventType(userInfo.getUserName(), courseId);
             L.info("listEventType:{}", listEventType);
             Map<String, Integer> eventTypeMap = EventTypeSum.EventTypeToMap(listEventType);
-            FeatureData featureData = combineData(eventTypeMap, userInfo.getUserId(), 0);
+            FeatureData featureData = combineData(eventTypeMap, userInfo.getUserId(), "NoPass");
             featureDatas.add(featureData);
         }
         // write CSV
@@ -74,7 +81,7 @@ public class TrainProcess {
         L.info("Done!");
     }
 
-    private FeatureData combineData(Map<String, Integer> eventTypeMap, int userId, int label) {
+    private FeatureData combineData(Map<String, Integer> eventTypeMap, int userId, String label) {
         int showTranscript = eventTypeMap.get(FeatureEnum.SHOWTRANSCRIPT.getName()) != null ? eventTypeMap.get(FeatureEnum.SHOWTRANSCRIPT.getName()) : 0;
         int hideTranscript = eventTypeMap.get(FeatureEnum.HIDETRANSCRIPT.getName()) != null ? eventTypeMap.get(FeatureEnum.HIDETRANSCRIPT.getName()) : 0;
         int loadVideo = eventTypeMap.get(FeatureEnum.LOADVIDEO.getName()) != null ? eventTypeMap.get(FeatureEnum.LOADVIDEO.getName()) : 0;
@@ -146,5 +153,20 @@ public class TrainProcess {
                     String.valueOf(fData.getLabel())});
         }
         return records;
+    }
+
+    //windows
+    public static boolean isWindows() {
+        return (OS.indexOf("win") >= 0);
+    }
+
+    //Mac
+    public static boolean isMac() {
+        return (OS.indexOf("mac") >= 0);
+    }
+
+    //linux or unix
+    public static boolean isUnix() {
+        return (OS.indexOf("nix") >= 0 || OS.indexOf("nux") >= 0);
     }
 }

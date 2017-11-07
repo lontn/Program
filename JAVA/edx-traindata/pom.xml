@@ -228,7 +228,7 @@
         <activeByDefault>true</activeByDefault>
       </activation>
       <build>
-        <finalName>${project.name}-${version}-local</finalName>
+        <finalName>${project.name}-${project.version}-local</finalName>
         <resources>
           <resource>
             <directory>${basedir}/src/main/resources</directory>
@@ -242,7 +242,7 @@
     <profile>
       <id>server</id>
       <build>
-        <finalName>${project.name}-${version}-${maven.build.timestamp}-server</finalName>
+        <finalName>${project.name}-${project.version}-${maven.build.timestamp}-server</finalName>
         <resources>
           <resource>
             <directory>${basedir}/src/main/resources</directory>
@@ -283,7 +283,7 @@
           </configuration>
         </plugin>
       </plugins>
-        <finalName>${project.name}-${version}-${maven.build.timestamp}-test</finalName>
+        <finalName>${project.name}-${project.version}-${maven.build.timestamp}-test</finalName>
         <resources>
           <resource>
             <directory>${basedir}/src/main/local-test</directory>
