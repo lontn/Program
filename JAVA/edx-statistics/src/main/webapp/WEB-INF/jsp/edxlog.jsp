@@ -50,7 +50,7 @@
         <label for="sel3">排除角色:</label>
         <div class="checkbox" v-for="role in roleResult">
           <label>
-            <input type="checkbox" id="{{role.id}}" value="{{role.name}}" v-model="edxObj.roles"> {{role.name}}
+            <input type="checkbox" :id="role.id" :value="role.name" v-model="edxObj.roles"> {{role.name}}
           </label>
         </div>
         <button type="button" id="edxBtn" class="btn btn-default" v-on:click="searchResult()">查詢</button>
@@ -120,7 +120,8 @@ var setPagination = function(totals, data, vm) {
             vm.$http.post("edxLog/searchEdX", data).then(function(response) {
                 console.log("searchEdX:", response.data);
                 var edxLogList = response.data.edxLogList;
-                vm.$set('resultLog', edxLogList);
+                //vm.$set('resultLog', edxLogList);
+                vm.resultLog = edxLogList;
                 $("#showTable" ).show();
             });
         }
@@ -151,14 +152,15 @@ Vue.http.options.emulateJSON = true;
             edxObj: {
                 course: '',
                 calenderStart: '',
-                calenderEnd:'',
+                calenderEnd: '',
                 roles: []
             },
             roleResult : roleCheckBox
         },
-        ready: function() {
+        created: function() {
             console.log("BBBB");
             this.getCourse();
+            console.log("CCC");
         },
         methods: {
             getCourse: function() {
@@ -168,14 +170,33 @@ Vue.http.options.emulateJSON = true;
                         //'Content-Type' : 'application/x-www-form-urlencoded'
                 };
                 //console.log(vm.$http);
-                vm.$http.post("edxLog/listCourse", data).then(function(response) {
-                    //console.log("response:", response.data);
-                    //resultCourse = response.data;
-                    vm.$set('resultCourse', response.data);
+                axios.post("edxLog/listCourse", data).then(function(response) {
+//                     console.log("response:", response.data);
+                    vm.resultCourse = response.data;
+//                     vm.$set('resultCourse', response.data);
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            },
+            dateDefind: function() {
+                $('#calenderStart').datetimepicker({
+                    locale: 'zh-tw',
+                    format: 'YYYY-MM-DD HH:mm'
+                }).on("hide", function (e) {
+                    var value = $("#calenderStart").val();
+                    vm.edxObj.calenderStart = value;
+                 });
+                $('#calenderEnd').datetimepicker({
+                    locale: 'zh-tw',
+                    format: 'YYYY-MM-DD HH:mm'
+                }).on("hide", function (e) {
+                   var value = $("#calenderEnd").val();
+                   vm.edxObj.calenderEnd = value;
                 });
             },
             searchResult: function() {
                 console.log("edxObj:", this.edxObj);
+                console.log("calenderStart:", this.edxObj.calenderStart);
                 var roleStr = this.edxObj.roles.join(",")
                 console.log("roleStr:", roleStr);
                 var vm = this;
@@ -193,7 +214,8 @@ Vue.http.options.emulateJSON = true;
                     console.log("searchEdX:", response.data);
                     var edxLogList = response.data.edxLogList;
                     if (edxLogList !=null) {
-                        vm.$set('resultLog', edxLogList);
+                        //vm.$set('resultLog', edxLogList);
+                        vm.resultLog = edxLogList;
                         //vm.$set('isShow', true);
                         $("#showTable").show();
                         $("#noDataTable").hide();
@@ -204,9 +226,14 @@ Vue.http.options.emulateJSON = true;
                         $("#noDataTable").show();
                         $("#showTable").hide();
                     }
+                }).catch(function (error) {
+                    console.log("Err:", error);
                 });
             }
         }
+//         mounted: function() {
+//             this.dateDefind();
+//         }
     });
 </script>
   </tiles:putAttribute>

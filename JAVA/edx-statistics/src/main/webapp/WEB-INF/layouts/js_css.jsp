@@ -19,6 +19,7 @@
 <script src="${contextPath}/js/bootstrap-datetimepicker.min.js"></script>
 <script src="${contextPath}/js/vue.js"></script>
 <script src="${contextPath}/js/vue-resource.js"></script>
+<script src="${contextPath}/js/axios.js"></script>
 <%-- <script src="${contextPath}/js/build.min.js"></script> --%>
 <script src="${contextPath}/js/highchart/highcharts.js"></script>
 <script src="${contextPath}/js/highchart/modules/exporting.js"></script>
