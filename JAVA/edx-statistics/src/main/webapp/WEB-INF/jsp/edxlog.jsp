@@ -100,10 +100,16 @@ $(function() {
     $('#datetimeStart').datetimepicker({
         locale: 'zh-tw',
         format: 'YYYY-MM-DD HH:mm'
+    }).on('hide', function (ev) {
+        var value = $("#datetimeStart").val();
+        vm.edxObj.calenderStart = value;
     });
     $('#datetimeEnd').datetimepicker({
         locale: 'zh-tw',
         format: 'YYYY-MM-DD HH:mm'
+    }).on('hide', function (ev) {
+        var value = $("#datetimeEnd").val();
+        vm.edxObj.calenderEnd = value;
     });
 });
 var setPagination = function(totals, data, vm) {
@@ -178,32 +184,16 @@ Vue.http.options.emulateJSON = true;
                     console.log(error);
                 });
             },
-            dateDefind: function() {
-                $('#calenderStart').datetimepicker({
-                    locale: 'zh-tw',
-                    format: 'YYYY-MM-DD HH:mm'
-                }).on("hide", function (e) {
-                    var value = $("#calenderStart").val();
-                    vm.edxObj.calenderStart = value;
-                 });
-                $('#calenderEnd').datetimepicker({
-                    locale: 'zh-tw',
-                    format: 'YYYY-MM-DD HH:mm'
-                }).on("hide", function (e) {
-                   var value = $("#calenderEnd").val();
-                   vm.edxObj.calenderEnd = value;
-                });
-            },
             searchResult: function() {
-                console.log("edxObj:", this.edxObj);
-                console.log("calenderStart:", this.edxObj.calenderStart);
+//                 console.log("edxObj:", this.edxObj);
+//                 console.log("calenderStart:", this.edxObj.calenderStart);
                 var roleStr = this.edxObj.roles.join(",")
                 console.log("roleStr:", roleStr);
                 var vm = this;
                 var data = {
                         courseId: this.edxObj.course,
-                        calenderStart: this.edxObj.calenderStart,
-                        calenderEnd: this.edxObj.calenderEnd,
+                        calenderStart: $("#calenderStart").val(),
+                        calenderEnd: $("#calenderEnd").val(),
                         roles: roleStr,
                         pageIndex: 0,
                         emulateJSON: true
@@ -231,9 +221,6 @@ Vue.http.options.emulateJSON = true;
                 });
             }
         }
-//         mounted: function() {
-//             this.dateDefind();
-//         }
     });
 </script>
   </tiles:putAttribute>
