@@ -9,7 +9,7 @@
       <org.springframework.version>4.1.7.RELEASE</org.springframework.version>
       <commons-configuration>1.10</commons-configuration>
       <org.log4j2>2.5</org.log4j2>
-      <hadoopv2x>2.7.1</hadoopv2x>
+      <hadoopv2x>2.16.0</hadoopv2x>
   </properties>
   <dependencies>
       <!-- Spring -->
