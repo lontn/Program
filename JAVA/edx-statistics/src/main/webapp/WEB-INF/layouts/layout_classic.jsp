@@ -12,8 +12,12 @@
 <tiles:insertAttribute name="head" ignore="true" />
 </head>
 <body>
+<!--這裡把 header , body, foot 組合起來-->
+<!-- Header -->
 <tiles:insertAttribute name="header" />
+<!-- Body (Content) Page -->
 <tiles:insertAttribute name="content" />
+<!-- foot Page -->
 <tiles:insertAttribute name="footer" ignore="true"/>
 </body>
 </html>
