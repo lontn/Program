@@ -7,7 +7,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <org.springframework.version>3.2.10.RELEASE</org.springframework.version>
     <org.slf4j.version>1.7.7</org.slf4j.version>
-    <org.log4j2>2.0.2</org.log4j2>
+    <org.log4j2>2.16.0</org.log4j2>
     <commons-configuration>1.10</commons-configuration>
     <jpa.version>1.0.1.Final</jpa.version>
   </properties>
